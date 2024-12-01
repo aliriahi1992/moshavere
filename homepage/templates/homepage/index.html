@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه اصلی</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 30px;
+            gap: 20px;
+            flex-wrap: nowrap; /* جلوگیری از تقسیم به ردیف‌های جدید */
+        }
+        .section {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 30%; /* عرض هر سکشن */
+            box-sizing: border-box; /* محاسبه دقیق عرض سکشن‌ها */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .section h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        .section p {
+            color: #777;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- سکشن اول -->
+    <div class="section">
+        <h2>پرسش از وکیل</h2>
+        <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-container">
+                <textarea name="number1" rows="4"></textarea><br>
+                <button type="submit">پرسش</button>
+            </div>
+        </form>
+        <label class="label">
+            {% if result1 %}
+                پاسخ: {{ result1 }}
+            {% else %}
+                منتظر وارد کردن عدد هستیم
+            {% endif %}
+        </label>
+    </div>
+
+    <!-- سکشن دوم -->
+    <div class="section">
+        <h2>پرسش از متخصص تغذیه</h2>
+        <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-container">
+                <textarea name="number2" rows="4"></textarea><br>
+                <button type="submit">پرسش</button>
+            </div>
+        </form>
+        <label class="label">
+            {% if result2 %}
+                پاسخ: {{ result2 }}
+            {% else %}
+                منتظر وارد کردن عدد هستیم
+            {% endif %}
+        </label>
+    </div>
+
+    <!-- سکشن سوم -->
+    <div class="section">
+        <h2>پرسش از مشاور خانواده</h2>
+        <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-container">
+                <textarea name="number3" rows="4"></textarea><br>
+                <button type="submit">پرسش</button>
+            </div>
+        </form>
+        <label class="label">
+            {% if result3 %}
+                پاسخ: {{ result3 }}
+            {% else %}
+                منتظر وارد کردن عدد هستیم
+            {% endif %}
+        </label>
+    </div>
+</div>
+
+</body>
+</html>
