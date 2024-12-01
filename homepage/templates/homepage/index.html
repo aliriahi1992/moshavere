@@ -37,14 +37,19 @@
             color: #777;
         }
         .form-container {
+            display: flex;
+            flex-direction: column; /* برای چیدمان عمودی فرم‌ها */
+            align-items: center; /* قرار دادن محتوا در مرکز */
             margin-top: 20px;
         }
         textarea {
             width: 100%;
+            max-width: 400px; /* عرض حداکثر برای جلوگیری از کشیدگی */
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
             margin-bottom: 10px;
+            box-sizing: border-box;
         }
         button {
             padding: 10px 20px;
@@ -55,6 +60,7 @@
             cursor: pointer;
             font-size: 16px;
             position: relative;
+            width: auto;
         }
         button:hover {
             background-color: #0056b3;
