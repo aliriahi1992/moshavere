@@ -18,7 +18,7 @@
             justify-content: space-around;
             padding: 30px;
             gap: 20px;
-            flex-wrap: nowrap; /* جلوگیری از تقسیم به ردیف‌های جدید */
+            flex-wrap: wrap; /* اجازه دادن به سکشن‌ها برای قرار گرفتن زیر هم */
         }
         .section {
             background-color: #ffffff;
@@ -86,6 +86,18 @@
             display: block;
             font-weight: bold;
             color: #333;
+        }
+
+        /* Media Query برای موبایل */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* قرار دادن سکشن‌ها به صورت عمودی */
+                padding: 10px; /* کاهش پدینگ برای موبایل */
+            }
+            .section {
+                width: 100%; /* تنظیم عرض سکشن‌ها به 100% در موبایل */
+                margin-bottom: 20px; /* فاصله بین سکشن‌ها */
+            }
         }
     </style>
 </head>
