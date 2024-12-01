@@ -18,7 +18,7 @@ def homepage(request):
                 # انتخاب مدل و ارسال درخواست به Gemini
                 model = genai.GenerativeModel('gemini-pro')
                 # فرض می‌کنیم که می‌خواهیم از دو عدد برای تولید محتوای خاص استفاده کنیم
-                prompt = "به عنوان یک وکیل به این سوال پاسخ بده با توجه به قوانین ایران و اگر این سوال در حوزه قضایی نیست بگو در حوزه تو نیست پاسخ دادن بهش"
+                prompt = "به عنوان یک وکیل به این سوال پاسخ بده"
                 response = model.generate_content(prompt)
                 # اینجا باید پاسخ مدل را پردازش کنید
                 result1 = response.text
@@ -38,7 +38,7 @@ def homepage(request):
                 # انتخاب مدل و ارسال درخواست به Gemini
                 model = genai.GenerativeModel('gemini-pro')
                 # فرض می‌کنیم که می‌خواهیم از دو عدد برای تولید محتوای خاص استفاده کنیم
-                prompt = "به عنوان یک متخصص تغذیه به این سوال جواب بده و اگر در حوزه تغذیه نیست بگو در حوزه تو نیست پاسخ دادن بهش"
+                prompt = "به عنوان یک متخصص تغذیه به این سوال جواب بده"
                 response = model.generate_content(prompt)
                 # اینجا باید پاسخ مدل را پردازش کنید
                 result2 = response.text
@@ -58,7 +58,7 @@ def homepage(request):
                 # انتخاب مدل و ارسال درخواست به Gemini
                 model = genai.GenerativeModel('gemini-pro')
                 # فرض می‌کنیم که می‌خواهیم از دو عدد برای تولید محتوای خاص استفاده کنیم
-                prompt = "به عنوان یک مشاور خانواده پاسخ این سوال رو بده و اگر در حوزه مشاور نیست بگو در حوزه تو نیست پاسخ دادن بهش"
+                prompt = "به عنوان یک مشاور خانواده پاسخ این سوال رو بده "
                 response = model.generate_content(prompt)
                 # اینجا باید پاسخ مدل را پردازش کنید
                 result3 = response.text
