@@ -9,7 +9,8 @@
             font-family: Arial, sans-serif;
             direction: rtl;
             text-align: right;
-            background-color: #f4f4f9;
+            background-color: #2c6e49; /* سبز جنگلی برای پس‌زمینه */
+            color: #f4f4f9; /* رنگ روشن برای متن‌ها */
             margin: 0;
             padding: 0;
         }
@@ -21,20 +22,21 @@
             flex-wrap: wrap; /* اجازه دادن به سکشن‌ها برای قرار گرفتن زیر هم */
         }
         .section {
-            background-color: #ffffff;
+            background-color: #ffffff; /* پس‌زمینه سفید برای هر سکشن */
             border-radius: 10px;
             padding: 20px;
             width: 30%; /* عرض هر سکشن */
             box-sizing: border-box; /* محاسبه دقیق عرض سکشن‌ها */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+            color: #333; /* رنگ تیره برای متن داخل سکشن‌ها */
         }
         .section h2 {
             font-size: 24px;
-            color: #333;
+            color: #2c6e49; /* سبز جنگلی برای عناوین سکشن‌ها */
         }
         .section p {
-            color: #777;
+            color: #777; /* رنگ خاکی برای متن توضیحات */
         }
         .form-container {
             display: flex;
@@ -53,7 +55,7 @@
         }
         button {
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: #3a8c4f; /* سبز تیره‌تر برای دکمه */
             color: white;
             border: none;
             border-radius: 5px;
@@ -63,7 +65,7 @@
             width: auto;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #2f7038; /* سبز تیره‌تر هنگام هاور */
         }
         .loading {
             position: absolute;
@@ -73,7 +75,7 @@
             width: 20px;
             height: 20px;
             border: 3px solid #fff;
-            border-top: 3px solid #007BFF;
+            border-top: 3px solid #3a8c4f; /* رنگ سبز دکمه */
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -85,7 +87,7 @@
             margin-top: 10px;
             display: block;
             font-weight: bold;
-            color: #333;
+            color: #333; /* رنگ تیره برای برچسب‌ها */
         }
 
         /* Media Query برای موبایل */
