@@ -5,14 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفحه اصلی</title>
     <style>
+        /* اضافه کردن فونت IRANSansWebFaNum */
+        @font-face {
+            font-family: 'IRANSansWebFaNum';
+            src: url('/font/IRANSansWebFaNum.ttf') format('truetype');
+        }
+
+        /* تنظیم فونت اصلی صفحه */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'IRANSansWebFaNum', Arial, sans-serif;  /* استفاده از فونت IRANSansWebFaNum */
             direction: rtl;
             text-align: right;
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
         }
+
         .container {
             display: flex;
             justify-content: space-around;
@@ -20,6 +28,7 @@
             gap: 20px;
             flex-wrap: wrap; /* اجازه دادن به سکشن‌ها برای قرار گرفتن زیر هم */
         }
+
         .section {
             background-color: #ffffff;
             border-radius: 10px;
@@ -48,15 +57,18 @@
             font-size: 24px;
             color: #333;
         }
+
         .section p {
             color: #777;
         }
+
         .form-container {
             display: flex;
             flex-direction: column; /* برای چیدمان عمودی فرم‌ها */
             align-items: center; /* قرار دادن محتوا در مرکز */
             margin-top: 20px;
         }
+
         textarea {
             width: 100%;
             max-width: 400px; /* عرض حداکثر برای جلوگیری از کشیدگی */
@@ -66,6 +78,7 @@
             margin-bottom: 10px;
             box-sizing: border-box;
         }
+
         button {
             padding: 10px 20px;
             background-color: #007BFF;
@@ -77,9 +90,11 @@
             position: relative;
             width: auto;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         .loading {
             position: absolute;
             right: 10px;
@@ -92,10 +107,12 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
             0% { transform: translateY(-50%) rotate(0deg); }
             100% { transform: translateY(-50%) rotate(360deg); }
         }
+
         .label {
             margin-top: 10px;
             display: block;
@@ -109,6 +126,7 @@
                 flex-direction: column; /* قرار دادن سکشن‌ها به صورت عمودی */
                 padding: 10px; /* کاهش پدینگ برای موبایل */
             }
+
             .section {
                 width: 100%; /* تنظیم عرض سکشن‌ها به 100% در موبایل */
                 margin-bottom: 20px; /* فاصله بین سکشن‌ها */
