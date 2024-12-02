@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>از مشاور بپرس</title>
+    <title>صفحه اصلی</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,21 +18,16 @@
             justify-content: space-around;
             padding: 30px;
             gap: 20px;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* اجازه دادن به سکشن‌ها برای قرار گرفتن زیر هم */
         }
         .section {
             background-color: #ffffff;
             border-radius: 10px;
             padding: 20px;
-            width: 30%;
-            box-sizing: border-box;
+            width: 30%; /* عرض هر سکشن */
+            box-sizing: border-box; /* محاسبه دقیق عرض سکشن‌ها */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-        }
-        .section img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px 10px 0 0;
         }
         .section h2 {
             font-size: 24px;
@@ -43,13 +38,13 @@
         }
         .form-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: column; /* برای چیدمان عمودی فرم‌ها */
+            align-items: center; /* قرار دادن محتوا در مرکز */
             margin-top: 20px;
         }
         textarea {
             width: 100%;
-            max-width: 400px;
+            max-width: 400px; /* عرض حداکثر برای جلوگیری از کشیدگی */
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
@@ -92,14 +87,16 @@
             font-weight: bold;
             color: #333;
         }
+
+        /* Media Query برای موبایل */
         @media (max-width: 768px) {
             .container {
-                flex-direction: column;
-                padding: 10px;
+                flex-direction: column; /* قرار دادن سکشن‌ها به صورت عمودی */
+                padding: 10px; /* کاهش پدینگ برای موبایل */
             }
             .section {
-                width: 100%;
-                margin-bottom: 20px;
+                width: 100%; /* تنظیم عرض سکشن‌ها به 100% در موبایل */
+                margin-bottom: 20px; /* فاصله بین سکشن‌ها */
             }
         }
     </style>
@@ -108,85 +105,77 @@
 
 <div class="container">
     <!-- سکشن اول -->
-    <div class="section" id="section1">
-        <img src="lawyer-image.jpg" alt="وکیل">
+    <div class="section">
         <h2>پرسش از وکیل</h2>
         <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
-        <form method="POST" id="form1" onsubmit="sendForm(event, 'form1', 'result1')">
+        <form method="POST" id="form1" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number1" rows="4"></textarea><br>
                 <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
             </div>
         </form>
-        <label class="label" id="result1">
-            سوال خود را بپرسید
+        <label class="label">
+            {% if result1 %}
+                {{ result1 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
         </label>
     </div>
 
     <!-- سکشن دوم -->
-    <div class="section" id="section2">
-        <img src="nutritionist-image.jpg" alt="متخصص تغذیه">
+    <div class="section">
         <h2>پرسش از متخصص تغذیه</h2>
         <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
-        <form method="POST" id="form2" onsubmit="sendForm(event, 'form2', 'result2')">
+        <form method="POST" id="form2" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number2" rows="4"></textarea><br>
                 <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
             </div>
         </form>
-        <label class="label" id="result2">
-            سوال خود را بپرسید
+        <label class="label">
+            {% if result2 %}
+                {{ result2 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
         </label>
     </div>
 
     <!-- سکشن سوم -->
-    <div class="section" id="section3">
-        <img src="family-counselor-image.jpg" alt="مشاور خانواده">
+    <div class="section">
         <h2>پرسش از مشاور خانواده</h2>
         <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
-        <form method="POST" id="form3" onsubmit="sendForm(event, 'form3', 'result3')">
+        <form method="POST" id="form3" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number3" rows="4"></textarea><br>
                 <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
             </div>
         </form>
-        <label class="label" id="result3">
-            سوال خود را بپرسید
+        <label class="label">
+            {% if result3 %}
+                {{ result3 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
         </label>
     </div>
 </div>
 
 <script>
-    function sendForm(event, formId, resultId) {
-        event.preventDefault(); // جلوگیری از بارگذاری مجدد صفحه
-
-        var form = document.getElementById(formId);
-        var resultLabel = document.getElementById(resultId);
+    function showLoading(form) {
+        // نمایش انیمیشن لودینگ روی دکمه
         var button = form.querySelector('button');
         var loading = button.querySelector('.loading');
-        
-        loading.style.display = 'inline-block'; // نمایش انیمیشن لودینگ
+        loading.style.display = 'inline-block';
 
-        // ارسال داده‌ها به صورت AJAX
-        var formData = new FormData(form);
-        
-        fetch('/submit-form/', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            resultLabel.innerHTML = data; // نمایش پاسخ در همان قسمت
-            loading.style.display = 'none'; // مخفی کردن انیمیشن لودینگ
-        })
-        .catch(error => {
-            console.error('Error:', error);
+        // مخفی کردن لودینگ پس از ارسال فرم
+        setTimeout(function() {
             loading.style.display = 'none';
-            resultLabel.innerHTML = 'خطا در ارسال فرم';
-        });
+        }, 3000); // زمان پیش فرض برای مخفی کردن (۳ ثانیه) را می توانید تغییر دهید.
     }
 </script>
 
