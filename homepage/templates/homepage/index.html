@@ -29,6 +29,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        .section img {
+            width: 100%; /* عرض تصویر به اندازه عرض سکشن */
+            height: auto; /* حفظ تناسب ابعاد تصویر */
+            border-radius: 10px 10px 0 0; /* گوشه‌های گرد تصویر */
+        }
         .section h2 {
             font-size: 24px;
             color: #333;
@@ -106,6 +111,7 @@
 <div class="container">
     <!-- سکشن اول -->
     <div class="section">
+        <img src="vakil.jpg" alt="پرسش از وکیل"> <!-- تصویر اضافه شده -->
         <h2>پرسش از وکیل</h2>
         <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
         <form method="POST" id="form1" onsubmit="showLoading(this)">
@@ -126,6 +132,7 @@
 
     <!-- سکشن دوم -->
     <div class="section">
+        <img src="taghzie.jpg" alt="پرسش از متخصص تغذیه"> <!-- تصویر اضافه شده -->
         <h2>پرسش از متخصص تغذیه</h2>
         <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
         <form method="POST" id="form2" onsubmit="showLoading(this)">
@@ -146,6 +153,7 @@
 
     <!-- سکشن سوم -->
     <div class="section">
+        <img src="moshaver.jpg" alt="پرسش از مشاور خانواده"> <!-- تصویر اضافه شده -->
         <h2>پرسش از مشاور خانواده</h2>
         <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
         <form method="POST" id="form3" onsubmit="showLoading(this)">
