@@ -38,8 +38,8 @@
             background: rgba(255, 255, 255, 0.8); /* پس‌زمینه شفاف */
             backdrop-filter: blur(10px); /* محو کردن پس‌زمینه */
             border-radius: 15px;
-            padding: 20px;
-            width: 30%;
+            padding: 15px; /* کاهش پدینگ */
+            width: 25%; /* عرض فرم کوچک‌تر */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -50,19 +50,20 @@
         }
 
         h2 {
-            font-size: 1.5em;
+            font-size: 1.2em; /* کاهش سایز عنوان */
             color: #333;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
+            padding: 8px; /* کاهش ارتفاع ورودی */
+            margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             transition: border-color 0.3s, background-color 0.3s;
             box-sizing: border-box;
+            font-size: 0.9em; /* کاهش سایز متن ورودی */
         }
 
         input:focus {
@@ -73,11 +74,11 @@
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 8px; /* کاهش ارتفاع دکمه */
             background-color: #007BFF;
             border: none;
             color: white;
-            font-size: 1em;
+            font-size: 0.9em; /* کاهش سایز متن دکمه */
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
@@ -92,10 +93,23 @@
             .container {
                 flex-direction: column;
                 gap: 20px;
+                padding: 20px; /* کاهش پدینگ برای موبایل */
             }
 
             .form {
-                width: 100%;
+                width: 90%; /* تنظیم عرض فرم در موبایل */
+            }
+
+            h2 {
+                font-size: 1em; /* کاهش سایز عنوان برای موبایل */
+            }
+
+            input {
+                font-size: 0.8em; /* کاهش سایز متن ورودی در موبایل */
+            }
+
+            button {
+                font-size: 0.8em; /* کاهش سایز متن دکمه در موبایل */
             }
         }
     </style>
