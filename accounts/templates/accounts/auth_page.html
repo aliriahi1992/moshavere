@@ -15,17 +15,18 @@
         body {
             font-family: 'IRANSansWebFaNum', Arial, sans-serif;
             direction: rtl;
-            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
-            color: #333;
             text-align: center;
+            background: url('/img/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 50px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -34,29 +35,30 @@
         }
 
         .form {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 15px;
+            background: rgba(255, 255, 255, 0.8); /* پس‌زمینه شفاف */
+            backdrop-filter: blur(10px); /* محو کردن پس‌زمینه */
+            border-radius: 15px;
+            padding: 20px;
             width: 30%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .form:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         h2 {
-            font-size: 1.2em;
+            font-size: 1.5em;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
             transition: border-color 0.3s, background-color 0.3s;
@@ -71,11 +73,11 @@
 
         button {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             background-color: #007BFF;
             border: none;
             color: white;
-            font-size: 0.9em;
+            font-size: 1em;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
@@ -85,24 +87,6 @@
             background-color: #0056b3;
         }
 
-        .image-container {
-            width: 30%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .image-container img:hover {
-            transform: scale(1.05);
-        }
-
         /* تنظیم ریسپانسیو */
         @media (max-width: 768px) {
             .container {
@@ -110,7 +94,7 @@
                 gap: 20px;
             }
 
-            .form, .image-container {
+            .form {
                 width: 100%;
             }
         }
@@ -125,11 +109,6 @@
             {{ reg_form.as_p }}
             <button type="submit" name="register">ثبت نام</button>
         </form>
-
-        <!-- تصویر وسط -->
-        <div class="image-container">
-            <img src="/img/img.jpg" alt="تصویر نمونه">
-        </div>
 
         <!-- فرم ورود -->
         <form method="POST" class="form login">
