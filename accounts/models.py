@@ -22,6 +22,7 @@ class CustomUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)  # اضافه‌شده
+    balance = models.IntegerField(default=5000)  # فیلد شارژ اولیه با مقدار پیش‌فرض 5000
 
     
     objects = CustomUserManager()

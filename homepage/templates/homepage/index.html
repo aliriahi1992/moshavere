@@ -5,80 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشاوره</title>
     <style>
-        /* اضافه کردن فونت IRANSansWebFaNum */
         @font-face {
             font-family: 'IRANSansWebFaNum';
             src: url('/font/IRANSansWebFaNum.ttf') format('truetype');
         }
-
-        /* تنظیم فونت اصلی صفحه */
         body {
-            font-family: 'IRANSansWebFaNum', Arial, sans-serif;  /* استفاده از فونت IRANSansWebFaNum */
+            font-family: 'IRANSansWebFaNum', Arial, sans-serif;
             direction: rtl;
             text-align: right;
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
         }
-
         .container {
             display: flex;
             justify-content: space-around;
             padding: 30px;
             gap: 20px;
-            flex-wrap: wrap; /* اجازه دادن به سکشن‌ها برای قرار گرفتن زیر هم */
+            flex-wrap: wrap;
         }
-
         .section {
             background-color: #ffffff;
             border-radius: 10px;
             padding: 20px;
-            width: 30%; /* عرض هر سکشن */
-            box-sizing: border-box; /* محاسبه دقیق عرض سکشن‌ها */
+            width: 30%;
+            box-sizing: border-box;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: all 0.3s ease; /* اضافه کردن ترنزیشن برای حرکت نرم */
+            transition: all 0.3s ease;
         }
-
-        /* افکت هاور روی سکشن */
         .section:hover {
-            background-color: #ffffff; /* تغییر رنگ پس‌زمینه در زمان هاور */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* سایه برجسته‌تر در هاور */
-            transform: scale(1.05); /* کمی بزرگتر شدن سکشن در زمان هاور */
+            background-color: #ffffff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
         }
-
         .section img {
-            width: 100%; /* عرض تصویر به اندازه عرض سکشن */
-            height: auto; /* حفظ تناسب ابعاد تصویر */
-            border-radius: 10px 10px 0 0; /* گوشه‌های گرد تصویر */
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
         }
-
         .section h2 {
             font-size: 24px;
             color: #333;
         }
-
         .section p {
             color: #777;
         }
-
         .form-container {
             display: flex;
-            flex-direction: column; /* برای چیدمان عمودی فرم‌ها */
-            align-items: center; /* قرار دادن محتوا در مرکز */
+            flex-direction: column;
+            align-items: center;
             margin-top: 20px;
         }
-
         textarea {
             width: 100%;
-            max-width: 400px; /* عرض حداکثر برای جلوگیری از کشیدگی */
+            max-width: 400px;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
             margin-bottom: 10px;
             box-sizing: border-box;
         }
-
         button {
             padding: 10px 20px;
             background-color: #007BFF;
@@ -90,11 +77,9 @@
             position: relative;
             width: auto;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
         .loading {
             position: absolute;
             right: 10px;
@@ -107,39 +92,68 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
         @keyframes spin {
             0% { transform: translateY(-50%) rotate(0deg); }
             100% { transform: translateY(-50%) rotate(360deg); }
         }
-
         .label {
             margin-top: 10px;
             display: block;
             font-weight: bold;
             color: #333;
         }
-
-        /* Media Query برای موبایل */
         @media (max-width: 768px) {
             .container {
-                flex-direction: column; /* قرار دادن سکشن‌ها به صورت عمودی */
-                padding: 10px; /* کاهش پدینگ برای موبایل */
+                flex-direction: column;
+                padding: 10px;
             }
-
             .section {
-                width: 100%; /* تنظیم عرض سکشن‌ها به 100% در موبایل */
-                margin-bottom: 20px; /* فاصله بین سکشن‌ها */
+                width: 100%;
+                margin-bottom: 20px;
             }
+        }
+        .error-message {
+            background-color: #ffcccc;
+            color: #900;
+            padding: 10px;
+            border: 1px solid #ff8888;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .user-info {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            width: 90%;
+        }
+        .user-info p {
+            margin: 5px 0;
+            color: #333;
         }
     </style>
 </head>
 <body>
 
+<!-- نمایش اطلاعات کاربر -->
+<div class="user-info">
+    <p>شماره موبایل: {{ user.username }}</p>
+    <p>موجودی حساب: {{ balance }} واحد</p>
+</div>
+
+{% if error %}
+<div class="error-message">
+    <p>{{ error }}</p>
+</div>
+{% endif %}
+
 <div class="container">
     <!-- سکشن اول -->
     <div class="section">
-        <img src="/img/vakil.jpg" alt="پرسش از وکیل"> <!-- تصویر اضافه شده -->
+        <img src="/img/vakil.jpg" alt="پرسش از وکیل">
         <h2>پرسش از وکیل</h2>
         <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
         <form method="POST" id="form1" onsubmit="showLoading(this)">
@@ -160,7 +174,7 @@
 
     <!-- سکشن دوم -->
     <div class="section">
-        <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه"> <!-- تصویر اضافه شده -->
+        <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
         <h2>پرسش از متخصص تغذیه</h2>
         <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
         <form method="POST" id="form2" onsubmit="showLoading(this)">
@@ -181,7 +195,7 @@
 
     <!-- سکشن سوم -->
     <div class="section">
-        <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده"> <!-- تصویر اضافه شده -->
+        <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
         <h2>پرسش از مشاور خانواده</h2>
         <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
         <form method="POST" id="form3" onsubmit="showLoading(this)">
@@ -203,15 +217,13 @@
 
 <script>
     function showLoading(form) {
-        // نمایش انیمیشن لودینگ روی دکمه
         var button = form.querySelector('button');
         var loading = button.querySelector('.loading');
         loading.style.display = 'inline-block';
 
-        // مخفی کردن لودینگ پس از ارسال فرم
         setTimeout(function() {
             loading.style.display = 'none';
-        }, 3000); // زمان پیش فرض برای مخفی کردن (۳ ثانیه) را می توانید تغییر دهید.
+        }, 3000);
     }
 </script>
 
