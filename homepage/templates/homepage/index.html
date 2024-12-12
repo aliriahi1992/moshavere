@@ -140,8 +140,8 @@
 
 <!-- نمایش اطلاعات کاربر -->
 <div class="user-info">
-    <p>شماره موبایل: {{ user.username }}</p>
-    <p>موجودی حساب: {{ balance }} واحد</p>
+    <p>{{ user.mobile_number }}</p>
+    <p>موجودی حساب {{ balance }} </p>
 </div>
 
 {% if error %}
