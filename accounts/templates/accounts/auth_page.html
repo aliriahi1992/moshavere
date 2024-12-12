@@ -5,59 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ثبت‌نام و ورود</title>
     <style>
+        /* اضافه کردن فونت IRANSansWebFaNum */
         @font-face {
             font-family: 'IRANSansWebFaNum';
             src: url('/font/IRANSansWebFaNum.ttf') format('truetype');
         }
 
+        /* تنظیمات عمومی */
         body {
             font-family: 'IRANSansWebFaNum', Arial, sans-serif;
             direction: rtl;
             margin: 0;
             padding: 0;
-            text-align: right;
+            text-align: center;
             background: url('/img/background.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #333;
         }
 
         .container {
-            max-width: 300px;
-            margin: 50px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .form {
-            display: none;
+            background: rgba(255, 255, 255, 0.8); /* پس‌زمینه شفاف */
+            backdrop-filter: blur(10px); /* محو کردن پس‌زمینه */
+            border-radius: 15px;
+            padding: 15px; /* کاهش پدینگ */
+            width: 25%; /* عرض فرم کوچک‌تر */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .form.active {
-            display: block;
+        .form:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         h2 {
-            font-size: 1.2em;
+            font-size: 1.2em; /* کاهش سایز عنوان */
             color: #333;
             margin-bottom: 10px;
         }
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 8px; /* کاهش ارتفاع ورودی */
             margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             transition: border-color 0.3s, background-color 0.3s;
             box-sizing: border-box;
-            font-size: 0.9em;
+            font-size: 0.9em; /* کاهش سایز متن ورودی */
         }
 
         input:focus {
@@ -68,11 +74,11 @@
 
         button {
             width: 100%;
-            padding: 8px;
+            padding: 8px; /* کاهش ارتفاع دکمه */
             background-color: #007BFF;
             border: none;
             color: white;
-            font-size: 0.9em;
+            font-size: 0.9em; /* کاهش سایز متن دکمه */
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
@@ -82,63 +88,49 @@
             background-color: #0056b3;
         }
 
-        .link {
-            display: block;
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #007BFF;
-            text-decoration: none;
-            cursor: pointer;
-        }
+        /* تنظیم ریسپانسیو */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px; /* کاهش پدینگ برای موبایل */
+            }
 
-        .link:hover {
-            text-decoration: underline;
+            .form {
+                width: 90%; /* تنظیم عرض فرم در موبایل */
+            }
+
+            h2 {
+                font-size: 1em; /* کاهش سایز عنوان برای موبایل */
+            }
+
+            input {
+                font-size: 0.8em; /* کاهش سایز متن ورودی در موبایل */
+            }
+
+            button {
+                font-size: 0.8em; /* کاهش سایز متن دکمه در موبایل */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- فرم ورود -->
-        <form method="POST" class="form login active" id="loginForm">
-            {% csrf_token %}
-            <h2>ورود</h2>
-            {{ login_form.as_p }}
-            <button type="submit" name="login">ورود</button>
-            <a class="link" onclick="showRegisterForm()">همین حالا ثبت نام کنید</a>
-        </form>
-
         <!-- فرم ثبت‌نام -->
-        <form method="POST" class="form register" id="registerForm">
+        <form method="POST" class="form register">
             {% csrf_token %}
             <h2>ثبت نام</h2>
             {{ reg_form.as_p }}
             <button type="submit" name="register">ثبت نام</button>
-            <a class="link" onclick="showLoginForm()">قبلا ثبت نام کرده اید؟ ورود</a>
+        </form>
+
+        <!-- فرم ورود -->
+        <form method="POST" class="form login">
+            {% csrf_token %}
+            <h2>ورود</h2>
+            {{ login_form.as_p }}
+            <button type="submit" name="login">ورود</button>
         </form>
     </div>
-
-    <script>
-        function showRegisterForm() {
-            document.getElementById('loginForm').classList.remove('active');
-            document.getElementById('registerForm').classList.add('active');
-        }
-
-        function showLoginForm() {
-            document.getElementById('registerForm').classList.remove('active');
-            document.getElementById('loginForm').classList.add('active');
-        }
-
-        // بررسی نتیجه ثبت‌نام
-        const registerForm = document.getElementById('registerForm');
-        registerForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // حذف ارسال فرم پیش‌فرض برای تست
-
-            // شبیه‌سازی موفقیت ثبت‌نام (در حالت واقعی، باید از پاسخ سرور استفاده شود)
-            setTimeout(() => {
-                alert('ثبت نام با موفقیت انجام شد!');
-                showLoginForm();
-            }, 500);
-        });
-    </script>
 </body>
 </html>
