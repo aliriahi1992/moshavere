@@ -69,8 +69,8 @@ def homepage(request):
             except ValueError:
                 result3 = "لطفاً یک عدد صحیح وارد کنید"
 
-    # اگر درخواست AJAX است، ارسال داده‌ها به صورت JSON
-    if request.is_ajax():
+    # بررسی درخواست AJAX با استفاده از هدر X-Requested-With
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         if 'number1' in request.POST:
             return JsonResponse({'result': result1 or "لطفاً یک سوال وارد کنید"})
         elif 'number2' in request.POST:
