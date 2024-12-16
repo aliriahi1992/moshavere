@@ -1,57 +1,77 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.contrib.auth import get_user_model
 import google.generativeai as genai
 
 @login_required
 def homepage(request):
+    result1 = result2 = result3 = None
     error_message = None
-    user = request.user
 
-    # چک کردن موجودی کاربر
+    # کسر شارژ از کاربر
+    user = request.user
     if user.balance < 1000:
         error_message = "موجودی شما کافی نیست."
-
-    if request.method == 'POST':
-        section = request.POST.get('section')  # تشخیص سکشن ارسال شده
-        question = request.POST.get('question')
-        result = None
-
-        if section and question and not error_message:
+        
+    # بررسی درخواست POST برای سکشن 1
+    if request.method == 'POST' and 'number1' in request.POST:
+        number = request.POST.get('number1')
+        if number:
             try:
-                # تنظیم کلید API و مدل Gemini
+                # تنظیم کلید API و ارسال درخواست به Gemini
                 GOOGLE_API_KEY = 'AIzaSyAxFcWDhELaj8iR8QQkGLfrLSdK33yyn-4'
                 genai.configure(api_key=GOOGLE_API_KEY)
                 model = genai.GenerativeModel('gemini-pro')
+                prompt = " :به عنوان یک وکیل پاسخ این سوال رو بده و اگر در حوزه تخصص وکیل نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                response = model.generate_content(prompt)
+                result1 = response.text
+                if result1 is not None :
+                    user.balance -= 1000
+                    user.save()  # ذخیره تغییرات در دیتابیس
+            except ValueError:
+                result1 = "لطفاً یک عدد صحیح وارد کنید"
 
-                # تولید prompt بر اساس سکشن
-                prompts = {
-                    '1': f":به عنوان یک وکیل پاسخ این سوال رو بده و اگر در حوزه تخصص وکیل نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال {question}",
-                    '2': f":به عنوان یک متخصص تغذیه پاسخ این سوال رو بده {question}",
-                    '3': f":به عنوان یک مشاور خانواده پاسخ این سوال رو بده و اگر در حوزه تخصص مشاور خانواده نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال {question}"
-                }
+    # بررسی درخواست POST برای سکشن 2
+    if request.method == 'POST' and 'number2' in request.POST:
+        number = request.POST.get('number2')
+        if number:
+            try:
+                # تنظیم کلید API و ارسال درخواست به Gemini
+                GOOGLE_API_KEY = 'AIzaSyAxFcWDhELaj8iR8QQkGLfrLSdK33yyn-4'
+                genai.configure(api_key=GOOGLE_API_KEY)
+                model = genai.GenerativeModel('gemini-pro')
+                prompt = " :به عنوان یک متخصص تغذیه پاسخ این سوال رو بده " + str(number)
+                response = model.generate_content(prompt)
+                result2 = response.text
+                if result2 is not None :
+                    user.balance -= 1000
+                    user.save()  # ذخیره تغییرات در دیتابیس                
+            except ValueError:
+                result2 = "لطفاً یک عدد صحیح وارد کنید"
 
-                if section in prompts:
-                    prompt = prompts[section]
-                    response = model.generate_content(prompt)
-                    result = response.text
+    # بررسی درخواست POST برای سکشن 3
+    if request.method == 'POST' and 'number3' in request.POST:
+        number = request.POST.get('number3')
+        if number:
+            try:
+                # تنظیم کلید API و ارسال درخواست به Gemini
+                GOOGLE_API_KEY = 'AIzaSyAxFcWDhELaj8iR8QQkGLfrLSdK33yyn-4'
+                genai.configure(api_key=GOOGLE_API_KEY)
+                model = genai.GenerativeModel('gemini-pro')
+                prompt = " :به عنوان یک مشاور خانواده پاسخ این سوال رو بده و اگر در حوزه تخصص مشاور خانواده نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                response = model.generate_content(prompt)
+                result3 = response.text
+                if result3 is not None :
+                    user.balance -= 1000
+                    user.save()  # ذخیره تغییرات در دیتابیس                
+            except ValueError:
+                result3 = "لطفاً یک عدد صحیح وارد کنید"
 
-                    if result:
-                        # کسر موجودی و ذخیره
-                        user.balance -= 1000
-                        user.save()
-
-            except Exception as e:
-                result = "خطایی در پردازش درخواست رخ داده است."
-
-        # بازگشت پاسخ به صورت JSON
-        return JsonResponse({
-            'result': result,
-            'balance': user.balance if not error_message else None,
-            'error': error_message
-        })
-
+    # رندر کردن قالب همراه با داده‌های لازم
     return render(request, 'homepage/index.html', {
-        'balance': user.balance,
-        'error': error_message
+        'result1': result1,
+        'result2': result2,
+        'result3': result3,
+        'balance': user.balance if not error_message else None,  # نمایش شارژ فقط در صورت موجودی کافی
+        'error': error_message  # نمایش خطا در صورت کمبود موجودی
     })

@@ -48,6 +48,9 @@
             font-size: 24px;
             color: #333;
         }
+        .section p {
+            color: #777;
+        }
         .form-container {
             display: flex;
             flex-direction: column;
@@ -72,6 +75,7 @@
             cursor: pointer;
             font-size: 16px;
             position: relative;
+            width: auto;
         }
         button:hover {
             background-color: #0056b3;
@@ -97,6 +101,16 @@
             display: block;
             font-weight: bold;
             color: #333;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .section {
+                width: 100%;
+                margin-bottom: 20px;
+            }
         }
         .error-message {
             background-color: #ffcccc;
@@ -128,85 +142,91 @@
 <div class="user-info">
     <p>{{ user.full_name }}</p>
     <p>{{ user.mobile_number }}</p>
-    <p>موجودی حساب: {{ balance }}</p>
+    <p>موجودی حساب {{ balance }} </p>
 </div>
+
+
+
+{% if error %}
+<div class="error-message">
+    <p>{{ error }}</p>
+</div>
+{% endif %}
 
 <div class="container">
     <!-- سکشن اول -->
     <div class="section">
         <img src="/img/vakil.jpg" alt="پرسش از وکیل">
         <h2>پرسش از وکیل</h2>
-        <form id="form1" onsubmit="handleFormSubmit(event, 'form1', 'label1')">
+        <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
+        <form method="POST" id="form1" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number1" rows="4"></textarea><br>
                 <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
             </div>
         </form>
-        <label id="label1" class="label">سوال خود را بپرسید</label>
+        <label class="label">
+            {% if result1 %}
+                {{ result1 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
+        </label>
     </div>
 
     <!-- سکشن دوم -->
     <div class="section">
         <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
         <h2>پرسش از متخصص تغذیه</h2>
-        <form id="form2" onsubmit="handleFormSubmit(event, 'form2', 'label2')">
+        <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
+        <form method="POST" id="form2" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number2" rows="4"></textarea><br>
                 <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
             </div>
         </form>
-        <label id="label2" class="label">سوال خود را بپرسید</label>
+        <label class="label">
+            {% if result2 %}
+                {{ result2 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
+        </label>
     </div>
 
     <!-- سکشن سوم -->
     <div class="section">
         <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
         <h2>پرسش از مشاور خانواده</h2>
-        <form id="form3" onsubmit="handleFormSubmit(event, 'form3', 'label3')">
+        <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
+        <form method="POST" id="form3" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number3" rows="4"></textarea><br>
                 <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
             </div>
         </form>
-        <label id="label3" class="label">سوال خود را بپرسید</label>
+        <label class="label">
+            {% if result3 %}
+                {{ result3 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
+        </label>
     </div>
 </div>
 
 <script>
-    function handleFormSubmit(event, formId, labelId) {
-        event.preventDefault();
-
-        const form = document.getElementById(formId);
-        const label = document.getElementById(labelId);
-        const loading = form.querySelector('.loading');
-
+    function showLoading(form) {
+        var button = form.querySelector('button');
+        var loading = button.querySelector('.loading');
         loading.style.display = 'inline-block';
 
-        const formData = new FormData(form);
-
-        fetch('', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
+        setTimeout(function() {
             loading.style.display = 'none';
-            if (data.result) {
-                label.textContent = data.result;
-            } else if (data.error) {
-                label.textContent = data.error;
-            }
-        })
-        .catch(error => {
-            loading.style.display = 'none';
-            label.textContent = 'خطایی رخ داد';
-        });
+        }, 3000);
     }
 </script>
 
