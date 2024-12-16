@@ -236,13 +236,18 @@
         var textarea = document.querySelector('textarea[name="' + textareaName + '"]');
         var question = textarea.value.trim();
         
+        if (!question) {
+            loading.style.display = 'none';
+            return;  // اگر سوال خالی است، لودینگ را مخفی کرده و از ارسال درخواست جلوگیری می‌کند
+        }
+
         // ارسال درخواست AJAX
         var formData = new FormData();
         formData.append(textareaName, question);
         formData.append('csrfmiddlewaretoken', document.querySelector('[name="csrfmiddlewaretoken"]').value);
 
         // ارسال درخواست به سرور
-        fetch('/your-url/', {
+        fetch(window.location.href, {  // درخواست به صفحه جاری
             method: 'POST',
             body: formData,
         })
@@ -262,6 +267,7 @@
         });
     }
 </script>
+
 
 </body>
 </html>
