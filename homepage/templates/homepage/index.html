@@ -247,7 +247,7 @@
         formData.append('csrfmiddlewaretoken', document.querySelector('[name="csrfmiddlewaretoken"]').value);
 
         // ارسال درخواست به سرور
-        fetch(window.location.href, {  // درخواست به صفحه جاری
+        fetch("/", {  // درخواست به صفحه جاری
             method: 'POST',
             body: formData,
         })
