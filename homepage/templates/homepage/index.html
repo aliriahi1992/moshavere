@@ -137,7 +137,6 @@
             color: #333;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -160,7 +159,7 @@
         <img src="/img/vakil.jpg" alt="پرسش از وکیل">
         <h2>پرسش از وکیل</h2>
         <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
-        <form method="POST" id="form1">
+        <form method="POST" id="form1" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number1" rows="4"></textarea><br>
@@ -181,7 +180,7 @@
         <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
         <h2>پرسش از متخصص تغذیه</h2>
         <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
-        <form method="POST" id="form2">
+        <form method="POST" id="form2" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number2" rows="4"></textarea><br>
@@ -202,7 +201,7 @@
         <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
         <h2>پرسش از مشاور خانواده</h2>
         <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
-        <form method="POST" id="form3">
+        <form method="POST" id="form3" onsubmit="showLoading(this)">
             {% csrf_token %}
             <div class="form-container">
                 <textarea name="number3" rows="4"></textarea><br>
@@ -229,37 +228,6 @@
             loading.style.display = 'none';
         }, 3000);
     }
-
-    // ارسال فرم‌ها با AJAX
-    $('form').on('submit', function(e) {
-        e.preventDefault(); // جلوگیری از ارسال فرم به صورت معمولی
-
-        var form = $(this);
-        var formId = form.attr('id');
-        var number = form.find('textarea').val();
-        var csrf_token = form.find('[name="csrfmiddlewaretoken"]').val();
-
-        $.ajax({
-            url: '',  // ارسال به همان URL
-            method: 'POST',
-            data: {
-                'csrfmiddlewaretoken': csrf_token,
-                [formId]: number,
-            },
-            beforeSend: function() {
-                showLoading(form[0]);
-            },
-            success: function(response) {
-                if (formId === 'form1') {
-                    $('.label').first().text(response.result1);
-                } else if (formId === 'form2') {
-                    $('.label').eq(1).text(response.result2);
-                } else {
-                    $('.label').last().text(response.result3);
-                }
-            }
-        });
-    });
 </script>
 
 </body>
