@@ -35,9 +35,8 @@
             transition: all 0.3s ease;
         }
         .section:hover {
-            background-color: #ffffff;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         .section img {
             width: 100%;
@@ -65,7 +64,6 @@
             border: 1px solid #ddd;
             margin-bottom: 10px;
             box-sizing: border-box;
-            font-family: 'IRANSansWebFaNum'; /* اعمال فونت ایران‌سنس به تکست‌باکس‌ها */
         }
         button {
             padding: 10px 20px;
@@ -75,44 +73,19 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            position: relative;
-            width: auto;
-            font-family: 'IRANSansWebFaNum'; /* اضافه کردن فونت به دکمه‌ها */
         }
         button:hover {
             background-color: #0056b3;
         }
         .loading {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border: 3px solid #fff;
-            border-top: 3px solid #007BFF;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: translateY(-50%) rotate(0deg); }
-            100% { transform: translateY(-50%) rotate(360deg); }
+            display: none;
         }
         .label {
             margin-top: 10px;
             display: block;
             font-weight: bold;
             color: #333;
-        }
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                padding: 10px;
-            }
-            .section {
-                width: 100%;
-                margin-bottom: 20px;
-            }
+            white-space: pre-wrap; /* برای نمایش چند خطی */
         }
         .error-message {
             background-color: #ffcccc;
@@ -139,96 +112,70 @@
     </style>
 </head>
 <body>
-
-<!-- نمایش اطلاعات کاربر -->
-<div class="user-info">
-    <p>{{ user.full_name }}</p>
-    <p>{{ user.mobile_number }}</p>
-    <p>موجودی حساب {{ balance }} </p>
-</div>
-
-{% if error %}
-<div class="error-message">
-    <p>{{ error }}</p>
-</div>
-{% endif %}
-
-<div class="container">
-    <!-- سکشن اول -->
-    <div class="section">
-        <img src="/img/vakil.jpg" alt="پرسش از وکیل">
-        <h2>پرسش از وکیل</h2>
-        <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
-        <form method="POST" id="form1" onsubmit="showLoading(this)">
-            {% csrf_token %}
-            <div class="form-container">
-                <textarea name="number1" rows="4"></textarea><br>
-                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-            </div>
-        </form>
-        <label class="label">
-            {% if result1 %}
-                {{ result1 }}
-            {% else %}
-                سوال خود را بپرسید
-            {% endif %}
-        </label>
+    <!-- اطلاعات کاربر -->
+    <div class="user-info">
+        <p>{{ user.full_name }}</p>
+        <p>{{ user.mobile_number }}</p>
+        <p>موجودی حساب: {{ balance }}</p>
     </div>
 
-    <!-- سکشن دوم -->
-    <div class="section">
-        <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
-        <h2>پرسش از متخصص تغذیه</h2>
-        <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
-        <form method="POST" id="form2" onsubmit="showLoading(this)">
-            {% csrf_token %}
-            <div class="form-container">
-                <textarea name="number2" rows="4"></textarea><br>
-                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-            </div>
-        </form>
-        <label class="label">
-            {% if result2 %}
-                {{ result2 }}
-            {% else %}
-                سوال خود را بپرسید
-            {% endif %}
-        </label>
+    {% if error %}
+    <div class="error-message">
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <!-- سکشن‌ها -->
+        {% for section in sections %}
+        <div class="section">
+            <img src="{{ section.image }}" alt="{{ section.title }}">
+            <h2>{{ section.title }}</h2>
+            <p>{{ section.description }}</p>
+            <form id="form{{ forloop.counter }}" onsubmit="sendQuestion(event, '{{ section.id }}')">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="question" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading">در حال ارسال...</span></button>
+                </div>
+            </form>
+            <label class="label" id="label{{ section.id }}">سوال خود را بپرسید</label>
+        </div>
+        {% endfor %}
     </div>
 
-    <!-- سکشن سوم -->
-    <div class="section">
-        <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
-        <h2>پرسش از مشاور خانواده</h2>
-        <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
-        <form method="POST" id="form3" onsubmit="showLoading(this)">
-            {% csrf_token %}
-            <div class="form-container">
-                <textarea name="number3" rows="4"></textarea><br>
-                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-            </div>
-        </form>
-        <label class="label">
-            {% if result3 %}
-                {{ result3 }}
-            {% else %}
-                سوال خود را بپرسید
-            {% endif %}
-        </label>
-    </div>
-</div>
+    <script>
+        function sendQuestion(event, sectionId) {
+            event.preventDefault(); // جلوگیری از بارگذاری مجدد صفحه
+            const form = event.target;
+            const formData = new FormData(form);
+            const csrfToken = form.querySelector('[name="csrfmiddlewaretoken"]').value;
 
-<script>
-    function showLoading(form) {
-        var button = form.querySelector('button');
-        var loading = button.querySelector('.loading');
-        loading.style.display = 'inline-block';
+            const loadingSpan = form.querySelector('.loading');
+            loadingSpan.style.display = 'inline-block';
 
-        setTimeout(function() {
-            loading.style.display = 'none';
-        }, 3000);
-    }
-</script>
-
+            fetch('', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingSpan.style.display = 'none';
+                const label = document.getElementById(`label${sectionId}`);
+                if (data.result) {
+                    label.textContent = data.result;
+                } else if (data.error) {
+                    label.textContent = data.error;
+                }
+            })
+            .catch(error => {
+                loadingSpan.style.display = 'none';
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
