@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse
 import google.generativeai as genai
 
 @login_required
@@ -26,7 +25,7 @@ def homepage(request):
                 prompt = " :به عنوان یک وکیل پاسخ این سوال رو بده و اگر در حوزه تخصص وکیل نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
                 response = model.generate_content(prompt)
                 result1 = response.text
-                if result1 is not None:
+                if result1 is not None :
                     user.balance -= 1000
                     user.save()  # ذخیره تغییرات در دیتابیس
             except ValueError:
@@ -45,7 +44,7 @@ def homepage(request):
                 response = model.generate_content(prompt)
                 result2 = response.text
                 result2 = result2.replace("**", "\n")
-                if result2 is not None:
+                if result2 is not None :
                     user.balance -= 1000
                     user.save()  # ذخیره تغییرات در دیتابیس                
             except ValueError:
@@ -63,20 +62,11 @@ def homepage(request):
                 prompt = " :به عنوان یک مشاور خانواده پاسخ این سوال رو بده و اگر در حوزه تخصص مشاور خانواده نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
                 response = model.generate_content(prompt)
                 result3 = response.text
-                if result3 is not None:
+                if result3 is not None :
                     user.balance -= 1000
                     user.save()  # ذخیره تغییرات در دیتابیس                
             except ValueError:
                 result3 = "لطفاً یک عدد صحیح وارد کنید"
-
-    # بررسی درخواست AJAX با استفاده از هدر X-Requested-With
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        if 'number1' in request.POST:
-            return JsonResponse({'result': result1 or "لطفاً یک سوال وارد کنید"})
-        elif 'number2' in request.POST:
-            return JsonResponse({'result': result2 or "لطفاً یک سوال وارد کنید"})
-        elif 'number3' in request.POST:
-            return JsonResponse({'result': result3 or "لطفاً یک سوال وارد کنید"})
 
     # رندر کردن قالب همراه با داده‌های لازم
     return render(request, 'homepage/index.html', {
