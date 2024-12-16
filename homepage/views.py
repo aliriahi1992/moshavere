@@ -43,6 +43,7 @@ def homepage(request):
                 prompt = " :به عنوان یک متخصص تغذیه پاسخ این سوال رو بده " + str(number)
                 response = model.generate_content(prompt)
                 result2 = response.text
+                result2 = result2.replace("**", "\n")
                 if result2 is not None :
                     user.balance -= 1000
                     user.save()  # ذخیره تغییرات در دیتابیس                
