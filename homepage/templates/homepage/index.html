@@ -247,11 +247,16 @@
         formData.append('csrfmiddlewaretoken', document.querySelector('[name="csrfmiddlewaretoken"]').value);
 
         // ارسال درخواست به سرور
-        fetch("/", {  // درخواست به صفحه جاری
+        fetch(window.location.href, {  // درخواست به صفحه جاری
             method: 'POST',
             body: formData,
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();  // فرض بر اینکه پاسخ JSON است
+        })
         .then(data => {
             // مخفی کردن لودینگ
             loading.style.display = 'none';
@@ -264,9 +269,14 @@
             // مخفی کردن لودینگ در صورت خطا
             loading.style.display = 'none';
             console.error('Error:', error);
+
+            // نمایش خطا به کاربر
+            var resultContainer = document.getElementById(resultId + '-container');
+            resultContainer.innerHTML = `<label class="label">خطا: ${error.message}</label>`;
         });
     }
 </script>
+
 
 
 </body>
