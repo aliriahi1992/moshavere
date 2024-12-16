@@ -1,6 +1,6 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
 import google.generativeai as genai
 
 @login_required
@@ -65,10 +65,16 @@ def homepage(request):
                 if result3 is not None:
                     user.balance -= 1000
                     user.save()  # ذخیره تغییرات در دیتابیس                
-            except ValueError:
-                result3 = "لطفاً یک عدد صحیح وارد کنید"
 
-    # رندر کردن قالب همراه با داده‌های لازم
+    # ارسال پاسخ به صورت JSON برای AJAX
+    if request.is_ajax():
+        return JsonResponse({
+            'result1': result1,
+            'result2': result2,
+            'result3': result3
+        })
+
+    # رندر کردن قالب همراه با داده‌های لازم (برای درخواست‌های معمولی)
     return render(request, 'homepage/index.html', {
         'result1': result1,
         'result2': result2,
