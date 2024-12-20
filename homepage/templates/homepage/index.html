@@ -153,46 +153,51 @@
 </div>
 
 <script>
-    function submitQuestion(section) {
-        const questionInput = document.getElementById(`question${section}`);
-        const loading = document.getElementById(`loading${section}`);
-        const responseDiv = document.getElementById(`response${section}`);
-        const csrfToken = "{{ csrf_token }}";
+function sendQuestion(form, section) {
+    var question = form.querySelector('textarea').value;
+    
+    // نمایش لودینگ
+    var button = form.querySelector('button');
+    var loading = button.querySelector('.loading');
+    loading.style.display = 'inline-block';
 
-        const question = questionInput.value.trim();
-        if (!question) {
-            responseDiv.textContent = "لطفاً سوال خود را وارد کنید.";
-            return;
+    fetch('/homepage/process-question/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({
+            section: section,
+            question: question
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        loading.style.display = 'none';
+        if (data.error) {
+            alert(`خطا: ${data.error}`);
+        } else {
+            // نمایش پاسخ
+            var resultLabel = form.querySelector('.label');
+            resultLabel.textContent = data.answer;
         }
+    })
+    .catch(error => {
+        loading.style.display = 'none';
+        console.error('Error:', error);
+        alert('خطایی در ارسال درخواست به وجود آمده است.');
+    });
+}
 
-        loading.style.display = "block";
-        responseDiv.textContent = "";
-
-        fetch("{% url 'homepage:process_question' %}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrfToken,
-            },
-            body: JSON.stringify({
-                section: section,
-                question: question,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            loading.style.display = "none";
-            if (data.error) {
-                responseDiv.textContent = `خطا: ${data.error}`;
-            } else {
-                responseDiv.textContent = data.answer;
-            }
-        })
-        .catch(error => {
-            loading.style.display = "none";
-            responseDiv.textContent = "خطایی در پردازش درخواست رخ داد.";
-        });
-    }
+// اضافه کردن event listener برای ارسال سوال
+document.querySelectorAll('form').forEach((form, index) => {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();  // جلوگیری از ارسال فرم به صورت پیش‌فرض
+        sendQuestion(form, index + 1);  // ارسال سوال برای هر بخش به صورت جداگانه
+    });
+});
 </script>
 
 </body>

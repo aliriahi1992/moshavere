@@ -25,10 +25,12 @@ def homepage(request):
 def process_question(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         try:
+            # دریافت داده‌ها از body درخواست
             data = json.loads(request.body)
             section = data.get('section')
             question = data.get('question')
 
+            # بررسی سوال
             if not question:
                 return JsonResponse({'error': 'سوال نمی‌تواند خالی باشد.'}, status=400)
 
