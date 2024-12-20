@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import google.generativeai as genai
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
 
 @login_required
 def homepage(request):
@@ -17,47 +21,30 @@ def homepage(request):
         'error': error_message,
     })
 
-@login_required
+@csrf_exempt
 def process_question(request):
-    if request.method == 'POST' and request.is_ajax():
-        section = request.POST.get('section')  # سکشنی که درخواست از آن ارسال شده است
-        question = request.POST.get('question')
-        user = request.user
-
-        # بررسی موجودی کاربر
-        if user.balance < 1000:
-            return JsonResponse({'error': 'موجودی شما کافی نیست.'}, status=400)
-
-        if not question:
-            return JsonResponse({'error': 'لطفاً یک سوال وارد کنید.'}, status=400)
-
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         try:
-            # تنظیم کلید API و ارسال درخواست به Gemini
-            GOOGLE_API_KEY = 'AIzaSyAxFcWDhELaj8iR8QQkGLfrLSdK33yyn-4'
-            genai.configure(api_key=GOOGLE_API_KEY)
-            model = genai.GenerativeModel('gemini-pro')
+            data = json.loads(request.body)
+            section = data.get('section')
+            question = data.get('question')
 
-            if section == '1':
-                prompt = f":به عنوان یک وکیل پاسخ این سوال رو بده و اگر در حوزه تخصص وکیل نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال {question}"
-            elif section == '2':
-                prompt = f":به عنوان یک متخصص تغذیه پاسخ این سوال رو بده {question}"
-            elif section == '3':
-                prompt = f":به عنوان یک مشاور خانواده پاسخ این سوال رو بده و اگر در حوزه تخصص مشاور خانواده نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال {question}"
+            if not question:
+                return JsonResponse({'error': 'سوال نمی‌تواند خالی باشد.'}, status=400)
+
+            # پردازش سوال بر اساس بخش (section)
+            if section == 1:
+                answer = f"پاسخ به سوال وکیل: {question}"
+            elif section == 2:
+                answer = f"پاسخ به سوال تغذیه: {question}"
+            elif section == 3:
+                answer = f"پاسخ به سوال مشاور خانواده: {question}"
             else:
-                return JsonResponse({'error': 'سکشنی معتبر نیست.'}, status=400)
+                return JsonResponse({'error': 'بخش نامعتبر است.'}, status=400)
 
-            response = model.generate_content(prompt)
-            answer = response.text
+            return JsonResponse({'answer': answer}, status=200)
 
-            if answer:
-                # کسر شارژ از موجودی کاربر
-                user.balance -= 1000
-                user.save()
-                return JsonResponse({'answer': answer})
-            else:
-                return JsonResponse({'error': 'پاسخی از سرور دریافت نشد.'}, status=500)
-
-        except Exception as e:
-            return JsonResponse({'error': f'خطا در پردازش: {str(e)}'}, status=500)
-
-    return JsonResponse({'error': 'درخواست نامعتبر است.'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'درخواست نامعتبر است.'}, status=400)
+    else:
+        return JsonResponse({'error': 'تنها درخواست‌های AJAX از نوع POST پذیرفته می‌شوند.'}, status=400)
