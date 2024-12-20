@@ -194,6 +194,21 @@
             </form>
             <label class="label" id="result3">سوال خود را بپرسید</label>
         </div>
+		
+		        <!-- سکشن چهارم -->
+        <div class="section">
+            <img src="/img/moshaver.jpg" alt="پرسش از استاد">
+            <h2>پرسش از استاد</h2>
+            <p>در این بخش سوالات درسی و علمی خود را از استاد پرسیده و پاسخ بگیرید</p>
+            <form method="POST" id="form4" onsubmit="submitForm(event, 4)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result3">سوال خود را بپرسید</label>
+        </div>
     </div>
 
     <script>

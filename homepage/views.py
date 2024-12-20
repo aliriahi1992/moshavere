@@ -25,11 +25,15 @@ def ask_question(request, section):
                 genai.configure(api_key=GOOGLE_API_KEY)
                 model = genai.GenerativeModel('gemini-pro')
                 if section == 1:
-                    prompt = "به عنوان یک وکیل پاسخ این سوال رو بده و اگر در حوزه تخصص وکیل نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                    prompt = "به عنوان یک فرد آگاه از مسائل حقوقی و قضایی پاسخ این سوال رو بده و اگر در حوزه حقوق و قضا نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
                 elif section == 2:
-                    prompt = "به عنوان یک متخصص تغذیه پاسخ این سوال رو بده " + str(number)
+                    prompt = "به عنوان یک متخصص تغذیه و رژیم درمانی پاسخ این سوال رو بده " + str(number)
                 elif section == 3:
-                    prompt = "به عنوان یک مشاور خانواده پاسخ این سوال رو بده و اگر در حوزه تخصص مشاور خانواده نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                    prompt = "به عنوان یک مشاور پاسخ این سوال رو بده و اگر در حوزه تخصص مشاور نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                elif section == 4:
+                    prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده و اگر در حوزه علم و درس نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+
+
                 response = model.generate_content(prompt)
                 result = response.text
                 result = result.replace("*", "")
