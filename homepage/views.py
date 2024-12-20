@@ -24,14 +24,30 @@ def ask_question(request, section):
                 GOOGLE_API_KEY = 'AIzaSyAxFcWDhELaj8iR8QQkGLfrLSdK33yyn-4'
                 genai.configure(api_key=GOOGLE_API_KEY)
                 model = genai.GenerativeModel('gemini-pro')
+
                 if section == 1:
-                    prompt = "به عنوان یک فرد آگاه از مسائل حقوقی و قضایی پاسخ این سوال رو بده و اگر در حوزه حقوق و قضا نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                    prompt = "به عنوان یک متخصص پوست و مو پاسخ این سوال رو بده و اگر در حوزه پوست و مو نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
                 elif section == 2:
-                    prompt = "به عنوان یک متخصص تغذیه و رژیم درمانی پاسخ این سوال رو بده " + str(number)
+                    prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده و اگر در حوزه علم و درس نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
                 elif section == 3:
                     prompt = "به عنوان یک مشاور پاسخ این سوال رو بده " + str(number)
                 elif section == 4:
-                    prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده و اگر در حوزه علم و درس نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                    prompt = "به عنوان یک متخصص تغذیه و رژیم درمانی پاسخ این سوال رو بده " + str(number)
+                elif section == 5:
+                    prompt = "به عنوان یک مربی ورزشی پاسخ این سوال رو بده " + str(number)
+                elif section == 6:
+                    prompt = "به عنوان یک فرد آگاه از مسائل حقوقی و قضایی پاسخ این سوال رو بده و اگر در حوزه حقوق و قضا نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
+                elif section == 7:
+                    prompt = "به عنوان یک فرد مشاور تحصیلی پاسخ این سوال رو بده " + str(number)
+                elif section == 8:
+                    prompt = "به عنوان یک پزشک پاسخ این سوال رو بده " + str(number)
+                elif section == 9:
+                    prompt = "به عنوان یک مشاور کسب و کار پاسخ این سوال رو بده " + str(number)
+                elif section == 10:
+                    prompt = "به عنوان یک متخصص بازار های مالی پاسخ این سوال رو بده " + str(number)
+                elif section == 11:
+                    prompt = "به عنوان یک مشاور امور مهاجرت پاسخ این سوال رو بده " + str(number)
+
 
 
                 response = model.generate_content(prompt)

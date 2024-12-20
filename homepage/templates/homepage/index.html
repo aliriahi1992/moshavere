@@ -150,11 +150,12 @@
     <div id="error-message" class="error-message" style="display:none;"></div>
 
     <div class="container">
-        <!-- سکشن اول -->
+	
+	        <!-- سکشن اول -->
         <div class="section">
-            <img src="/img/vakil.jpg" alt="پرسش از وکیل">
-            <h2>پرسش از وکیل</h2>
-            <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
+            <img src="/img/hairandbeauty.jpg" alt="پرسش از متخصص پوست و مو">
+            <h2>پرسش از متخصص پوست و مو</h2>
+            <p>سوالات خود از متخصص پوست و مو را پرسیده و مشاوره بگیرید</p>
             <form method="POST" id="form1" onsubmit="submitForm(event, 1)">
                 {% csrf_token %}
                 <div class="form-container">
@@ -164,12 +165,14 @@
             </form>
             <label class="label" id="result1">سوال خود را بپرسید</label>
         </div>
-
-        <!-- سکشن دوم -->
+	
+	
+	
+			<!-- سکشن دوم -->
         <div class="section">
-            <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
-            <h2>پرسش از متخصص تغذیه</h2>
-            <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
+            <img src="/img/ostad.jpg" alt="پرسش از استاد">
+            <h2>پرسش از استاد</h2>
+            <p>در این بخش سوالات درسی و علمی خود را پرسیده و پاسخ بگیرید</p>
             <form method="POST" id="form2" onsubmit="submitForm(event, 2)">
                 {% csrf_token %}
                 <div class="form-container">
@@ -179,6 +182,8 @@
             </form>
             <label class="label" id="result2">سوال خود را بپرسید</label>
         </div>
+	
+	
 
         <!-- سکشن سوم -->
         <div class="section">
@@ -194,12 +199,13 @@
             </form>
             <label class="label" id="result3">سوال خود را بپرسید</label>
         </div>
-		
-		        <!-- سکشن چهارم -->
+
+
+        <!-- سکشن چهارم -->
         <div class="section">
-            <img src="/img/ostad.jpg" alt="پرسش از استاد">
-            <h2>پرسش از استاد</h2>
-            <p>در این بخش سوالات درسی و علمی خود را پرسیده و پاسخ بگیرید</p>
+            <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
+            <h2>پرسش از متخصص تغذیه</h2>
+            <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
             <form method="POST" id="form4" onsubmit="submitForm(event, 4)">
                 {% csrf_token %}
                 <div class="form-container">
@@ -209,6 +215,131 @@
             </form>
             <label class="label" id="result4">سوال خود را بپرسید</label>
         </div>
+	
+	
+	
+        <!-- سکشن پنجم -->
+        <div class="section">
+            <img src="/img/morabi.jpg" alt="پرسش از مربی">
+            <h2>پرسش از مربی</h2>
+            <p>با یک مربی حرفه ای صحبت کنید و مشاوره بگیرید</p>
+            <form method="POST" id="form5" onsubmit="submitForm(event, 5)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result5">سوال خود را بپرسید</label>
+        </div>
+	
+	
+	
+	
+        <!-- سکشن ششم -->
+        <div class="section">
+            <img src="/img/vakil.jpg" alt="پرسش از وکیل">
+            <h2>پرسش از وکیل</h2>
+            <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
+            <form method="POST" id="form6" onsubmit="submitForm(event, 6)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result6">سوال خود را بپرسید</label>
+        </div>
+
+
+
+		
+		
+        <!-- سکشن هفتم -->
+        <div class="section">
+            <img src="/img/moshavertahsili.jpg" alt="پرسش از مشاور تحصیلی">
+            <h2>پرسش از مشاور تحصیلی</h2>
+            <p>از مشاور تحصیلی سوالات خود را بپرسید و پاسخ بگیرید</p>
+            <form method="POST" id="form7" onsubmit="submitForm(event, 7)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result7">سوال خود را بپرسید</label>
+        </div>		
+		
+
+		
+        <!-- سکشن هشتم -->
+        <div class="section">
+            <img src="/img/doctor.jpg" alt="پرسش از پزشک">
+            <h2>پرسش از پزشک</h2>
+            <p>سوالات پزشکی خود را بپرسید و راهنمایی بگیرید</p>
+            <form method="POST" id="form8" onsubmit="submitForm(event, 8)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result8">سوال خود را بپرسید</label>
+        </div>			
+		
+
+
+        <!-- سکشن نهم -->
+        <div class="section">
+            <img src="/img/business.jpg" alt="پرسش از مشاور کسب و کار">
+            <h2>پرسش از مشاور کسب و کار</h2>
+            <p>برای راه اندازی و توسعه کسب و کار خود مشاوره بگیرید</p>
+            <form method="POST" id="form9" onsubmit="submitForm(event, 9)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result9">سوال خود را بپرسید</label>
+        </div>	
+		
+	
+        <!-- سکشن دهم -->
+        <div class="section">
+            <img src="/img/financial.jpg" alt="پرسش از متخصص بازار های مالی">
+            <h2>پرسش از متخصص بازار های مالی</h2>
+            <p>سوالات خود در مورد بازار های مالی را مطرح کنید</p>
+            <form method="POST" id="form10" onsubmit="submitForm(event, 10)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result10">سوال خود را بپرسید</label>
+        </div>	
+		
+
+
+        <!-- سکشن یازدهم -->
+        <div class="section">
+            <img src="/img/vakilmohajerat.jpg" alt="پرسش از مشاور مهاجرت">
+            <h2>پرسش از مشاور مهاجرت</h2>
+            <p>در این بخش سوالات خود در مورد مهاجرت را بپرسید و مشورت بگیرید</p>
+            <form method="POST" id="form11" onsubmit="submitForm(event, 11)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result11">سوال خود را بپرسید</label>
+        </div>			
+		
+		
+	
+
     </div>
 
     <script>
