@@ -139,95 +139,94 @@
     </style>
 </head>
 <body>
-
-<!-- نمایش اطلاعات کاربر -->
-<div class="user-info">
-    <p>{{ user.full_name }}</p>
-    <p>{{ user.mobile_number }}</p>
-    <p>موجودی حساب <span id="balance">{{ balance }}</span></p>
-</div>
-
-<div id="error-message" class="error-message" style="display:none;"></div>
-
-<div class="container">
-    <!-- سکشن اول -->
-    <div class="section">
-        <img src="/img/vakil.jpg" alt="پرسش از وکیل">
-        <h2>پرسش از وکیل</h2>
-        <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
-        <form method="POST" id="form1" onsubmit="submitForm(event, 1)">
-            {% csrf_token %}
-            <div class="form-container">
-                <textarea name="number" rows="4"></textarea><br>
-                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-            </div>
-        </form>
-        <label class="label" id="result1">سوال خود را بپرسید</label>
+    <!-- نمایش اطلاعات کاربر -->
+    <div class="user-info">
+        <p>{{ user.full_name }}</p>
+        <p>{{ user.mobile_number }}</p>
+        <p>موجودی حساب <span id="balance">{{ balance }}</span></p>
+        <a href="{% url 'accounts:logout' %}">خروج از حساب کاربری</a>  <!-- لینک خروج از حساب کاربری -->
     </div>
 
-    <!-- سکشن دوم -->
-    <div class="section">
-        <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
-        <h2>پرسش از متخصص تغذیه</h2>
-        <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
-        <form method="POST" id="form2" onsubmit="submitForm(event, 2)">
-            {% csrf_token %}
-            <div class="form-container">
-                <textarea name="number" rows="4"></textarea><br>
-                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-            </div>
-        </form>
-        <label class="label" id="result2">سوال خود را بپرسید</label>
+    <div id="error-message" class="error-message" style="display:none;"></div>
+
+    <div class="container">
+        <!-- سکشن اول -->
+        <div class="section">
+            <img src="/img/vakil.jpg" alt="پرسش از وکیل">
+            <h2>پرسش از وکیل</h2>
+            <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
+            <form method="POST" id="form1" onsubmit="submitForm(event, 1)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result1">سوال خود را بپرسید</label>
+        </div>
+
+        <!-- سکشن دوم -->
+        <div class="section">
+            <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
+            <h2>پرسش از متخصص تغذیه</h2>
+            <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
+            <form method="POST" id="form2" onsubmit="submitForm(event, 2)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result2">سوال خود را بپرسید</label>
+        </div>
+
+        <!-- سکشن سوم -->
+        <div class="section">
+            <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
+            <h2>پرسش از مشاور خانواده</h2>
+            <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
+            <form method="POST" id="form3" onsubmit="submitForm(event, 3)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result3">سوال خود را بپرسید</label>
+        </div>
     </div>
 
-    <!-- سکشن سوم -->
-    <div class="section">
-        <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
-        <h2>پرسش از مشاور خانواده</h2>
-        <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
-        <form method="POST" id="form3" onsubmit="submitForm(event, 3)">
-            {% csrf_token %}
-            <div class="form-container">
-                <textarea name="number" rows="4"></textarea><br>
-                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-            </div>
-        </form>
-        <label class="label" id="result3">سوال خود را بپرسید</label>
-    </div>
-</div>
-
-<script>
-    function submitForm(event, section) {
-        event.preventDefault();
-        const form = event.target;
-        const data = new FormData(form);
-        const loading = form.querySelector('.loading');
-        loading.style.display = 'inline-block';
-        
-        fetch(`/homepage/ask/${section}/`, {
-            method: 'POST',
-            body: data,
-            headers: {
-                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                document.getElementById('error-message').style.display = 'block';
-                document.getElementById('error-message').innerText = data.error;
-            } else {
-                document.getElementById(`result${section}`).innerText = data.result;
-                document.getElementById('balance').innerText = data.balance;
-                document.getElementById('error-message').style.display = 'none';
-            }
-        })
-        .finally(() => {
-            loading.style.display = 'none';
-        })
-    }
-</script>
-
+    <script>
+        function submitForm(event, section) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+            const loading = form.querySelector('.loading');
+            loading.style.display = 'inline-block';
+            
+            fetch(`/homepage/ask/${section}/`, {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').innerText = data.error;
+                } else {
+                    document.getElementById(`result${section}`).innerText = data.result;
+                    document.getElementById('balance').innerText = data.balance;
+                    document.getElementById('error-message').style.display = 'none';
+                }
+            })
+            .finally(() => {
+                loading.style.display = 'none';
+            })
+        }
+    </script>
 </body>
 </html>
