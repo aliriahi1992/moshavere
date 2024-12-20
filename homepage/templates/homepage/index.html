@@ -337,8 +337,40 @@
             <label class="label" id="result11">سوال خود را بپرسید</label>
         </div>			
 		
-		
 	
+        <!-- سکشن دوازدهم -->
+        <div class="section">
+            <img src="/img/programmer.jpg" alt="پرسش از برنامه نویس">
+            <h2>پرسش از برنامه نویس</h2>
+            <p>سوالات برنامه نویسی خود را بپرسید و پاسخ بگیرید</p>
+            <form method="POST" id="form12" onsubmit="submitForm(event, 12)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result12">سوال خود را بپرسید</label>
+        </div>	
+
+
+        <!-- سکشن سیزدهم -->
+        <div class="section">
+            <img src="/img/buyer.jpg" alt="پرسش از مشاور خرید">
+            <h2>پرسش از مشاور خرید</h2>
+            <p>برای خرید هدیه و محصول مشاوره بگیرید</p>
+            <form method="POST" id="form13" onsubmit="submitForm(event, 13)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result13">سوال خود را بپرسید</label>
+        </div>	
+
+
+		
 
     </div>
 
