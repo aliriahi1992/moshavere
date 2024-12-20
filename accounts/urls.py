@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth.views import LogoutView # اضافه کردن ایمپورت LogoutView
 from .views import auth_page
 
 app_name = 'accounts'
