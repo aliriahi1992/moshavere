@@ -65,7 +65,7 @@
             border: 1px solid #ddd;
             margin-bottom: 10px;
             box-sizing: border-box;
-            font-family: 'IRANSansWebFaNum';
+            font-family: 'IRANSansWebFaNum'; /* اعمال فونت ایران‌سنس به تکست‌باکس‌ها */
         }
         button {
             padding: 10px 20px;
@@ -77,20 +77,42 @@
             font-size: 16px;
             position: relative;
             width: auto;
-            font-family: 'IRANSansWebFaNum';
+            font-family: 'IRANSansWebFaNum'; /* اضافه کردن فونت به دکمه‌ها */
         }
         button:hover {
             background-color: #0056b3;
         }
         .loading {
-            display: none;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #007BFF;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 3px solid #fff;
+            border-top: 3px solid #007BFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        .response {
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+        .label {
             margin-top: 10px;
+            display: block;
+            font-weight: bold;
             color: #333;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .section {
+                width: 100%;
+                margin-bottom: 20px;
+            }
         }
         .error-message {
             background-color: #ffcccc;
@@ -101,10 +123,24 @@
             text-align: center;
             margin-bottom: 20px;
         }
+        .user-info {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            width: 90%;
+        }
+        .user-info p {
+            margin: 5px 0;
+            color: #333;
+        }
     </style>
 </head>
 <body>
 
+<!-- نمایش اطلاعات کاربر -->
 <div class="user-info">
     <p>{{ user.full_name }}</p>
     <p>{{ user.mobile_number }}</p>
@@ -119,85 +155,79 @@
 
 <div class="container">
     <!-- سکشن اول -->
-    <div class="section" id="section1">
+    <div class="section">
         <img src="/img/vakil.jpg" alt="پرسش از وکیل">
         <h2>پرسش از وکیل</h2>
         <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
-        <textarea id="question1" rows="4"></textarea><br>
-        <button onclick="sendQuestion(1)">پرسش</button>
-        <div class="loading" id="loading1">در حال پردازش...</div>
-        <div class="response" id="response1">سوال خود را بپرسید</div>
+        <form method="POST" id="form1" onsubmit="showLoading(this)">
+            {% csrf_token %}
+            <div class="form-container">
+                <textarea name="number1" rows="4"></textarea><br>
+                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+            </div>
+        </form>
+        <label class="label">
+            {% if result1 %}
+                {{ result1 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
+        </label>
     </div>
 
     <!-- سکشن دوم -->
-    <div class="section" id="section2">
+    <div class="section">
         <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
         <h2>پرسش از متخصص تغذیه</h2>
         <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
-        <textarea id="question2" rows="4"></textarea><br>
-        <button onclick="sendQuestion(2)">پرسش</button>
-        <div class="loading" id="loading2">در حال پردازش...</div>
-        <div class="response" id="response2">سوال خود را بپرسید</div>
+        <form method="POST" id="form2" onsubmit="showLoading(this)">
+            {% csrf_token %}
+            <div class="form-container">
+                <textarea name="number2" rows="4"></textarea><br>
+                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+            </div>
+        </form>
+        <label class="label">
+            {% if result2 %}
+                {{ result2 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
+        </label>
     </div>
 
     <!-- سکشن سوم -->
-    <div class="section" id="section3">
+    <div class="section">
         <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
         <h2>پرسش از مشاور خانواده</h2>
         <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
-        <textarea id="question3" rows="4"></textarea><br>
-        <button onclick="sendQuestion(3)">پرسش</button>
-        <div class="loading" id="loading3">در حال پردازش...</div>
-        <div class="response" id="response3">سوال خود را بپرسید</div>
+        <form method="POST" id="form3" onsubmit="showLoading(this)">
+            {% csrf_token %}
+            <div class="form-container">
+                <textarea name="number3" rows="4"></textarea><br>
+                <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+            </div>
+        </form>
+        <label class="label">
+            {% if result3 %}
+                {{ result3 }}
+            {% else %}
+                سوال خود را بپرسید
+            {% endif %}
+        </label>
     </div>
 </div>
 
 <script>
-function sendQuestion(form, section) {
-    var question = form.querySelector('textarea').value;
-    
-    // نمایش لودینگ
-    var button = form.querySelector('button');
-    var loading = button.querySelector('.loading');
-    loading.style.display = 'inline-block';
+    function showLoading(form) {
+        var button = form.querySelector('button');
+        var loading = button.querySelector('.loading');
+        loading.style.display = 'inline-block';
 
-    fetch('/homepage/process-question/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        },
-        body: JSON.stringify({
-            section: section,
-            question: question
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        loading.style.display = 'none';
-        if (data.error) {
-            alert(`خطا: ${data.error}`);
-        } else {
-            // نمایش پاسخ
-            var resultLabel = form.querySelector('.label');
-            resultLabel.textContent = data.answer;
-        }
-    })
-    .catch(error => {
-        loading.style.display = 'none';
-        console.error('Error:', error);
-        alert('خطایی در ارسال درخواست به وجود آمده است.');
-    });
-}
-
-// اضافه کردن event listener برای ارسال سوال
-document.querySelectorAll('form').forEach((form, index) => {
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();  // جلوگیری از ارسال فرم به صورت پیش‌فرض
-        sendQuestion(form, index + 1);  // ارسال سوال برای هر بخش به صورت جداگانه
-    });
-});
+        setTimeout(function() {
+            loading.style.display = 'none';
+        }, 3000);
+    }
 </script>
 
 </body>
