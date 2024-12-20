@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import google.generativeai as genai
+import os
 
 @login_required
 def homepage(request):
@@ -20,7 +21,7 @@ def ask_question(request, section):
         number = request.POST.get('number')
         if number:
             try:
-                GOOGLE_API_KEY = 'YOUR_API_KEY_HERE'
+                GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
                 genai.configure(api_key=GOOGLE_API_KEY)
                 model = genai.GenerativeModel('gemini-pro')
                 if section == '1':
@@ -36,5 +37,7 @@ def ask_question(request, section):
                     user.save()
             except ValueError:
                 result = "لطفاً یک عدد صحیح وارد کنید"
+            except Exception as e:
+                return JsonResponse({'error': str(e)})
     
     return JsonResponse({'result': result, 'balance': user.balance})
