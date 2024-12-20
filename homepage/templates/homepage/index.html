@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشاوره</title>
     <style>
-        /* همان استایل‌های قبلی */
         @font-face {
             font-family: 'IRANSansWebFaNum';
             src: url('/font/IRANSansWebFaNum.ttf') format('truetype');
@@ -40,6 +39,24 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
             transform: scale(1.05);
         }
+        .section img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
+        }
+        .section h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        .section p {
+            color: #777;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
         textarea {
             width: 100%;
             max-width: 400px;
@@ -48,6 +65,7 @@
             border: 1px solid #ddd;
             margin-bottom: 10px;
             box-sizing: border-box;
+            font-family: 'IRANSansWebFaNum';
         }
         button {
             padding: 10px 20px;
@@ -59,6 +77,7 @@
             font-size: 16px;
             position: relative;
             width: auto;
+            font-family: 'IRANSansWebFaNum';
         }
         button:hover {
             background-color: #0056b3;
@@ -101,7 +120,9 @@
 <div class="container">
     <!-- سکشن اول -->
     <div class="section" id="section1">
+        <img src="/img/vakil.jpg" alt="پرسش از وکیل">
         <h2>پرسش از وکیل</h2>
+        <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
         <textarea id="question1" rows="4"></textarea><br>
         <button onclick="submitQuestion(1)">پرسش</button>
         <div class="loading" id="loading1">در حال پردازش...</div>
@@ -110,7 +131,9 @@
 
     <!-- سکشن دوم -->
     <div class="section" id="section2">
+        <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
         <h2>پرسش از متخصص تغذیه</h2>
+        <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
         <textarea id="question2" rows="4"></textarea><br>
         <button onclick="submitQuestion(2)">پرسش</button>
         <div class="loading" id="loading2">در حال پردازش...</div>
@@ -119,7 +142,9 @@
 
     <!-- سکشن سوم -->
     <div class="section" id="section3">
+        <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
         <h2>پرسش از مشاور خانواده</h2>
+        <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
         <textarea id="question3" rows="4"></textarea><br>
         <button onclick="submitQuestion(3)">پرسش</button>
         <div class="loading" id="loading3">در حال پردازش...</div>
