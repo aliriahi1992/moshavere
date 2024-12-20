@@ -32,6 +32,7 @@ def ask_question(request, section):
                     prompt = "به عنوان یک مشاور خانواده پاسخ این سوال رو بده و اگر در حوزه تخصص مشاور خانواده نیست بگو توی حوزه تو نیست پاسخ دادن به این سوال " + str(number)
                 response = model.generate_content(prompt)
                 result = response.text
+                result = result.replace("*", "")
                 if result:
                     user.balance -= 1000
                     user.save()
