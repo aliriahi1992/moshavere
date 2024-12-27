@@ -51,6 +51,12 @@ def ask_question(request, section):
                     prompt = "به عنوان یک برنامه نویس پاسخ این سوال رو بده " + str(number)
                 elif section == 13:
                     prompt = "به عنوان یک مشاور خرید محصول پاسخ این سوال رو بده " + str(number)
+                elif section == 14:
+                    prompt = "به عنوان یک تعمیر کار پاسخ این سوال رو بده " + str(number)
+                elif section == 15:
+                    prompt = "به عنوان یک مشاور سرمایه گذاری پاسخ این سوال رو بده " + str(number)
+
+
 
                 response = model.generate_content(prompt)
                 result = response.text

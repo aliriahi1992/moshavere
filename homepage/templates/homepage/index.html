@@ -371,6 +371,39 @@
 
 
 		
+        <!-- سکشن چهاردهم -->
+        <div class="section">
+            <img src="/img/tamirkar.jpg" alt="پرسش از تعمیر کار">
+            <h2>پرسش از تعمیر کار</h2>
+            <p>از تعمیر کاری حرفه ای مشورت بگیرید</p>
+            <form method="POST" id="form14" onsubmit="submitForm(event, 14)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result14">سوال خود را بپرسید</label>
+        </div>			
+		
+
+
+        <!-- سکشن پانزدهم -->
+        <div class="section">
+            <img src="/img/sarmayegozar.jpg" alt="پرسش از مشاور سرمایه گذاری">
+            <h2>پرسش از مشاور سرمایه گذاری</h2>
+            <p>برای سرمایه گذاری های خود مشورت بگیرید</p>
+            <form method="POST" id="form15" onsubmit="submitForm(event, 15)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result15">سوال خود را بپرسید</label>
+        </div>			
+		
+		
 
     </div>
 
