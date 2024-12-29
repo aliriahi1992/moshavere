@@ -25,6 +25,7 @@
             flex-wrap: wrap;
         }
         .section {
+			display: none;
             background-color: #ffffff;
             border-radius: 10px;
             padding: 20px;
@@ -34,6 +35,9 @@
             text-align: center;
             transition: all 0.3s ease;
         }
+        .section.visible {
+            display: block;
+        }		
         .section:hover {
             background-color: #ffffff;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -136,6 +140,17 @@
             margin: 5px 0;
             color: #333;
         }
+        #dropdown {
+			margin-top: 20px; /* فاصله بیشتر از متن‌های دیگر */
+			padding: 10px;
+			font-size: 16px;
+			width: 80%; /* عرض دراپ‌دان 80% از عرض ظرف */
+			max-width: 400px; /* حداکثر عرض برای کنترل بهتر */
+			text-align: center; /* وسط‌چین کردن متن در داخل دراپ‌دان */
+			box-sizing: border-box; /* جلوگیری از افزایش غیرمنتظره عرض */
+        }		
+		
+		
     </style>
 </head>
 <body>
@@ -144,15 +159,48 @@
         <p>{{ user.full_name }}</p>
         <p>{{ user.mobile_number }}</p>
         <p>موجودی حساب <span id="balance">{{ balance }}</span></p>
-        <a href="{% url 'accounts:logout' %}">خروج از حساب کاربری</a>  <!-- لینک خروج از حساب کاربری -->
+        <p><a href="{% url 'accounts:logout' %}">خروج از حساب کاربری</a></p>  <!-- لینک خروج از حساب کاربری -->
+		
+		<label for="dropdown" style="margin-right: 10px; font-size: 16px;">نمایش</label>
+		<select id="dropdown">
+			<option value="all">همه موارد</option>
+			<option value="section1">متخصص پوست و مو</option>
+			<option value="section2">استاد</option>
+			<option value="section3">مشاور خانواده</option>
+			<option value="section4">متخصص تغذیه</option>
+			<option value="section5">مربی</option>
+			<option value="section6">وکیل</option>
+			<option value="section7">مشاور تحصیلی</option>
+			<option value="section8">پزشک</option>
+			<option value="section9">مشاور کسب و کار</option>
+			<option value="section10">متخصص بازار های مالی</option>
+			<option value="section11">مشاور مهاجرت</option>
+			<option value="section12">برنامه نویس</option>
+			<option value="section13">مشاور خرید</option>
+			<option value="section14">تعمیر کار</option>
+			<option value="section15">مشاور سرمایه گذاری</option>
+		</select>			
+		
+		
     </div>
 
     <div id="error-message" class="error-message" style="display:none;"></div>
 
+	
+	
+	
+	
     <div class="container">
 	
+	
+	
+
+	
+	
+	
+	
 	        <!-- سکشن اول -->
-        <div class="section">
+        <div id="section1" class="section">
             <img src="/img/hairandbeauty.jpg" alt="پرسش از متخصص پوست و مو">
             <h2>پرسش از متخصص پوست و مو</h2>
             <p>سوالات خود از متخصص پوست و مو را پرسیده و مشاوره بگیرید</p>
@@ -169,7 +217,7 @@
 	
 	
 			<!-- سکشن دوم -->
-        <div class="section">
+        <div id="section2" class="section">
             <img src="/img/ostad.jpg" alt="پرسش از استاد">
             <h2>پرسش از استاد</h2>
             <p>در این بخش سوالات درسی و علمی خود را پرسیده و پاسخ بگیرید</p>
@@ -186,7 +234,7 @@
 	
 
         <!-- سکشن سوم -->
-        <div class="section">
+        <div id="section3" class="section">
             <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
             <h2>پرسش از مشاور خانواده</h2>
             <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
@@ -202,7 +250,7 @@
 
 
         <!-- سکشن چهارم -->
-        <div class="section">
+        <div id="section4" class="section">
             <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
             <h2>پرسش از متخصص تغذیه</h2>
             <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
@@ -219,7 +267,7 @@
 	
 	
         <!-- سکشن پنجم -->
-        <div class="section">
+        <div id="section5" class="section">
             <img src="/img/morabi.jpg" alt="پرسش از مربی">
             <h2>پرسش از مربی</h2>
             <p>با یک مربی حرفه ای صحبت کنید و مشاوره بگیرید</p>
@@ -237,7 +285,7 @@
 	
 	
         <!-- سکشن ششم -->
-        <div class="section">
+        <div id="section6" class="section">
             <img src="/img/vakil.jpg" alt="پرسش از وکیل">
             <h2>پرسش از وکیل</h2>
             <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
@@ -256,7 +304,7 @@
 		
 		
         <!-- سکشن هفتم -->
-        <div class="section">
+        <div id="section7" class="section">
             <img src="/img/moshavertahsili.jpg" alt="پرسش از مشاور تحصیلی">
             <h2>پرسش از مشاور تحصیلی</h2>
             <p>از مشاور تحصیلی سوالات خود را بپرسید و پاسخ بگیرید</p>
@@ -273,7 +321,7 @@
 
 		
         <!-- سکشن هشتم -->
-        <div class="section">
+        <div id="section8" class="section">
             <img src="/img/doctor.jpg" alt="پرسش از پزشک">
             <h2>پرسش از پزشک</h2>
             <p>سوالات پزشکی خود را بپرسید و راهنمایی بگیرید</p>
@@ -290,7 +338,7 @@
 
 
         <!-- سکشن نهم -->
-        <div class="section">
+        <div id="section9" class="section">
             <img src="/img/business.jpg" alt="پرسش از مشاور کسب و کار">
             <h2>پرسش از مشاور کسب و کار</h2>
             <p>برای راه اندازی و توسعه کسب و کار خود مشاوره بگیرید</p>
@@ -306,7 +354,7 @@
 		
 	
         <!-- سکشن دهم -->
-        <div class="section">
+        <div id="section10" class="section">
             <img src="/img/financial.jpg" alt="پرسش از متخصص بازار های مالی">
             <h2>پرسش از متخصص بازار های مالی</h2>
             <p>سوالات خود در مورد بازار های مالی را مطرح کنید</p>
@@ -323,7 +371,7 @@
 
 
         <!-- سکشن یازدهم -->
-        <div class="section">
+        <div id="section11" class="section">
             <img src="/img/vakilmohajerat.jpg" alt="پرسش از مشاور مهاجرت">
             <h2>پرسش از مشاور مهاجرت</h2>
             <p>در این بخش سوالات خود در مورد مهاجرت را بپرسید و مشورت بگیرید</p>
@@ -339,7 +387,7 @@
 		
 	
         <!-- سکشن دوازدهم -->
-        <div class="section">
+        <div id="section12" class="section">
             <img src="/img/programmer.jpg" alt="پرسش از برنامه نویس">
             <h2>پرسش از برنامه نویس</h2>
             <p>سوالات برنامه نویسی خود را بپرسید و پاسخ بگیرید</p>
@@ -355,7 +403,7 @@
 
 
         <!-- سکشن سیزدهم -->
-        <div class="section">
+        <div id="section13" class="section">
             <img src="/img/buyer.jpg" alt="پرسش از مشاور خرید">
             <h2>پرسش از مشاور خرید</h2>
             <p>برای خرید هدیه و محصول مشاوره بگیرید</p>
@@ -372,7 +420,7 @@
 
 		
         <!-- سکشن چهاردهم -->
-        <div class="section">
+        <div id="section14" class="section">
             <img src="/img/tamirkar.jpg" alt="پرسش از تعمیر کار">
             <h2>پرسش از تعمیر کار</h2>
             <p>از تعمیر کاری حرفه ای مشورت بگیرید</p>
@@ -389,7 +437,7 @@
 
 
         <!-- سکشن پانزدهم -->
-        <div class="section">
+        <div id="section15" class="section">
             <img src="/img/sarmayegozar.jpg" alt="پرسش از مشاور سرمایه گذاری">
             <h2>پرسش از مشاور سرمایه گذاری</h2>
             <p>برای سرمایه گذاری های خود مشورت بگیرید</p>
@@ -438,6 +486,30 @@
                 loading.style.display = 'none';
             })
         }
+		
+		
+        const dropdown = document.getElementById('dropdown');
+        const sections = document.querySelectorAll('.section');
+
+        function updateSections() {
+            const value = dropdown.value;
+            sections.forEach(section => {
+                if (value === 'all' || section.id === value) {
+                    section.classList.add('visible');
+                } else {
+                    section.classList.remove('visible');
+                }
+            });
+        }
+
+        // Initialize default view
+        updateSections();
+
+        // Add event listener
+        dropdown.addEventListener('change', updateSections);		
+		
+		
+		
     </script>
 </body>
 </html>
