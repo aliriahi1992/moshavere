@@ -21,7 +21,7 @@ def ask_question(request, section):
         number = request.POST.get('number')
         if number:
             try:
-                GOOGLE_API_KEY = ''
+                GOOGLE_API_KEY = os.getenv('API_KEY_1')
                 genai.configure(api_key=GOOGLE_API_KEY)
                 model = genai.GenerativeModel('gemini-pro')
 
