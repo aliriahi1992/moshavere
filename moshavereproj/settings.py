@@ -112,3 +112,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+#تنظیمات مخصوص درگاه زرین پال
+MERCHANT  =  "8c79fb71-9ff5-4b54-ac81-e3d28cd59ddc"
+SANDBOX  =  True
