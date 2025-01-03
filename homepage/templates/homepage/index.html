@@ -152,6 +152,48 @@
 			text-align: center; /* وسط‌چین کردن متن در داخل دراپ‌دان */
 			box-sizing: border-box; /* جلوگیری از افزایش غیرمنتظره عرض */
         }		
+
+		/* استایل پاپ‌آپ */
+		.modal {
+			font-family: 'IRANSansWebFaNum';
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
+		}
+
+		.modal-content {
+			font-family: 'IRANSansWebFaNum';
+			background-color: #fefefe;
+			margin: 15% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 500px;
+		}
+
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+
+
 		
 		
     </style>
@@ -162,7 +204,9 @@
         <p>{{ user.full_name }}</p>
         <p>{{ user.mobile_number }}</p>
         <p>موجودی حساب <span id="balance">{{ balance }}</span></p>
+		<p><a href="#" id="increase-balance-link">افزایش اعتبار</a></p>  <!-- لینک افزایش اعتبار -->		
         <p><a href="{% url 'accounts:logout' %}">خروج از حساب کاربری</a></p>  <!-- لینک خروج از حساب کاربری -->
+
 		
 		<label for="dropdown" style="margin-right: 10px; font-size: 16px;">نمایش</label>
 		<select id="dropdown">
@@ -189,6 +233,25 @@
 
     <div id="error-message" class="error-message" style="display:none;"></div>
 
+	
+	<div id="increase-balance-modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2>افزایش اعتبار</h2>
+			<form id="increase-balance-form">
+				<input type="radio" id="10" name="amount" value="100000">
+				<label for="10">10 هزار تومان (10 سوال)</label><br>
+				<input type="radio" id="20" name="amount" value="200000">
+				<label for="20">20 هزار تومان (20 سوال)</label><br>
+				<input type="radio" id="30" name="amount" value="300000">
+				<label for="30">30 هراز تومان (35 سوال)</label><br>
+				<input type="radio" id="50" name="amount" value="500000">
+				<label for="50">50 هزار تومان (70 سوال)</label><br><br>
+				<button type="submit">پرداخت</button>
+			</form>
+		</div>
+	</div>
+	
 	
 	
 	
@@ -510,6 +573,33 @@
 
         // Add event listener
         dropdown.addEventListener('change', updateSections);		
+		
+		
+		
+		
+		
+		// باز کردن پاپ‌آپ
+		document.getElementById('increase-balance-link').onclick = function(event) {
+			event.preventDefault();
+			document.getElementById('increase-balance-modal').style.display = 'block';
+		};
+
+		// بستن پاپ‌آپ
+		document.getElementsByClassName('close')[0].onclick = function() {
+			document.getElementById('increase-balance-modal').style.display = 'none';
+		};
+
+		// ارسال اطلاعات به صفحه پرداخت
+		document.getElementById('increase-balance-form').onsubmit = function(event) {
+			event.preventDefault();
+			var amount = document.querySelector('input[name="amount"]:checked').value;
+			window.location.href = `https://www.zarinpal.com/pg/StartPay/${amount}`;
+		};
+				
+		
+		
+		
+		
 		
 		
 		
