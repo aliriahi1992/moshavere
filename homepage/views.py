@@ -105,37 +105,43 @@ CallbackURL = 'http://127.0.0.1:8000/verify/'
 
 
 def send_request(request):
-	data = {
-		"merchant_id": settings.MERCHANT,
-		"amount": amount,
-		"currency": currency,
-		"description": description,
-		"callback_url": CallbackURL,
-		"metadata": metadata
-	}
-	data = json.dumps(data)
-	# set content length by data
-	headers = {'content-type': 'application/json', 'accept': 'application/json'}
-	try:
-		response = requests.post(
-			ZP_API_REQUEST, data=data, headers=headers, timeout=10)
-		response = response.json()
-		err = response["errors"]
-		if err:
-			return JsonResponse(err, content_type="application/json",safe=False)
-		if response['data']['code'] == 100:
-			url = ZP_API_STARTPAY + str(response['data']['authority'])
-			return redirect(url)
-		else:
-			return JsonResponse(json.dumps({'status': False, 'code': str(response['data']['code'])}), safe=False)
-		return JsonResponse(response)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        amount = data.get('amount')
 
-	except requests.exceptions.Timeout:
-		data = json.dumps({'status': False, 'code': 'timeout'})
-		return HttpResponse(data)
-	except requests.exceptions.ConnectionError:
-		data = json.dumps({'status': False, 'code': 'اتصال برقرار نشد'})
-		return HttpResponse(data)
+        if not amount:
+            return JsonResponse({'status': False, 'error': 'مقدار نامعتبر است.'})
+
+        # داده‌های مورد نیاز برای زرین پال
+        data = {
+            "merchant_id": settings.MERCHANT,
+            "amount": int(amount),
+            "currency": currency,
+            "description": description,
+            "callback_url": CallbackURL,
+            "metadata": metadata
+        }
+        data = json.dumps(data)
+        headers = {'content-type': 'application/json', 'accept': 'application/json'}
+
+        try:
+            response = requests.post(ZP_API_REQUEST, data=data, headers=headers, timeout=10)
+            response = response.json()
+            err = response.get("errors")
+            if err:
+                return JsonResponse(err, content_type="application/json", safe=False)
+            if response['data']['code'] == 100:
+                url = ZP_API_STARTPAY + str(response['data']['authority'])
+                return JsonResponse({'url': url})
+            else:
+                return JsonResponse({'status': False, 'code': str(response['data']['code'])})
+        except requests.exceptions.Timeout:
+            return JsonResponse({'status': False, 'error': 'timeout'})
+        except requests.exceptions.ConnectionError:
+            return JsonResponse({'status': False, 'error': 'اتصال برقرار نشد'})
+
+    return JsonResponse({'status': False, 'error': 'درخواست نامعتبر است.'})
+
 
 
 def verify(request):
