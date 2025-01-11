@@ -234,23 +234,28 @@
     <div id="error-message" class="error-message" style="display:none;"></div>
 
 	
+	<!-- فرم افزایش اعتبار -->
 	<div id="increase-balance-modal" class="modal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
+			<div id="increase-balance-content">
 			<h2>افزایش اعتبار</h2>
-			<form id="increase-balance-form">
-				<input type="radio" id="10" name="amount" value="100000">
-				<label for="10">10 هزار تومان (10 سوال)</label><br>
-				<input type="radio" id="20" name="amount" value="200000">
-				<label for="20">20 هزار تومان (20 سوال)</label><br>
-				<input type="radio" id="30" name="amount" value="300000">
-				<label for="30">30 هراز تومان (35 سوال)</label><br>
-				<input type="radio" id="50" name="amount" value="500000">
-				<label for="50">50 هزار تومان (70 سوال)</label><br><br>
-				<button type="submit">پرداخت</button>
-			</form>
+				<form id="increase-balance-form">
+					<input type="radio" id="10" name="amount" value="100000">
+					<label for="10">10 هزار تومان (10 سوال)</label><br>
+					<input type="radio" id="20" name="amount" value="200000">
+					<label for="20">20 هزار تومان (20 سوال)</label><br>
+					<input type="radio" id="30" name="amount" value="300000">
+					<label for="30">30 هراز تومان (35 سوال)</label><br>
+					<input type="radio" id="50" name="amount" value="500000">
+					<label for="50">50 هزار تومان (70 سوال)</label><br><br>
+					<button type="submit">پرداخت</button>
+				</form>
+			</div>
+			<div id="payment-result" style="display:none;"></div>
 		</div>
 	</div>
+
 	
 	
 	
@@ -612,7 +617,50 @@
 			});
 		};
 				
+
+
+		// دریافت نتیجه پرداخت
+		function displayPaymentResult(status, message) {
+			var content = document.getElementById('increase-balance-content');
+			var result = document.getElementById('payment-result');
+			content.style.display = 'none'; // مخفی کردن محتوای ماژول
+			result.style.display = 'block'; // نمایش نتیجه پرداخت
+			result.innerText = message; // نمایش پیام نتیجه پرداخت
+		}
+
+		// دریافت نتیجه پرداخت
+		function verifyPayment(authority, status) {
+			fetch(`/homepage/verify/?Authority=${authority}&Status=${status}`)
+			.then(response => response.json())
+			.then(data => {
+				if (data.status) {
+					displayPaymentResult(true, data.message + '. شماره پیگیری: ' + (data.ref_id || ''));
+				} else {
+					displayPaymentResult(false, data.message);
+				}
+			})
+			.catch(error => {
+				displayPaymentResult(false, 'خطا در ارتباط');
+			});
+		}
+
+		// بعد از بازگشت از درگاه پرداخت، این تابع را فراخوانی کنید.
+		window.onload = function() {
+			var urlParams = new URLSearchParams(window.location.search);
+			var authority = urlParams.get('Authority');
+			var status = urlParams.get('Status');
+			if (authority && status) {  // شرط اطمینان از بازگشت از درگاه پرداخت
+				document.getElementById('increase-balance-modal').style.display = 'block';
+				verifyPayment(authority, status);
+			}
+		};
+
+				
 		
+		
+
+
+				
 		window.onclick = function(event) {
 			var modal = document.getElementById('increase-balance-modal');
 			if (event.target === modal) {

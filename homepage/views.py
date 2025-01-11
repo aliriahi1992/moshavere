@@ -98,7 +98,7 @@ currency = "IRR"  # or "IRT"
 # Required Data
 amount = 20000000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://127.0.0.1:8000/verify/'
+CallbackURL = 'http://127.0.0.1:8000/homepage/'
 
 
 # Important: need to edit for a real server.
@@ -145,29 +145,23 @@ def send_request(request):
 
 
 def verify(request):
-	authority = request.GET.get('Authority')
-	status = request.GET.get('Status')
-	if status == "NOK":
-		return HttpResponse(json.dumps({'status': "پرداخت ناموفق"}))
-	data = {
-		"merchant_id": settings.MERCHANT,
-		"amount": amount,
-		"authority": authority,
-	}
-	data = json.dumps(data)
-	headers = {'content-type': 'application/json', 'accept': 'application/json'}
-	try:
-		response = requests.post(ZP_API_VERIFY, data=data, headers=headers)
-		response = response.json()
-		err = response["errors"]
-		if err:
-			return JsonResponse(err, content_type="application/json",safe=False)
-		if response['data']['code'] == 100:
-			data = json.dumps({'status': True, 'first_time_verify': True, 'ref_id': response['data']['ref_id']})
-		else:
-			data = json.dumps({'status': False, 'data': response})
-		return JsonResponse(data, safe=False)
+    authority = request.GET.get('Authority')
+    status = request.GET.get('Status')
+    if status == "NOK":
+        return JsonResponse({'status': False, 'message': "پرداخت ناموفق"})
 
-	except requests.exceptions.ConnectionError:
-		data = json.dumps({'status': False, 'code': 'اتصال برقرار نشد'})
-		return HttpResponse(data)
+    data = {
+        "merchant_id": settings.MERCHANT,
+        "amount": amount,
+        "authority": authority,
+    }
+    headers = {'content-type': 'application/json', 'accept': 'application/json'}
+    try:
+        response = requests.post(ZP_API_VERIFY, data=json.dumps(data), headers=headers)
+        response = response.json()
+        if response['data']['code'] == 100:
+            return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
+        else:
+            return JsonResponse({'status': False, 'message': 'پرداخت ناموفق', 'data': response})
+    except requests.exceptions.ConnectionError:
+        return JsonResponse({'status': False, 'message': 'اتصال برقرار نشد'})
