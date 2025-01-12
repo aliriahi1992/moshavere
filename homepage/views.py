@@ -85,12 +85,7 @@ ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/"
 
-# Optional Data
-#metadata = {
-	#"mobile": "09123456789",  # Buyer phone number Must start with 09
-	#"email": "example@example.com",  # Buyer Email
-	#"order_id": "1234",  # Order Id
-#}
+
 currency = "IRR"  # or "IRT"
 
 # کد مرچنت خود را در فایل settings وارد کنید
@@ -106,16 +101,18 @@ CallbackURL = 'http://beporsimige.ir/homepage/'
 
 def send_request(request):
     if request.method == 'POST':
+        #دریافت متغیر های ارسالی به درگاه از صفحه وب سمت مشتری
         data = json.loads(request.body)
         amount = data.get('amount')
         mobile = data.get('mobile')
         description = data.get('description')
         order_id = data.get('order_id')
+        email = data.get('email')
 
 
         metadata = {
 	    "mobile": mobile,  # Buyer phone number Must start with 09
-	    "email": "example@example.com",  # Buyer Email
+	    "email": email,  # Buyer Email
 	    "order_id": order_id,  # Order Id
         }
 
