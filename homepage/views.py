@@ -108,6 +108,11 @@ def send_request(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         amount = data.get('amount')
+        mobile = data.get('mobile')
+        description = data.get('description')
+        order_id = data.get('order_id')
+
+
 
         if not amount:
             return JsonResponse({'status': False, 'error': 'مقدار نامعتبر است.'})
