@@ -191,6 +191,24 @@
 			text-decoration: none;
 			cursor: pointer;
 		}
+		
+	
+		/* استایل پاپ آپ نمایش نتیجه تراکنش */
+		.modal2 {
+			font-family: 'IRANSansWebFaNum';
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
+		}		
+		
+		
 
 
 
@@ -252,9 +270,24 @@
 					<button type="submit">پرداخت</button>
 				</form>
 			</div>
-			<div id="payment-result" style="display:none;"></div>
 		</div>
 	</div>
+
+
+
+	
+	
+	
+	
+	<!-- فرم نمایش پاسخ درگاه -->
+	<div id="show-result" class="modal2">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2>نتیجه تراکنش</h2>
+			<div id="payment-result"></div>
+		</div>
+	</div>	
+	
 
 	
 	
@@ -581,19 +614,22 @@
 		
 		
 		
-		
-		
-		// باز کردن پاپ‌آپ
+		// باز کردن پاپ آپ افزایش اعتبار
 		document.getElementById('increase-balance-link').onclick = function(event) {
 			event.preventDefault();
 			document.getElementById('increase-balance-modal').style.display = 'block';
 		};
 
-		// بستن پاپ‌آپ
+		// بستن پاپ آپ افزایش اعتبار
 		document.getElementsByClassName('close')[0].onclick = function() {
 			document.getElementById('increase-balance-modal').style.display = 'none';
 		};
-
+		
+		// بستن پاپ آپ نمایش نتیجه تراکنش
+		document.getElementsByClassName('close')[1].onclick = function() {
+			document.getElementById('show-result').style.display = 'none';
+		};
+		
 		// ارسال اطلاعات به صفحه پرداخت
 		document.getElementById('increase-balance-form').onsubmit = function(event) {
 			event.preventDefault();
@@ -615,15 +651,14 @@
 					alert('خطا در فرآیند پرداخت');
 				}
 			});
-		};
-				
+		};		
 
 
-		// دریافت نتیجه پرداخت
+		// نمایش پاپ آپ نمایش نتیجه تراکنش پس از پرداخت
 		function displayPaymentResult(status, message) {
-			var content = document.getElementById('increase-balance-content');
+			var content = document.getElementById('show-result');
 			var result = document.getElementById('payment-result');
-			content.style.display = 'none'; // مخفی کردن محتوای ماژول
+			content.style.display = 'block'; // مخفی کردن محتوای ماژول
 			result.style.display = 'block'; // نمایش نتیجه پرداخت
 			result.innerText = message; // نمایش پیام نتیجه پرداخت
 		}
@@ -650,29 +685,28 @@
 			var authority = urlParams.get('Authority');
 			var status = urlParams.get('Status');
 			if (authority && status) {  // شرط اطمینان از بازگشت از درگاه پرداخت
-				document.getElementById('increase-balance-modal').style.display = 'block';
+				document.getElementById('show-result').style.display = 'block';
 				verifyPayment(authority, status);
+				
+				
+				//بازگرداندن url به حالت اولیه اش
+				const newUrl = window.location.origin + window.location.pathname;
+				history.replaceState(null, '', newUrl);
 			}
 		};
 
 				
-		
-		
-
-
-				
+		// مخفی کردن پاپ آپ های افزایش اعتبار و نمایش نتیجه تراکنش با کلیک کردن خارج از آنها		
 		window.onclick = function(event) {
 			var modal = document.getElementById('increase-balance-modal');
 			if (event.target === modal) {
 				modal.style.display = 'none';
 			}
+			var modal2 = document.getElementById('show-result');
+			if (event.target === modal2) {
+				modal2.style.display = 'none';
+			}
 		};
-		
-		
-		
-		
-		
-		
     </script>
 </body>
 </html>

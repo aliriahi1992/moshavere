@@ -98,7 +98,7 @@ currency = "IRR"  # or "IRT"
 # Required Data
 amount = 20000000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://beporsimige.ir/homepage/'
+CallbackURL = 'http://127.0.0.1:8000/homepage/'
 
 
 # Important: need to edit for a real server.
