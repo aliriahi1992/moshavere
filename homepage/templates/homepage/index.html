@@ -631,6 +631,34 @@
 			document.getElementById('show-result').style.display = 'none';
 		};
 		
+		//تشخیص سیستم عامل کاربر
+		function getOS() {
+		  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+		  if (/windows phone/i.test(userAgent)) {
+			return "Windows Phone";
+		  }
+		  if (/win/i.test(userAgent)) {
+			return "Windows";
+		  }
+		  if (/android/i.test(userAgent)) {
+			return "Android";
+		  }
+		  if (/linux/i.test(userAgent)) {
+			return "Linux";
+		  }
+		  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+			return "iOS";
+		  }
+		  if (/Mac/i.test(userAgent)) {
+			return "MacOS";
+		  }
+		  return "Unknown";
+		}		
+		
+		
+		
+		
 		// ارسال اطلاعات به صفحه پرداخت
 		document.getElementById('increase-balance-form').onsubmit = function(event) {
 			event.preventDefault();
@@ -638,6 +666,8 @@
 			var mobile = "{{ user.mobile_number }}";
 			var description = "{{ user.full_name }}";
 			var	order_id = "{{ balance }}";
+			var email = getOS()
+			
 			
 			fetch('/homepage/request/', {
 				method: 'POST',
@@ -645,7 +675,7 @@
 					'Content-Type': 'application/json',
 					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
 				},
-				body: JSON.stringify({ amount: amount , mobile: mobile , description: description , order_id: order_id })
+				body: JSON.stringify({ amount: amount , mobile: mobile , description: description , order_id: order_id , email: email })
 			})
 			.then(response => response.json())
 			.then(data => {
