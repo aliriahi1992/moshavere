@@ -560,6 +560,7 @@
     </div>
 
     <script>
+		//تابع ارسال سوال به هوش مصنوعی و دریافت پاسخ
         function submitForm(event, section) {
             event.preventDefault();
             const form = event.target;
@@ -634,14 +635,17 @@
 		document.getElementById('increase-balance-form').onsubmit = function(event) {
 			event.preventDefault();
 			var amount = document.querySelector('input[name="amount"]:checked').value;
-
+			var mobile = "{{ user.mobile_number }}";
+			var description = "{{ user.full_name }}";
+			var	order_id = "{{ balance }}";
+			
 			fetch('/homepage/request/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
 				},
-				body: JSON.stringify({ amount: amount })
+				body: JSON.stringify({ amount: amount , mobile: mobile , description: description , order_id: order_id })
 			})
 			.then(response => response.json())
 			.then(data => {
