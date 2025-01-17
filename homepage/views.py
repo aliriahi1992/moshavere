@@ -140,6 +140,8 @@ def send_request(request):
             if err:
                 return JsonResponse(err, content_type="application/json", safe=False)
             if response['data']['code'] == 100:
+                #استفاده از مفهوم سشن برای ذخیره سازی اطلاعات پرداخت کاربر در زمان ارسال به درگاه و بازگشت از درگاه
+                request.session['amount'] = int(amount)
                 url = ZP_API_STARTPAY + str(response['data']['authority'])
                 return JsonResponse({'url': url})
             else:
@@ -161,7 +163,8 @@ def verify(request):
 
     data = {
         "merchant_id": settings.MERCHANT,
-        "amount": amount,
+        #استفاده از مفهوم سشن برای ذخیره سازی اطلاعات پرداخت کاربر در زمان ارسال به درگاه و بازگشت از درگاه
+        "amount" : request.session.get('amount'),
         "authority": authority,
     }
     headers = {'content-type': 'application/json', 'accept': 'application/json'}
