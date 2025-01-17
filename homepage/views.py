@@ -154,8 +154,9 @@ def send_request(request):
     return JsonResponse({'status': False, 'error': 'درخواست نامعتبر است.'})
 
 
-
+@login_required
 def verify(request):
+    #جهت افزایش اعتبار یوزر 
     user = request.user
     authority = request.GET.get('Authority')
     status = request.GET.get('Status')
@@ -174,6 +175,7 @@ def verify(request):
         response = response.json()
         if response['data']['code'] == 100:
             return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
+            #جهت افزایش اعتبار یوزر 
             user.balance += request.session.get('amount')
             user.save()
 
