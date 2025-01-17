@@ -156,6 +156,7 @@ def send_request(request):
 
 
 def verify(request):
+    user = request.user
     authority = request.GET.get('Authority')
     status = request.GET.get('Status')
     if status == "NOK":
@@ -173,6 +174,10 @@ def verify(request):
         response = response.json()
         if response['data']['code'] == 100:
             return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
+            user.balance += request.session.get('amount')
+            user.save()
+
+
         else:
             return JsonResponse({'status': False, 'message': 'پرداخت ناموفق', 'data': response})
     except requests.exceptions.ConnectionError:
