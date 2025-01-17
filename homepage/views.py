@@ -73,7 +73,7 @@ def ask_question(request, section):
                     user.balance -= 1000
                     user.save()
             except ValueError:
-                result = "لطفاً یک عدد صحیح وارد کنید"
+                result = "محدودیت هایی در پاسخگویی به این سوالات برای من وجود دارد و متاسفانه نمی توانم پاسخ این سوال شما را بدهم."
             except Exception as e:
                 return JsonResponse({'error': str(e)})
     
@@ -91,9 +91,9 @@ currency = "IRR"  # or "IRT"
 # کد مرچنت خود را در فایل settings وارد کنید
 
 # Required Data
-amount = 20000000  # Based on your currency
+amount = 20000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://beporsimige.ir/homepage/'
+CallbackURL = 'http://127.0.0.1:8000/homepage/'
 
 
 # Important: need to edit for a real server.
