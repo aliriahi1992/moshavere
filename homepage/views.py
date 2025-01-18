@@ -93,7 +93,7 @@ currency = "IRR"  # or "IRT"
 # Required Data
 amount = 20000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://beporsimige.ir//homepage/'
+CallbackURL = 'http://127.0.0.1:8000/homepage/'
 
 
 # Important: need to edit for a real server.
@@ -174,10 +174,13 @@ def verify(request):
         response = requests.post(ZP_API_VERIFY, data=json.dumps(data), headers=headers)
         response = response.json()
         if response['data']['code'] == 100:
-            return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
+
             #جهت افزایش اعتبار یوزر 
-            user.balance += request.session.get('amount')
+            user.balance += request.session.get('amount')/10
             user.save()
+
+            return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
+
 
 
         else:
