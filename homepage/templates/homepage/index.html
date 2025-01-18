@@ -267,6 +267,12 @@
 					<label for="30">30 هراز تومان (35 سوال)</label><br>
 					<input type="radio" id="50" name="amount" value="500000">
 					<label for="50">50 هزار تومان (70 سوال)</label><br><br>
+					
+					<!-- تکست‌باکس و دکمه اعمال کد تخفیف -->
+					<input type="text" id="discount-code" placeholder="کد تخفیف">
+					<button type="button" id="apply-discount">اعمال</button><br><br>					
+						
+						
 					<button type="submit">پرداخت</button>
 				</form>
 			</div>
@@ -656,26 +662,43 @@
 		  return "Unknown";
 		}		
 		
-		
+	
+
+
+		//اعمال کد تخفیف
+		document.getElementById('apply-discount').addEventListener('click', function() {
+			let discountCode = document.getElementById('discount-code').value;
+			if (discountCode === "first time") {
+				let selectedAmount = document.querySelector('input[name="amount"]:checked').value;
+				let discountedAmount = selectedAmount * 0.8;
+				document.querySelector('input[name="amount"]:checked').value = discountedAmount;
+				alert('تخفیف 20 درصدی اعمال شد.');
+			} else {
+				alert('کد تخفیف نامعتبر است.');
+			}
+		});
+
+
+
+	
 		
 		
 		// ارسال اطلاعات به صفحه پرداخت
 		document.getElementById('increase-balance-form').onsubmit = function(event) {
 			event.preventDefault();
-			var amount = document.querySelector('input[name="amount"]:checked').value;
-			var mobile = "{{ user.mobile_number }}";
-			var description = "{{ user.full_name }}";
-			var	order_id = "{{ balance }}";
-			var email = getOS()
-			
-			
+			let amount = document.querySelector('input[name="amount"]:checked').value;
+			let mobile = "{{ user.mobile_number }}";
+			let description = "{{ user.full_name }}";
+			let order_id = "{{ balance }}";
+			let email = getOS();
+
 			fetch('/homepage/request/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
 				},
-				body: JSON.stringify({ amount: amount , mobile: mobile , description: description , order_id: order_id , email: email })
+				body: JSON.stringify({ amount: amount, mobile: mobile, description: description, order_id: order_id, email: email })
 			})
 			.then(response => response.json())
 			.then(data => {
@@ -685,7 +708,7 @@
 					alert('خطا در فرآیند پرداخت');
 				}
 			});
-		};		
+		};
 
 
 		// نمایش پاپ آپ نمایش نتیجه تراکنش پس از پرداخت
