@@ -16,3 +16,17 @@ class TransactionHistory(models.Model):
     def __str__(self):
         return f"Transaction {self.ref_id} for {self.user_full_name}"
 
+
+class QuestionHistory(models.Model):
+    created_at = models.DateTimeField()
+    status = models.CharField(max_length=255, default='None')
+    user_phone_number = models.CharField(max_length=11)
+    user_full_name = models.CharField(max_length=255)
+    question = models.CharField(max_length=255, default='')
+    from_who = models.CharField(max_length=255, default='')
+    api_key_name = models.CharField(max_length=255, default='')
+    credit = models.IntegerField()
+    user_os = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.user_full_name} - {self.status}"

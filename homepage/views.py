@@ -12,7 +12,8 @@ from django.shortcuts import redirect
 #برای ذخیره سازی سوابق تراکنش ها در مدل دیتای جنگو
 from .models import TransactionHistory 
 from datetime import datetime
-
+#برای ذخیره سازی سوابق سوالات پرسیده شده توسط کاربران
+from .models import QuestionHistory 
 
 @login_required
 def homepage(request):
@@ -28,10 +29,61 @@ def ask_question(request, section):
         return JsonResponse({'error': 'موجودی شما کافی نیست.'})
 
     if request.method == 'POST':
+        #number همان سوال کاربر است که از سمت فرانت می آید
         number = request.POST.get('number')
+        #مقادیری که از سمت مرورگر جهت ذخیره سازی در دیتابیس ارسال می شوند
+        user_phone_number = request.POST.get('user_phone_number')
+        user_full_name = request.POST.get('user_full_name')
+        question = request.POST.get('number')
+        credit = request.POST.get('credit')
+        user_os = request.POST.get('user_os')
+        #مقدار دهی اولیه به پارامتر هایی که از سمت مرورگر نیامده اند
+        from_who = ""
+        api_key_name = ""
+        status =""
+
+
+        #مقداردهی متغیری که باید در دیتابیس ذخیره شود
+        if section == 1:
+            from_who = "متخصص پوست و مو"
+        elif section == 2:
+            from_who = "استاد"            
+        elif section == 2:
+            from_who = "استاد"
+        elif section == 3: 
+            from_who = "مشاور خانواده"    
+        elif section == 4:
+            from_who = "متخصص تغذیه"
+        elif section == 5:  
+            from_who = "مربی"
+        elif section == 6: 
+            from_who = "وکیل" 
+        elif section == 7:
+            from_who = "مشاور تحصیلی"
+        elif section == 8:   
+            from_who = "پزشک" 
+        elif section == 9:   
+            from_who = "مشاور کسب و کار"   
+        elif section == 10:  
+            from_who = "متخصص بازار های مالی"
+        elif section == 11:  
+            from_who = "مشاور مهاجرت" 
+        elif section == 12: 
+            from_who = "برنامه نویس"  
+        elif section == 13: 
+            from_who = "مشاور خرید" 
+        elif section == 14: 
+            from_who = "تعمیر کار"  
+        elif section == 15: 
+            from_who = "مشاور سرمایه گذاری"                           
+                     
+
         if number:
             try:
                 GOOGLE_API_KEY = os.getenv('API_KEY_1')
+                #مقدار دهی به متغیر های ذخیره سازی در دیتابیس
+                api_key_name = "API_KEY_1"
+
                 genai.configure(api_key=GOOGLE_API_KEY)
                 model = genai.GenerativeModel('gemini-pro')
 
@@ -56,16 +108,15 @@ def ask_question(request, section):
                 elif section == 10:
                     prompt = "به عنوان یک متخصص بازار های مالی پاسخ این سوال رو بده " + str(number)
                 elif section == 11:
-                    prompt = "به عنوان یک مشاور امور مهاجرت پاسخ این سوال رو بده " + str(number)
+                    prompt = "به عنوان یک مشاور امور مهاجرت پاسخ این سوال رو بده " + str(number)                  
                 elif section == 12:
                     prompt = "به عنوان یک برنامه نویس پاسخ این سوال رو بده " + str(number)
                 elif section == 13:
-                    prompt = "به عنوان یک مشاور خرید محصول پاسخ این سوال رو بده " + str(number)
+                    prompt = "به عنوان یک مشاور خرید محصول پاسخ این سوال رو بده " + str(number)  
                 elif section == 14:
                     prompt = "به عنوان یک تعمیر کار پاسخ این سوال رو بده " + str(number)
                 elif section == 15:
                     prompt = "به عنوان یک مشاور سرمایه گذاری پاسخ این سوال رو بده " + str(number)
-
 
 
                 response = model.generate_content(prompt)
@@ -74,11 +125,51 @@ def ask_question(request, section):
                 if result:
                     user.balance -= 1000
                     user.save()
+                    #مقدار دهی به متغیر های ذخیره سازی در دیتابیس
+                    status = "Answered"                     
+
             except ValueError:
                 result = "محدودیت هایی در پاسخگویی به این سوالات برای من وجود دارد و متاسفانه نمی توانم پاسخ این سوال شما را بدهم."
+                #مقدار دهی به متغیر های ذخیره سازی در دیتابیس
+                status = "Unable to respond" 
             except Exception as e:
+                #مقدار دهی به متغیر های ذخیره سازی در دیتابیس
+                status = "Error"  
+
+                #ذخیره سازی سوال کاربر و متغیر های مورد نیاز دیگر در دیتابیس
+                question = QuestionHistory(
+                    created_at = datetime.now(),
+                    status = status,
+                    user_phone_number = user_phone_number,
+                    user_full_name = user_full_name,
+                    question = question,
+                    from_who = from_who,
+                    api_key_name = api_key_name,
+                    credit = credit,
+                    user_os = user_os
+                )
+                question.save()                
+
                 return JsonResponse({'error': str(e)})
-    
+
+
+            #ذخیره سازی سوال کاربر و متغیر های مورد نیاز دیگر در دیتابیس
+            question = QuestionHistory(
+                created_at = datetime.now(),
+                status = status,
+                user_phone_number = user_phone_number,
+                user_full_name = user_full_name,
+                question = question,
+                from_who = from_who,
+                api_key_name = api_key_name,
+                credit = credit,
+                user_os = user_os
+            )
+            question.save()
+
+
+
+
     return JsonResponse({'result': result, 'balance': user.balance})
 
 
@@ -95,7 +186,7 @@ currency = "IRR"  # or "IRT"
 # Required Data
 amount = 20000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'https://beporsimige.ir/homepage/'
+CallbackURL = 'http://beporsimige.ir/homepage/'
 
 
 # Important: need to edit for a real server.

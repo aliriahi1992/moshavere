@@ -579,11 +579,25 @@
     </div>
 
     <script>
-		//تابع ارسال سوال به هوش مصنوعی و دریافت پاسخ
+		//تابع ارسال و درسافت پاسخ به ویو جهت پاسخ دهی از هوش مصنوعی
         function submitForm(event, section) {
             event.preventDefault();
             const form = event.target;
             const data = new FormData(form);
+			
+			//مثدار دهی متغیر ها جهت افزوده شدن به درخواست ارسالی به سرو جهت ذخیره سازی در دیتابیس
+			let user_phone_number = "{{ user.mobile_number }}";
+			let user_full_name = "{{ user.full_name }}";
+			let credit = "{{ balance }}";
+			let user_os = getOS();
+			//افزودن مقادیر مورد نیاز به درخواست ارسال به ویو جهت ذخیره سازی در سرور
+			data.append('user_phone_number', user_phone_number);
+			data.append('user_full_name', user_full_name);
+			data.append('credit', credit);
+			data.append('user_os', user_os);
+			
+			
+			
             const loading = form.querySelector('.loading');
             loading.style.display = 'inline-block';
             
