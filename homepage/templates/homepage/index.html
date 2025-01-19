@@ -675,16 +675,15 @@
 		  return "Unknown";
 		}		
 		
-	
+		//تعریف متغیر برای ذخیره و محاسبات کد تخفیف و قیمت اصلی
+		let discount = 1;
 
-
+		
 		//اعمال کد تخفیف
 		document.getElementById('apply-discount').addEventListener('click', function() {
 			let discountCode = document.getElementById('discount-code').value;
 			if (discountCode === "first time") {
-				let selectedAmount = document.querySelector('input[name="amount"]:checked').value;
-				let discountedAmount = selectedAmount * 0.8;
-				document.querySelector('input[name="amount"]:checked').value = discountedAmount;
+				discount = 0.8;
 				alert('تخفیف 20 درصدی اعمال شد.');
 			} else {
 				alert('کد تخفیف نامعتبر است.');
@@ -699,7 +698,8 @@
 		// ارسال اطلاعات به صفحه پرداخت
 		document.getElementById('increase-balance-form').onsubmit = function(event) {
 			event.preventDefault();
-			let amount = document.querySelector('input[name="amount"]:checked').value;
+			let orginal_price = document.querySelector('input[name="amount"]:checked').value;
+			let amount = discount*orginal_price ;	
 			let mobile = "{{ user.mobile_number }}";
 			let description = "{{ user.full_name }}";
 			let order_id = "{{ balance }}";
@@ -711,7 +711,7 @@
 					'Content-Type': 'application/json',
 					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
 				},
-				body: JSON.stringify({ amount: amount, mobile: mobile, description: description, order_id: order_id, email: email })
+				body: JSON.stringify({ amount: amount, mobile: mobile, description: description, order_id: order_id, email: email, orginal_price: orginal_price })
 			})
 			.then(response => response.json())
 			.then(data => {

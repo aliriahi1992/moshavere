@@ -93,7 +93,7 @@ currency = "IRR"  # or "IRT"
 # Required Data
 amount = 20000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'https://beporsimige.ir/homepage/'
+CallbackURL = 'http://127.0.0.1:8000/homepage/'
 
 
 # Important: need to edit for a real server.
@@ -104,6 +104,7 @@ def send_request(request):
         #دریافت متغیر های ارسالی به درگاه از صفحه وب سمت مشتری
         data = json.loads(request.body)
         amount = data.get('amount')
+        orginal_price = data.get('orginal_price')
         mobile = data.get('mobile')
         description = data.get('description')
         order_id = data.get('order_id')
@@ -142,6 +143,7 @@ def send_request(request):
             if response['data']['code'] == 100:
                 #استفاده از مفهوم سشن برای ذخیره سازی اطلاعات پرداخت کاربر در زمان ارسال به درگاه و بازگشت از درگاه
                 request.session['amount'] = int(amount)
+                request.session['orginal_price'] = int(orginal_price)
                 url = ZP_API_STARTPAY + str(response['data']['authority'])
                 return JsonResponse({'url': url})
             else:
@@ -176,7 +178,7 @@ def verify(request):
         if response['data']['code'] == 100:
 
             #جهت افزایش اعتبار یوزر 
-            user.balance += request.session.get('amount')/10
+            user.balance += request.session.get('orginal_price')/10
             user.save()
 
             return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
