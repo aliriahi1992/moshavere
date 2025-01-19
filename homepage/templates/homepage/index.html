@@ -675,8 +675,11 @@
 		  return "Unknown";
 		}		
 		
+		
+		
 		//تعریف متغیر برای ذخیره و محاسبات کد تخفیف و قیمت اصلی
 		let discount = 1;
+		let discount_code = "";
 
 		
 		//اعمال کد تخفیف
@@ -684,6 +687,7 @@
 			let discountCode = document.getElementById('discount-code').value;
 			if (discountCode === "first time") {
 				discount = 0.8;
+				discount_code = "first time"
 				alert('تخفیف 20 درصدی اعمال شد.');
 			} else {
 				alert('کد تخفیف نامعتبر است.');
@@ -695,23 +699,31 @@
 	
 		
 		
-		// ارسال اطلاعات به صفحه پرداخت
+		// ارسال اطلاعات به ویو جهت ارسال به صفحه پرداخت
 		document.getElementById('increase-balance-form').onsubmit = function(event) {
 			event.preventDefault();
 			let orginal_price = document.querySelector('input[name="amount"]:checked').value;
 			let amount = discount*orginal_price ;	
 			let mobile = "{{ user.mobile_number }}";
+			//جهت ثبت در سوابق پرداخت زرین پال
 			let description = "{{ user.full_name }}";
+			//جهت ثبت در سوابق پرداخت خودمان
+			let user_full_name = "{{ user.full_name }}";
+			//جهت ثبت در سوابق پرداخت زرین پال
 			let order_id = "{{ balance }}";
+			//جهت ثبت در سوابق پرداخت خودمان
+			let initial_credit = "{{ balance }}";
+			//جهت ثبت در سوابق پرداخت زرین پال
 			let email = getOS();
-
+			//جهت ثبت در سوابق پرداخت خودمان
+			let user_os = getOS();
 			fetch('/homepage/request/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
 				},
-				body: JSON.stringify({ amount: amount, mobile: mobile, description: description, order_id: order_id, email: email, orginal_price: orginal_price })
+				body: JSON.stringify({ amount: amount, mobile: mobile, description: description, order_id: order_id, email: email, orginal_price: orginal_price ,user_full_name: user_full_name ,discount_code: discount_code ,initial_credit :initial_credit ,user_os: user_os})
 			})
 			.then(response => response.json())
 			.then(data => {

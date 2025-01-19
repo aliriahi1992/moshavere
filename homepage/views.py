@@ -9,7 +9,9 @@ import requests
 import json
 from django.http import HttpResponse , JsonResponse
 from django.shortcuts import redirect
-
+#برای ذخیره سازی سوابق تراکنش ها در مدل دیتای جنگو
+from .models import TransactionHistory 
+from datetime import datetime
 
 
 @login_required
@@ -93,7 +95,7 @@ currency = "IRR"  # or "IRT"
 # Required Data
 amount = 20000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://beporsimige.ir/homepage/'
+CallbackURL = 'http://127.0.0.1:8000/homepage/'
 
 
 # Important: need to edit for a real server.
@@ -109,6 +111,12 @@ def send_request(request):
         description = data.get('description')
         order_id = data.get('order_id')
         email = data.get('email')
+        #مقادیر اختصاصی جهت ثبت در دیتا مدل سوابق تراکنش خودمان در جنگو
+        user_full_name = data.get('user_full_name')
+        discount_code = data.get('discount_code')
+        initial_credit = data.get('initial_credit')
+        user_os = data.get('user_os')
+
 
 
         metadata = {
@@ -141,9 +149,16 @@ def send_request(request):
             if err:
                 return JsonResponse(err, content_type="application/json", safe=False)
             if response['data']['code'] == 100:
-                #استفاده از مفهوم سشن برای ذخیره سازی اطلاعات پرداخت کاربر در زمان ارسال به درگاه و بازگشت از درگاه
+
+                #استفاده از مفهوم سشن برای ذخیره سازی اطلاعات پرداخت کاربر در زمان ارسال به درگاه و بازگشت از درگاه ، این مقادیر جلوتر در تابع وریفای از سشن استخراج می شوند
+                request.session['user_phone_number'] = str(mobile)
+                request.session['user_full_name'] = str(user_full_name)
                 request.session['amount'] = int(amount)
                 request.session['orginal_price'] = int(orginal_price)
+                request.session['discount_code'] = str(discount_code)
+                request.session['initial_credit'] = str(initial_credit)
+                request.session['user_os'] = str(user_os)
+
                 url = ZP_API_STARTPAY + str(response['data']['authority'])
                 return JsonResponse({'url': url})
             else:
@@ -163,6 +178,24 @@ def verify(request):
     authority = request.GET.get('Authority')
     status = request.GET.get('Status')
     if status == "NOK":
+       
+        #ذخیره سازی سابقه تراکنش به عنوان تراکنشی نا موفق
+        transaction = TransactionHistory(
+            created_at = datetime.now(),
+            status = "NOK",
+            user_phone_number = request.session.get('user_phone_number'),
+            user_full_name = request.session.get('user_full_name'),
+            orginal_price = request.session.get('orginal_price'),
+            amount = request.session.get('amount'),
+            ref_id = "",
+            discount_code = request.session.get('discount_code'),
+            initial_credit = request.session.get('initial_credit'),
+            secondary_credit = request.session.get('initial_credit'),
+            user_os = request.session.get('user_os')
+        )
+        transaction.save()
+
+
         return JsonResponse({'status': False, 'message': "پرداخت ناموفق"})
 
     data = {
@@ -180,6 +213,24 @@ def verify(request):
             #جهت افزایش اعتبار یوزر 
             user.balance += request.session.get('orginal_price')/10
             user.save()
+
+            
+            #ذخیره سازی سابقه تراکنش به عنوان تراکنشی نا موفق
+            transaction = TransactionHistory(
+                created_at = datetime.now(),
+                status = "OK",
+                user_phone_number = request.session.get('user_phone_number'),
+                user_full_name = request.session.get('user_full_name'),
+                orginal_price = request.session.get('orginal_price'),
+                amount = request.session.get('amount'),
+                ref_id = response['data']['ref_id'],
+                discount_code = request.session.get('discount_code'),
+                initial_credit = request.session.get('initial_credit'),
+                secondary_credit = int(request.session.get('initial_credit')) + int(request.session.get('orginal_price'))/10,
+                user_os = request.session.get('user_os')
+            )
+            transaction.save()           
+            
 
             return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
 
