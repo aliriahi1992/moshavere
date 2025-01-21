@@ -752,6 +752,7 @@
 
 		// نمایش پاپ آپ نمایش نتیجه تراکنش پس از پرداخت
 		function displayPaymentResult(status, message) {
+			location.reload();
 			var content = document.getElementById('show-result');
 			var result = document.getElementById('payment-result');
 			content.style.display = 'block'; // مخفی کردن محتوای ماژول
