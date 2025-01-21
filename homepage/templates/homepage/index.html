@@ -766,6 +766,7 @@
 			.then(response => response.json())
 			.then(data => {
 				if (data.status) {
+					document.getElementById('balance').innerText = data.balance;
 					document.getElementById("payment-result").innerHTML = data.message + '<br>شماره پیگیری : ' + (data.ref_id || '') + '<br>تعداد سوال باقیمانده : ' + {{ balance }};
 				} else {
 					displayPaymentResult(false, data.message);

@@ -48,8 +48,6 @@ def ask_question(request, section):
             from_who = "متخصص پوست و مو"
         elif section == 2:
             from_who = "استاد"            
-        elif section == 2:
-            from_who = "استاد"
         elif section == 3: 
             from_who = "مشاور خانواده"    
         elif section == 4:
@@ -333,7 +331,7 @@ def verify(request):
             transaction.save()           
             
 
-            return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id']})
+            return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id'] , 'balance': user.balance})
 
 
 
