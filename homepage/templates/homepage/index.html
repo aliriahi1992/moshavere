@@ -234,7 +234,7 @@
     <div class="user-info">
         <p>{{ user.full_name }}</p>
         <p>{{ user.mobile_number }}</p>
-        <p>موجودی حساب <span id="balance">{{ balance }}</span></p>
+        <p>تعداد پرسش باقیمانده : <span id="balance">{{ balance }}</span></p>
 		<p><a href="#" id="increase-balance-link">افزایش اعتبار</a></p>  <!-- لینک افزایش اعتبار -->		
         <p><a href="{% url 'accounts:logout' %}">خروج از حساب کاربری</a></p>  <!-- لینک خروج از حساب کاربری -->
 
@@ -279,7 +279,7 @@
 					<input type="radio" id="30" name="amount" value="300000">
 					<label for="30">30 هراز تومان (35 سوال)</label><br>
 					<input type="radio" id="50" name="amount" value="500000">
-					<label for="50">50 هزار تومان (70 سوال)</label><br><br>
+					<label for="50">50 هزار تومان (60 سوال)</label><br><br>
 					
 					<!-- تکست‌باکس و دکمه اعمال کد تخفیف -->
 					<input type="text" id="discount-code" placeholder="کد تخفیف">
@@ -765,7 +765,7 @@
 			.then(response => response.json())
 			.then(data => {
 				if (data.status) {
-					displayPaymentResult(true, data.message + '. شماره پیگیری: ' + (data.ref_id || ''));
+					document.getElementById("payment-result").innerHTML = data.message + '<br>شماره پیگیری : ' + (data.ref_id || '') + '<br>تعداد سوال باقیمانده : ' + {{ balance }};
 				} else {
 					displayPaymentResult(false, data.message);
 				}

@@ -25,7 +25,7 @@ def ask_question(request, section):
     result = None
     error_message = None
 
-    if user.balance < 1000:
+    if user.balance < 1:
         return JsonResponse({'error': 'موجودی شما کافی نیست.'})
 
     if request.method == 'POST':
@@ -123,7 +123,7 @@ def ask_question(request, section):
                 result = response.text
                 result = result.replace("*", "")
                 if result:
-                    user.balance -= 1000
+                    user.balance -= 1
                     user.save()
                     #مقدار دهی به متغیر های ذخیره سازی در دیتابیس
                     status = "Answered"                     
@@ -302,11 +302,21 @@ def verify(request):
         if response['data']['code'] == 100:
 
             #جهت افزایش اعتبار یوزر 
-            user.balance += request.session.get('orginal_price')/10
+            i = 1
+            if request.session.get('orginal_price') == 100000:
+                i = 10
+            elif request.session.get('orginal_price') == 200000:
+                i = 20
+            elif request.session.get('orginal_price') == 300000: 
+                i = 35     
+            elif request.session.get('orginal_price') == 500000:
+                i = 60
+
+            user.balance += i
             user.save()
 
             
-            #ذخیره سازی سابقه تراکنش به عنوان تراکنشی نا موفق
+            #ذخیره سازی سابقه تراکنش به عنوان تراکنش موفق
             transaction = TransactionHistory(
                 created_at = datetime.now(),
                 status = "OK",
@@ -317,7 +327,7 @@ def verify(request):
                 ref_id = response['data']['ref_id'],
                 discount_code = request.session.get('discount_code'),
                 initial_credit = request.session.get('initial_credit'),
-                secondary_credit = int(request.session.get('initial_credit')) + int(request.session.get('orginal_price'))/10,
+                secondary_credit = int(request.session.get('initial_credit')) + i,
                 user_os = request.session.get('user_os')
             )
             transaction.save()           
