@@ -720,7 +720,7 @@
 			if (discountCode === "first time") {
 				discount = 0.8;
 				discount_code = "first time"
-				updatePayableAmount(); // به‌روزرسانی مبلغ قابل پرداخت
+				updatePayableAmount(); // به روزرسانی مبلغ قابل پرداخت
 				alert('تخفیف 20 درصدی اعمال شد.');
 			} else {
 				alert('کد تخفیف نامعتبر است.');
@@ -732,19 +732,26 @@
 		//جهت نمایش مبلغ قابل پرداخت در ماؤول افزایش اعتبار
 		const radioButtons = document.querySelectorAll('input[name="amount"]');
 		const payableAmountText = document.getElementById('payable-amount');
-
-		// افزودن event listener برای رادیو باتن‌ها
 		radioButtons.forEach((radio) => {
 			radio.addEventListener('change', () => {
 			  const selectedAmount = radio.value/10*discount; // مقدار انتخاب شده
-			  payableAmountText.textContent = `مبلغ قابل پرداخت : ${selectedAmount} تومان`;
+			  const formattedAmount = Math.round(selectedAmount).toLocaleString('en-US'); // قالب‌بندی عدد با کاما
+			  payableAmountText.textContent = `مبلغ قابل پرداخت : ${formattedAmount} تومان`;	
 			});
 		});		
 		
+		// تابعی برای اینکه در زمان اعمال کد تخفیف آن را صدا زنی کنیم و مبلغ تخفیف را بر روی مبلغ قابل پرداخت اعمال نماید
 		function updatePayableAmount() {
 			const selectedAmount = document.querySelector('input[name="amount"]:checked').value/10*discount; // مقدار انتخاب شده
-			payableAmountText.textContent = `مبلغ قابل پرداخت : ${selectedAmount} تومان`;	
+			const formattedAmount = Math.round(selectedAmount).toLocaleString('en-US'); // قالب‌بندی عدد با کاما
+			payableAmountText.textContent = `مبلغ قابل پرداخت : ${formattedAmount} تومان`;			
 		}
+		
+		
+		
+		
+		
+		
 		
 		
 		// ارسال اطلاعات به ویو جهت ارسال به صفحه پرداخت
