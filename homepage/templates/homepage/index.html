@@ -210,19 +210,33 @@
 		
 		/* استایل تکست‌باکس و دکمه اعمال */
 		#discount-code {
-			font-family: 'IRANSansWebFaNum';
-			width: 20%;
-
-			box-sizing: border-box;
+		  height: 40px; /* ارتفاع تکست باکس */
+		  padding: 0 10px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  border: 1px solid #ccc; /* حاشیه */
+		  border-radius: 5px; /* گوشه‌های گرد */
+		  width: 120px; /* عرض تکست باکس */
+		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
 		}
 
 		#apply-discount {
-			font-family: 'IRANSansWebFaNum';
-			padding: 10px 20px;
-			margin-top: 10px;
-			cursor: pointer;
+		  height: 40px; /* ارتفاع دکمه */
+		  padding: 0 20px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  background-color: #28a745; /* رنگ سبز خوش رنگ */
+		  color: white; /* رنگ متن دکمه */
+		  border: none; /* حذف حاشیه */
+		  border-radius: 5px; /* گوشه‌های گرد */
+		  cursor: pointer; /* تغییر نشانگر ماوس به دست */
+		  transition: background-color 0.3s ease; /* انیمیشن تغییر رنگ */
+		  display: inline-block; /* حالت بلوکی برای دکمه */
+		  margin-left: 10px; /* فاصله از تکست باکس */
 		}		
-
+		
+		/* افکت هاور */
+		#apply-discount:hover {
+		  background-color: #218838; /* رنگ سبز تیره‌تر هنگام هاور */
+		}
 
 
 		
