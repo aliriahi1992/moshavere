@@ -299,7 +299,10 @@
 					<!-- تکست‌باکس و دکمه اعمال کد تخفیف -->
 					<input type="text" id="discount-code" placeholder="کد تخفیف">
 					<button type="button" id="apply-discount">اعمال</button><br><br>					
-						
+					<!-- متن مبلغ قابل پرداخت -->
+					<p id="payable-amount" style="font-weight: bold; color: green;">
+					  مبلغ قابل پرداخت : -
+					</p>						
 						
 					<button type="submit">پرداخت</button>
 				</form>
@@ -717,6 +720,7 @@
 			if (discountCode === "first time") {
 				discount = 0.8;
 				discount_code = "first time"
+				updatePayableAmount(); // به‌روزرسانی مبلغ قابل پرداخت
 				alert('تخفیف 20 درصدی اعمال شد.');
 			} else {
 				alert('کد تخفیف نامعتبر است.');
@@ -724,8 +728,23 @@
 		});
 
 
+		
+		//جهت نمایش مبلغ قابل پرداخت در ماؤول افزایش اعتبار
+		const radioButtons = document.querySelectorAll('input[name="amount"]');
+		const payableAmountText = document.getElementById('payable-amount');
 
-	
+		// افزودن event listener برای رادیو باتن‌ها
+		radioButtons.forEach((radio) => {
+			radio.addEventListener('change', () => {
+			  const selectedAmount = radio.value/10*discount; // مقدار انتخاب شده
+			  payableAmountText.textContent = `مبلغ قابل پرداخت : ${selectedAmount} تومان`;
+			});
+		});		
+		
+		function updatePayableAmount() {
+			const selectedAmount = document.querySelector('input[name="amount"]:checked').value/10*discount; // مقدار انتخاب شده
+			payableAmountText.textContent = `مبلغ قابل پرداخت : ${selectedAmount} تومان`;	
+		}
 		
 		
 		// ارسال اطلاعات به ویو جهت ارسال به صفحه پرداخت
