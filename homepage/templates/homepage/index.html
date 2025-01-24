@@ -313,7 +313,7 @@
 					<input type="text" id="discount-code" placeholder="کد تخفیف">
 					<button type="button" id="apply-discount">اعمال</button><br><br>					
 					<!-- متن مبلغ قابل پرداخت -->
-					<p id="payable-amount" style="font-weight: bold; color: green;">
+					<p id="payable-amount" style="font-weight: bold;">
 					  مبلغ قابل پرداخت : 
 					</p>						
 						
@@ -821,7 +821,6 @@
 
 		// نمایش پاپ آپ نمایش نتیجه تراکنش پس از پرداخت
 		function displayPaymentResult(status, message) {
-			location.reload();
 			var content = document.getElementById('show-result');
 			var result = document.getElementById('payment-result');
 			content.style.display = 'block'; // مخفی کردن محتوای ماژول
