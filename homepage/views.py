@@ -19,6 +19,8 @@ from .models import QuestionHistory
 def homepage(request):
     return render(request, 'homepage/index.html', {'balance': request.user.balance})
 
+
+#تابع پرسش از هوش مصنوعی
 @login_required
 def ask_question(request, section):
     user = request.user
@@ -190,6 +192,7 @@ CallbackURL = 'http://beporsimige.ir/homepage/'
 # Important: need to edit for a real server.
 
 
+#تابع ارسال درخواست به درگاه بانکی
 def send_request(request):
     if request.method == 'POST':
         #دریافت متغیر های ارسالی به درگاه از صفحه وب سمت مشتری
@@ -260,6 +263,7 @@ def send_request(request):
     return JsonResponse({'status': False, 'error': 'درخواست نامعتبر است.'})
 
 
+#تابع نمایش نتیجه تراکنش بانکی و ذخیره نتیجه
 @login_required
 def verify(request):
     #جهت افزایش اعتبار یوزر 
@@ -339,3 +343,27 @@ def verify(request):
             return JsonResponse({'status': False, 'message': 'پرداخت ناموفق', 'data': response})
     except requests.exceptions.ConnectionError:
         return JsonResponse({'status': False, 'message': 'اتصال برقرار نشد'})
+
+
+
+
+#تابع تغییر رمز ورود
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_password = data.get('new_password')
+
+            if not new_password:
+                return JsonResponse({'success': False, 'message': 'رمز عبور نمی تواند خالی باشد.'}, status=400)
+
+            user = request.user
+            user.set_password(new_password)
+            user.save()
+
+            return JsonResponse({'success': True, 'message': 'رمز عبور با موفقیت تغییر کرد.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'message': 'روش درخواست معتبر نیست.'}, status=405)

@@ -85,7 +85,7 @@
             text-decoration: underline;
         }
 
-        /* تنظیم حالت اولیه فرم‌ها */
+        /* تنظیم حالت اولیه فرم ها */
         #register-form {
             display: none;
         }
@@ -106,19 +106,21 @@
             {{ login_form.as_p }}
             <button type="submit" name="login">ورود</button>
             <a href="#" id="show-register">همین حالا ثبت نام کنید</a>
+			<a href="#" id="forgot-password">فراموشی رمز عبور</a>		
         </form>
 
-        <!-- فرم ثبت‌نام -->
+        <!-- فرم ثبت نام -->
         <form method="POST" id="register-form" class="form register">
             {% csrf_token %}
             <h2>ثبت نام</h2>
             {{ reg_form.as_p }}
             <button type="submit" name="register">ثبت نام</button>
-            <a href="#" id="show-login">قبلا ثبت نام کرده‌اید؟ ورود</a>
+            <a href="#" id="show-login">قبلا ثبت نام کرده اید؟ ورود</a>
         </form>
     </div>
 
     <script>
+		//جابجایی بین فرم های ثبت نام و ورود
         document.getElementById('show-register').addEventListener('click', function (e) {
             e.preventDefault();
             document.getElementById('login-form').style.display = 'none';
@@ -130,6 +132,42 @@
             document.getElementById('register-form').style.display = 'none';
             document.getElementById('login-form').style.display = 'block';
         });
+		
+		
+		
+		//تابع برای چک کردن مولفه های مورد نیاز برای فراموشی رمز عبور و ارسال درخواست به سرور
+		document.getElementById('forgot-password').addEventListener('click', function (e) {
+			e.preventDefault();
+			const mobileInput = document.querySelector('#login-form input[name="username"]');
+			const mobileNumber = mobileInput ? mobileInput.value.trim() : null;
+
+			if (!mobileNumber) {
+				alert("لطفاً شماره موبایل خود را وارد کنید.");
+				return;
+			}
+
+			fetch('/forgot-password/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': '{{ csrf_token }}',
+				},
+				body: JSON.stringify({ mobile_number: mobileNumber }),
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert("رمز عبور جدید به زودی از طریق پیامک برای شما ارسال خواهد شد");
+				} else {
+					alert(data.message || "خطایی رخ داده است. لطفاً دوباره تلاش کنید.");
+				}
+			})
+			.catch(error => console.error("Error:", error));
+		});		
+		
+		
+		
+		
     </script>
 </body>
 </html>

@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
+#برای فراموشی رمز عبور
+from django.http import JsonResponse
+from .models import CustomUser
+
 
 def auth_page(request):
     reg_form = RegistrationForm()
@@ -33,3 +37,26 @@ def auth_page(request):
                 messages.error(request, "فرم ورود معتبر نیست.")
 
     return render(request, 'accounts/auth_page.html', {'reg_form': reg_form, 'login_form': login_form})
+
+
+
+
+#تابع فراموشی رمز ورود
+def forgot_password(request):
+    if request.method == "POST":
+        import json
+        data = json.loads(request.body)
+        mobile_number = data.get('mobile_number')
+
+        if not mobile_number:
+            return JsonResponse({'success': False, 'message': 'شماره موبایل ارسال نشده است.'})
+
+        try:
+            user = CustomUser.objects.get(mobile_number=mobile_number)
+            user.is_forget = True
+            user.save()
+            return JsonResponse({'success': True})
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'کاربری با این شماره موبایل یافت نشد.'})
+    
+    return JsonResponse({'success': False, 'message': 'درخواست نامعتبر است.'})    

@@ -4,17 +4,17 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ('mobile_number', 'full_name', 'balance', 'is_staff', 'is_admin', 'is_active')  # اضافه کردن balance به list_display
+    list_display = ('mobile_number', 'full_name', 'balance', 'is_staff', 'is_admin', 'is_active' ,'is_forget')  # اضافه کردن balance به list_display
     list_filter = ('is_staff', 'is_admin', 'is_active')
     fieldsets = (
         (None, {'fields': ('mobile_number', 'password')}),
         ('اطلاعات شخصی', {'fields': ('full_name', 'balance')}),  # اضافه کردن balance به fieldsets
-        ('دسترسی‌ها', {'fields': ('is_staff', 'is_admin', 'is_active')}),
+        ('دسترسی‌ها', {'fields': ('is_staff', 'is_admin', 'is_active','is_forget')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('mobile_number', 'full_name', 'password1', 'password2', 'balance', 'is_staff', 'is_admin', 'is_active'),
+            'fields': ('mobile_number', 'full_name', 'password1', 'password2', 'balance', 'is_staff', 'is_admin', 'is_active','is_forget'),
         }),
     )
     search_fields = ('mobile_number', 'full_name')

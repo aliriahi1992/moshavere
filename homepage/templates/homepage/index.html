@@ -30,7 +30,7 @@
 			display: none;
             background-color: #ffffff;
             border-radius: 10px;
-            padding: 20px;
+            padding: 10px;
             width: 30%;
             box-sizing: border-box;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -132,10 +132,10 @@
         .user-info {
             background-color: #ffffff;
             border-radius: 10px;
-            padding: 20px;
+            padding: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin: 20px auto;
+            margin: 5px auto;
             width: 90%;
         }
         .user-info p {
@@ -206,7 +206,26 @@
 			overflow: auto;
 			background-color: rgb(0,0,0);
 			background-color: rgba(0,0,0,0.4);
+		}	
+
+
+		/* استایل پاپ آپ تغییر رمز ورود کاربر */
+		.modal3 {
+			font-family: 'IRANSansWebFaNum';
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
 		}		
+
+
+		
 		
 		/* استایل تکست باکس و دکمه اعمال */
 		#discount-code {
@@ -263,7 +282,8 @@
         <p>{{ user.full_name }}</p>
         <p>{{ user.mobile_number }}</p>
         <p>تعداد پرسش باقیمانده : <span id="balance">{{ balance }}</span></p>
-		<p><a href="#" id="increase-balance-link">افزایش اعتبار</a></p>  <!-- لینک افزایش اعتبار -->		
+		<p><a href="#" id="increase-balance-link">افزایش اعتبار</a></p>  <!-- لینک افزایش اعتبار -->
+		<p><a href="#" id="change-password-link">تغییر رمز ورود</a></p>  <!-- لینک افزایش اعتبار -->
         <p><a href="{% url 'accounts:logout' %}">خروج از حساب کاربری</a></p>  <!-- لینک خروج از حساب کاربری -->
 
 		
@@ -301,13 +321,13 @@
 			<h2>افزایش اعتبار</h2>
 				<form id="increase-balance-form">
 					<input type="radio" id="10" name="amount" value="100000">
-					<label for="10">10 هزار تومان (10 سوال)</label><br>
+					<label for="10">10 هزار تومان (10 پرسش)</label><br>
 					<input type="radio" id="20" name="amount" value="200000">
-					<label for="20">20 هزار تومان (20 سوال)</label><br>
+					<label for="20">20 هزار تومان (20 پرسش)</label><br>
 					<input type="radio" id="30" name="amount" value="300000">
-					<label for="30">30 هراز تومان (35 سوال)</label><br>
+					<label for="30">30 هزار تومان (35 پرسش)</label><br>
 					<input type="radio" id="50" name="amount" value="500000">
-					<label for="50">50 هزار تومان (60 سوال)</label><br><br>
+					<label for="50">50 هزار تومان (60 پرسش)</label><br><br>
 					
 					<!-- تکست باکس و دکمه اعمال کد تخفیف -->
 					<input type="text" id="discount-code" placeholder="کد تخفیف">
@@ -328,8 +348,6 @@
 		</div>
 	</div>
 
-
-
 	
 	
 	
@@ -345,6 +363,24 @@
 	
 
 	
+
+	<!-- فرم تغییر رمز ورود -->
+	<div id="change-password-modal" class="modal3">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div id="change-password-content">
+			<h2>تغییر رمز ورود</h2>
+				<form id="change-password-form">
+					<label>رمز ورود جدید:</label>
+					<input type="password" id="new-password"><br><br>
+					<label>تکرار رمز ورود جدید:</label>
+					<input type="password" id="confirm-password"><br><br>
+					<button type="button" id="apply-password">تغییر رمز ورود</button><br><br>
+				</form>
+			</div>	
+		</div>
+	</div>	
+
 	
 	
 	
@@ -394,8 +430,8 @@
 
         <!-- سکشن سوم -->
         <div id="section3" class="section">
-            <img src="/img/moshaver.jpg" alt="پرسش از مشاور خانواده">
-            <h2>پرسش از مشاور خانواده</h2>
+            <img src="/img/moshaver.jpg" alt="پرسش از مشاور">
+            <h2>پرسش از مشاور</h2>
             <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
             <form method="POST" id="form3" onsubmit="submitForm(event, 3)">
                 {% csrf_token %}
@@ -691,6 +727,13 @@
 			event.preventDefault();
 			document.getElementById('increase-balance-modal').style.display = 'block';
 		};
+		
+		// باز کردن پاپ آپ افزایش اعتبار
+		document.getElementById('change-password-link').onclick = function(event) {
+			event.preventDefault();
+			document.getElementById('change-password-modal').style.display = 'block';
+		};		
+		
 
 		// بستن پاپ آپ افزایش اعتبار
 		document.getElementsByClassName('close')[0].onclick = function() {
@@ -701,6 +744,12 @@
 		document.getElementsByClassName('close')[1].onclick = function() {
 			document.getElementById('show-result').style.display = 'none';
 		};
+		
+		// بستن پاپ آپ تغییر رمز ورود
+		document.getElementsByClassName('close')[2].onclick = function() {
+			document.getElementById('change-password-modal').style.display = 'none';
+		};		
+		
 		
 		//تشخیص سیستم عامل کاربر
 		function getOS() {
@@ -862,7 +911,7 @@
 		};
 
 				
-		// مخفی کردن پاپ آپ های افزایش اعتبار و نمایش نتیجه تراکنش با کلیک کردن خارج از آنها		
+		// مخفی کردن پاپ آپ های افزایش اعتبار و نمایش نتیجه تراکنش و تغییر رمز ورود با کلیک کردن خارج از آنها		
 		window.onclick = function(event) {
 			var modal = document.getElementById('increase-balance-modal');
 			if (event.target === modal) {
@@ -872,7 +921,87 @@
 			if (event.target === modal2) {
 				modal2.style.display = 'none';
 			}
+			var modal3 = document.getElementById('change-password-modal');
+			if (event.target === modal3) {
+				modal3.style.display = 'none';
+			}			
+			
+			
 		};
+		
+		
+		//اعتبار سنجی فرم تغییر رمز ورود
+		const changePasswordButton = document.getElementById('apply-password');
+
+		changePasswordButton.addEventListener('click', () => {
+			const newPassword = document.getElementById('new-password').value;
+			const confirmPassword = document.getElementById('confirm-password').value;
+
+			if (newPassword === '' || confirmPassword === '') {
+				alert('رمز ورود نمی تواند خالی باشد.');
+				return;
+			}
+
+			if (newPassword !== confirmPassword) {
+				alert('رمز ورود ها یکسان نیستند.');
+				return;
+			}
+
+			// ارسال به سرور
+			sendPasswordChange(newPassword);
+		});		
+		
+		
+		
+		//تابعی برای تغییر رمز ورود
+		function sendPasswordChange(newPassword) {
+			fetch('/homepage/change-password/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': getCsrfToken(), // اگر از CSRF استفاده می کنید
+				},
+				body: JSON.stringify({ new_password: newPassword }),
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.success) {
+					alert(data.message); // رمز عبور با موفقیت تغییر کرد
+					//مخفی کردن پاپ آپ تغییر رمز ورود
+					document.getElementById('change-password-modal').style.display = 'none';	
+			        document.getElementById('new-password').value = '';
+			        document.getElementById('confirm-password').value = '';					
+					
+				} else {
+					alert(`خطا: ${data.message}`); // پیام خطا از سرور
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('خطایی در ارتباط با سرور رخ داده است.');
+			});
+		}
+
+		// دریافت CSRF Token (اختیاری)
+		function getCsrfToken() {
+			const name = 'csrftoken';
+			const cookies = document.cookie.split(';');
+			for (let cookie of cookies) {
+				const [key, value] = cookie.trim().split('=');
+				if (key === name) {
+					return value;
+				}
+			}
+			return '';
+		}
+				
+		
+		
     </script>
 </body>
 </html>
