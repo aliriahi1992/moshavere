@@ -238,6 +238,7 @@
 		  width: 120px; /* عرض تکست باکس */
 		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
 		}
+	
 
 		#apply-discount {
 		  height: 40px; /* ارتفاع دکمه */
@@ -271,6 +272,31 @@
 		  font-size: 14px;
 		  margin-left: 10px; /* فاصله بین متن و دکمه */
 		}
+
+		/* استایل تکست باکس تغییر رمز عبور*/
+		#new-password {
+		  font-family: 'IRANSansWebFaNum';
+		  height: 40px; /* ارتفاع تکست باکس */
+		  padding: 0 10px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  border: 1px solid #ccc; /* حاشیه */
+		  border-radius: 5px; /* گوشه های گرد */
+		  width: 150px; /* عرض تکست باکس */
+		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
+		}		
+		
+
+		/* استایل تکست باکس تغییر رمز عبور*/
+		#confirm-password {
+		  font-family: 'IRANSansWebFaNum';
+		  height: 40px; /* ارتفاع تکست باکس */
+		  padding: 0 10px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  border: 1px solid #ccc; /* حاشیه */
+		  border-radius: 5px; /* گوشه های گرد */
+		  width: 150px; /* عرض تکست باکس */
+		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
+		}	
 
 		
 		
@@ -371,10 +397,8 @@
 			<div id="change-password-content">
 			<h2>تغییر رمز ورود</h2>
 				<form id="change-password-form">
-					<label>رمز ورود جدید:</label>
-					<input type="password" id="new-password"><br><br>
-					<label>تکرار رمز ورود جدید:</label>
-					<input type="password" id="confirm-password"><br><br>
+					<input type="password" id="new-password" placeholder="رمز ورود جدید"><br><br>	
+					<input type="password" id="confirm-password" placeholder="رمز ورود جدید"><br><br>
 					<button type="button" id="apply-password">تغییر رمز ورود</button><br><br>
 				</form>
 			</div>	
