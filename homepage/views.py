@@ -152,11 +152,10 @@ def ask_question(request, section):
 
                 return JsonResponse({'error': str(e)})
 
-            naive_datetime = datetime.datetime.now()
-            aware_datetime = timezone.make_aware(naive_datetime)
+
             #ذخیره سازی سوال کاربر و متغیر های مورد نیاز دیگر در دیتابیس
             question = QuestionHistory(
-                created_at = aware_datetime,
+                created_at = datetime.now(),
                 status = status,
                 user_phone_number = user_phone_number,
                 user_full_name = user_full_name,

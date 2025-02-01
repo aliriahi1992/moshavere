@@ -115,6 +115,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://beporsimige.ir",
+    "https://www.beporsimige.ir"  # در صورت نیاز نسخه www را هم اضافه کنید
+]
+
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
