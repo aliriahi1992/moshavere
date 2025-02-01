@@ -1,7 +1,7 @@
 from django.db import models
 
 class TransactionHistory(models.Model):
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=255, default='NOK')
     user_phone_number = models.CharField(max_length=11)
     user_full_name = models.CharField(max_length=255)
@@ -18,7 +18,7 @@ class TransactionHistory(models.Model):
 
 
 class QuestionHistory(models.Model):
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=255, default='None')
     user_phone_number = models.CharField(max_length=11)
     user_full_name = models.CharField(max_length=255)
