@@ -150,8 +150,8 @@ def ask_question(request, section):
                 )
                 question.save()                
 
-                return JsonResponse({'error': str(e)})
-
+                #return JsonResponse({'error': str(e)})
+                return JsonResponse({'error': str(response)})
 
             #ذخیره سازی سوال کاربر و متغیر های مورد نیاز دیگر در دیتابیس
             question = QuestionHistory(
@@ -274,7 +274,7 @@ def verify(request):
        
         #ذخیره سازی سابقه تراکنش به عنوان تراکنشی نا موفق
         transaction = TransactionHistory(
-            created_at = datetime.now(),
+            #created_at = datetime.now(),
             status = "NOK",
             user_phone_number = request.session.get('user_phone_number'),
             user_full_name = request.session.get('user_full_name'),
@@ -320,7 +320,7 @@ def verify(request):
             
             #ذخیره سازی سابقه تراکنش به عنوان تراکنش موفق
             transaction = TransactionHistory(
-                created_at = datetime.now(),
+                #created_at = datetime.now(),
                 status = "OK",
                 user_phone_number = request.session.get('user_phone_number'),
                 user_full_name = request.session.get('user_full_name'),
