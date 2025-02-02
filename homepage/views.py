@@ -80,7 +80,7 @@ def ask_question(request, section):
 
         if number:
             try:
-                GOOGLE_API_KEY = os.getenv('API_KEY_2')
+                GOOGLE_API_KEY = os.getenv('API_KEY_1')
                 #مقدار دهی به متغیر های ذخیره سازی در دیتابیس
                 api_key_name = "API_KEY_1"
 
