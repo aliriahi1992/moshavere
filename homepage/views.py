@@ -150,8 +150,7 @@ def ask_question(request, section):
                 )
                 question.save()                
 
-                #return JsonResponse({'error': str(e)})
-                return JsonResponse({'error': str(response)})
+                return JsonResponse({'error': str(e)})
 
             #ذخیره سازی سوال کاربر و متغیر های مورد نیاز دیگر در دیتابیس
             question = QuestionHistory(
