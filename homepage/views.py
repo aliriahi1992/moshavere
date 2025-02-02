@@ -149,7 +149,7 @@ def ask_question(request, section):
                     user_os = user_os
                 )
                 question.save()                
-
+                print(f"Error: {e}")
                 return JsonResponse({'error': str(e)})
 
 
