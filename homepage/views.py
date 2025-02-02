@@ -80,7 +80,7 @@ def ask_question(request, section):
 
         if number:
             try:
-                GOOGLE_API_KEY = os.getenv('API_KEY_1')
+                GOOGLE_API_KEY = os.getenv('API_KEY_2')
                 #مقدار دهی به متغیر های ذخیره سازی در دیتابیس
                 api_key_name = "API_KEY_1"
 
@@ -151,6 +151,7 @@ def ask_question(request, section):
                 question.save()                
 
                 return JsonResponse({'error': str(e)})
+
 
             #ذخیره سازی سوال کاربر و متغیر های مورد نیاز دیگر در دیتابیس
             question = QuestionHistory(
