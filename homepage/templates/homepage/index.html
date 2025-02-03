@@ -145,11 +145,11 @@
         }
         #dropdown {
 			font-family: 'IRANSansWebFaNum';
-			margin-top: 20px; /* فاصله بیشتر از متن های دیگر */
-			padding: 10px;
+			margin-top: 0px; /* فاصله بیشتر از متن های دیگر */
+			padding: 7px;
 			font-size: 16px;
 			width: 80%; /* عرض دراپ دان 80% از عرض ظرف */
-			max-width: 400px; /* حداکثر عرض برای کنترل بهتر */
+			max-width: 250px; /* حداکثر عرض برای کنترل بهتر */
 			text-align: center; /* وسط چین کردن متن در داخل دراپ دان */
 			box-sizing: border-box; /* جلوگیری از افزایش غیرمنتظره عرض */
         }		
@@ -304,7 +304,7 @@
 		/* کد CSS */
 		.header {
 			display: flex;
-			justify-content: center; /* وسط‌چین کردن تمام عناصر */
+			flex-direction: column; /* نمایش المان‌ها به صورت عمودی */
 			align-items: center;
 			background-color: #f8f9fa;
 			padding: 10px 20px;
@@ -346,8 +346,20 @@
 		.display-section {
 			display: flex;
 			align-items: center;
+			justify-content: center;
 			gap: 10px; /* فاصله بین عبارت "نمایش" و دراپ‌دان */
+			margin-top: 20px; /* فاصله بیشتر بین بخش "نمایش" و بقیه المان‌ها */
 		}
+
+		.dropdown-label {
+			font-size: 16px;
+			line-height: 1.5; /* تنظیم ارتفاع خط برای وسط‌چین کردن عمودی */
+			display: flex;
+			align-items: center;
+			justify-content: center; /* وسط‌چین کردن عمودی عبارت "نمایش" */
+			height: 100%; /* تنظیم ارتفاع برای وسط‌چین کردن عمودی */
+		}
+
 
 		/* تنظیمات مخصوص نمایش در دستگاه‌های کوچکتر */
 		@media screen and (max-width: 768px) {
@@ -362,10 +374,15 @@
 				gap: 10px; /* فاصله بین المان‌ها برای نمایش بهتر در دستگاه‌های کوچکتر */
 			}
 
+			.display-section {
+				justify-content: center; /* وسط‌چین کردن عبارت "نمایش" و دراپ‌دان */
+			}
+
 			.user-info select {
 				margin-top: 10px; /* فاصله بیشتر بین قسمت نمایش و بقیه المان‌ها */
 			}
 		}
+
 
 
 	
@@ -377,7 +394,6 @@
 
 
 	<!-- کد HTML -->
-
 	<div class="header">
 		<div class="user-info">
 			<p><i class="fas fa-user"></i> {{ user.full_name }}</p>
@@ -386,34 +402,36 @@
 			<p><a href="#" id="increase-balance-link"><i class="fas fa-plus-circle"></i> افزایش اعتبار</a></p>
 			<p><a href="#" id="change-password-link"><i class="fas fa-key"></i> تغییر رمز ورود</a></p>
 			<p><a href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> خروج از حساب کاربری</a></p>
-			<div class="display-section">
-				<label for="dropdown" style="font-size: 16px;">نمایش</label>
-				<select id="dropdown">
-					<option value="all">همه موارد</option>
-					<option value="section1">متخصص پوست و مو</option>
-					<option value="section2">استاد</option>
-					<option value="section3">مشاور خانواده</option>
-					<option value="section4">متخصص تغذیه</option>
-					<option value="section5">مربی</option>
-					<option value="section6">وکیل</option>
-					<option value="section7">مشاور تحصیلی</option>
-					<option value="section8">پزشک</option>
-					<option value="section9">مشاور کسب و کار</option>
-					<option value="section10">متخصص بازار های مالی</option>
-					<option value="section11">مشاور مهاجرت</option>
-					<option value="section12">برنامه نویس</option>
-					<option value="section13">مشاور خرید</option>
-					<option value="section14">تعمیر کار</option>
-					<option value="section15">مشاور سرمایه گذاری</option>
-				</select> 
-			</div>
 		</div>
+
 	</div>
+
 
 
 
     <div id="error-message" class="error-message" style="display:none;"></div>
 
+		<div class="display-section">
+			<label for="dropdown" class="dropdown-label">نمایش</label>
+			<select id="dropdown">
+				<option value="all">همه موارد</option>
+				<option value="section1">متخصص پوست و مو</option>
+				<option value="section2">استاد</option>
+				<option value="section3">مشاور خانواده</option>
+				<option value="section4">متخصص تغذیه</option>
+				<option value="section5">مربی</option>
+				<option value="section6">وکیل</option>
+				<option value="section7">مشاور تحصیلی</option>
+				<option value="section8">پزشک</option>
+				<option value="section9">مشاور کسب و کار</option>
+				<option value="section10">متخصص بازار های مالی</option>
+				<option value="section11">مشاور مهاجرت</option>
+				<option value="section12">برنامه نویس</option>
+				<option value="section13">مشاور خرید</option>
+				<option value="section14">تعمیر کار</option>
+				<option value="section15">مشاور سرمایه گذاری</option>
+			</select> 
+		</div>
 	
 	<!-- فرم افزایش اعتبار -->
 	<div id="increase-balance-modal" class="modal">
