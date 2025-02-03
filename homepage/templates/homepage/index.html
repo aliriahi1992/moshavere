@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -297,44 +298,119 @@
 		  width: 150px; /* عرض تکست باکس */
 		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
 		}	
-
 		
+		
+
+		/* کد CSS */
+		.header {
+			display: flex;
+			justify-content: center; /* وسط‌چین کردن تمام عناصر */
+			align-items: center;
+			background-color: #f8f9fa;
+			padding: 10px 20px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			flex-wrap: wrap; /* برای نمایش در دستگاه‌های کوچکتر */
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+			gap: 20px; /* فاصله بین المان‌ها */
+			flex-wrap: wrap; /* برای نمایش در دستگاه‌های کوچکتر */
+			justify-content: center; /* وسط‌چین کردن تمام المان‌های کاربر */
+		}
+
+		.user-info p {
+			margin: 0;
+			padding: 0 10px;
+			font-size: 14px;
+			color: #333;
+			display: flex;
+			align-items: center;
+			gap: 5px; /* فاصله بین آیکون و متن */
+		}
+
+		.user-info a {
+			text-decoration: none;
+			color: #007bff;
+			font-size: 14px;
+			display: flex;
+			align-items: center;
+			gap: 5px; /* فاصله بین آیکون و متن */
+		}
+
+		.user-info a:hover {
+			text-decoration: underline;
+		}
+
+		.display-section {
+			display: flex;
+			align-items: center;
+			gap: 10px; /* فاصله بین عبارت "نمایش" و دراپ‌دان */
+		}
+
+		/* تنظیمات مخصوص نمایش در دستگاه‌های کوچکتر */
+		@media screen and (max-width: 768px) {
+			.header {
+				flex-direction: column; /* نمایش المان‌ها به صورت عمودی */
+				align-items: center;
+			}
+
+			.user-info {
+				flex-direction: column; /* نمایش المان‌های اطلاعات کاربر به صورت عمودی */
+				align-items: center;
+				gap: 10px; /* فاصله بین المان‌ها برای نمایش بهتر در دستگاه‌های کوچکتر */
+			}
+
+			.user-info select {
+				margin-top: 10px; /* فاصله بیشتر بین قسمت نمایش و بقیه المان‌ها */
+			}
+		}
+
+
+	
 		
     </style>
 </head>
 <body>
-    <!-- نمایش اطلاعات کاربر -->
-    <div class="user-info">
-        <p>{{ user.full_name }}</p>
-        <p>{{ user.mobile_number }}</p>
-        <p>تعداد پرسش باقیمانده : <span id="balance">{{ balance }}</span></p>
-		<p><a href="#" id="increase-balance-link">افزایش اعتبار</a></p>  <!-- لینک افزایش اعتبار -->
-		<p><a href="#" id="change-password-link">تغییر رمز ورود</a></p>  <!-- لینک افزایش اعتبار -->
-        <p><a href="{% url 'accounts:logout' %}">خروج از حساب کاربری</a></p>  <!-- لینک خروج از حساب کاربری -->
 
-		
-		<label for="dropdown" style="margin-right: 10px; font-size: 16px;">نمایش</label>
-		<select id="dropdown">
-			<option value="all">همه موارد</option>
-			<option value="section1">متخصص پوست و مو</option>
-			<option value="section2">استاد</option>
-			<option value="section3">مشاور خانواده</option>
-			<option value="section4">متخصص تغذیه</option>
-			<option value="section5">مربی</option>
-			<option value="section6">وکیل</option>
-			<option value="section7">مشاور تحصیلی</option>
-			<option value="section8">پزشک</option>
-			<option value="section9">مشاور کسب و کار</option>
-			<option value="section10">متخصص بازار های مالی</option>
-			<option value="section11">مشاور مهاجرت</option>
-			<option value="section12">برنامه نویس</option>
-			<option value="section13">مشاور خرید</option>
-			<option value="section14">تعمیر کار</option>
-			<option value="section15">مشاور سرمایه گذاری</option>
-		</select>			
-		
-		
-    </div>
+
+
+	<!-- کد HTML -->
+
+	<div class="header">
+		<div class="user-info">
+			<p><i class="fas fa-user"></i> {{ user.full_name }}</p>
+			<p><i class="fas fa-phone"></i> {{ user.mobile_number }}</p>
+			<p><i class="fas fa-question-circle"></i> تعداد پرسش باقیمانده: <span id="balance">{{ balance }}</span></p>
+			<p><a href="#" id="increase-balance-link"><i class="fas fa-plus-circle"></i> افزایش اعتبار</a></p>
+			<p><a href="#" id="change-password-link"><i class="fas fa-key"></i> تغییر رمز ورود</a></p>
+			<p><a href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> خروج از حساب کاربری</a></p>
+			<div class="display-section">
+				<label for="dropdown" style="font-size: 16px;">نمایش</label>
+				<select id="dropdown">
+					<option value="all">همه موارد</option>
+					<option value="section1">متخصص پوست و مو</option>
+					<option value="section2">استاد</option>
+					<option value="section3">مشاور خانواده</option>
+					<option value="section4">متخصص تغذیه</option>
+					<option value="section5">مربی</option>
+					<option value="section6">وکیل</option>
+					<option value="section7">مشاور تحصیلی</option>
+					<option value="section8">پزشک</option>
+					<option value="section9">مشاور کسب و کار</option>
+					<option value="section10">متخصص بازار های مالی</option>
+					<option value="section11">مشاور مهاجرت</option>
+					<option value="section12">برنامه نویس</option>
+					<option value="section13">مشاور خرید</option>
+					<option value="section14">تعمیر کار</option>
+					<option value="section15">مشاور سرمایه گذاری</option>
+				</select> 
+			</div>
+		</div>
+	</div>
+
+
 
     <div id="error-message" class="error-message" style="display:none;"></div>
 
