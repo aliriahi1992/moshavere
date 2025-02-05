@@ -24,7 +24,7 @@
 			color: #333;
 		}
 
-		/* تنظیمات بک‌گراند برای حالت موبایل */
+		/* تنظیمات بک گراند برای حالت موبایل */
 		@media (max-width: 768px) {
 			body {
 				background: url('/img/background-mobile.jpg') no-repeat center center fixed;
@@ -48,7 +48,7 @@
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 20px;
-            width: 200px;
+            width: 300px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -59,7 +59,7 @@
         }
 
         input, button {
-            font-family: 'IRANSansWebFaNum', Arial, sans-serif; /* اضافه کردن فونت ایران‌سنس */
+            font-family: 'IRANSansWebFaNum', Arial, sans-serif; /* اضافه کردن فونت ایران سنس */
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -103,10 +103,31 @@
                 width: 90%;
             }
         }
+		
+		/* باکس تاریک */
+		.dark-box {
+			font-family: 'IRANSansWebFaNum';
+			background-color: rgba(0, 0, 0, 0.7); /* رنگ تیره با شفافیت */
+			padding: 20px;
+			margin-bottom: 20px;
+			border-radius: 10px; /* گوشه‌های گرد */
+		}
+
+		.dark-box h1 {
+			color: #fff; /* رنگ سفید */
+			font-size: 1.5em;
+			margin: 0;		
+		
+		
     </style>
 </head>
 <body>
     <div class="container">
+	
+	    <div class="dark-box">
+            <h1>بپرسی میگه!<br>نخستین مشاور هوش مصنوعی پارسی</h1>
+        </div>
+	
         <!-- فرم ورود -->
         <form method="POST" id="login-form" class="form login">
             {% csrf_token %}
