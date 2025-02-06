@@ -117,6 +117,8 @@ def ask_question(request, section):
                     prompt = "به عنوان یک تعمیر کار پاسخ این سوال رو بده " + str(number)
                 elif section == 15:
                     prompt = "به عنوان یک مشاور سرمایه گذاری پاسخ این سوال رو بده " + str(number)
+                elif section == 16:
+                    prompt = "به عنوان یک متخصص موبایل و کامپیوتر پاسخ این سوال رو بده " + str(number)                    
 
 
                 response = model.generate_content(prompt)

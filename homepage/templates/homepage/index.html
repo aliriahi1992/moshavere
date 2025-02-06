@@ -500,6 +500,7 @@
 				<option value="section13">مشاور خرید</option>
 				<option value="section14">تعمیر کار</option>
 				<option value="section15">مشاور سرمایه گذاری</option>
+				<option value="section16">متخصص موبایل و کامپیوتر</option>
 			</select> 
 		</div>
 	
@@ -830,6 +831,24 @@
             <label class="label" id="result15">سوال خود را بپرسید</label>
         </div>			
 		
+
+
+        <!-- سکشن شانزدهم -->
+        <div id="section16" class="section">
+            <img src="/img/aliriahi.jpg" alt="پرسش از متخصص موبایل و کامپیوتر">
+            <h2>پرسش از متخصص موبایل و کامپیوتر</h2>
+            <p>سوالات خود را از یک خبره موبایل و کامپیوتر بپرسید</p>
+            <form method="POST" id="form16" onsubmit="submitForm(event, 16)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+                    <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+                </div>
+            </form>
+            <label class="label" id="result15">سوال خود را بپرسید</label>
+        </div>		
+
+
 		
 
     </div>
