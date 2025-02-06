@@ -317,6 +317,7 @@
 			flex-wrap: wrap; /* برای نمایش در دستگاه های کوچکتر */
 		}
 
+
 		.user-info {
 			display: flex;
 			align-items: center;
@@ -389,7 +390,7 @@
 		}
 
 
-		.custom-header {
+		.custom-header {		
 			font-family: 'MRT_poster';
 			background-color: #333;
 			color: #fff;
@@ -411,6 +412,21 @@
 			font-size: 1em;
 			color: #ddd;
 		}
+		
+		/* برای نمایش ثابت کاستوم هدر در اسکرول صفحه */
+		.custom-header.sticky {
+			position: fixed;
+			width: 100%;
+			z-index: 9999; /* مقدار بالا برای جلوتر بودن */
+			font-family: 'MRT_poster';
+			background-color: #333;
+			color: #fff;
+			text-align: right;
+			padding: 20px;
+			display: flex;
+			align-items: center;
+			transition: all 0.4s ease-in-out;
+		}		
 
 	
 		
@@ -441,8 +457,6 @@
 		</div>
 
 	</div>
-
-
 
 
     <div id="error-message" class="error-message" style="display:none;"></div>
@@ -1149,8 +1163,17 @@
 			}
 			return '';
 		}
-				
 		
+		//برای نمایش ثابت هدر ها در اسکرول صفحه	
+		window.addEventListener("scroll", function () {
+			var custom_header = document.querySelector(".custom-header");
+			if (window.scrollY > 0) { // پس از 50 پیکسل اسکرول
+				custom_header.classList.add("sticky");
+				header.classList.add("sticky");
+			} else {
+				custom_header.classList.remove("sticky");
+			}
+		});		
 		
     </script>
 </body>
