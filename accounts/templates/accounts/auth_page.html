@@ -135,41 +135,6 @@
 			margin: 0;				
 		}	
 			
-			
-			
-		/* فوتر در ابتدا زیر صفحه است */
-		.footer {
-			background-color: black;
-			padding: 20px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			gap: 20px;
-			width: 100%;
-			position: relative; /* فوتر دیگر روی بک‌گراند نیست */
-		}
-
-
-
-		/* استایل ایمیل */
-		.footer-email {
-			color: white;
-			font-size: 1.2em;
-			margin: 0;
-		}
-
-		/* استایل لوگو */
-		.footer-logo {
-			height: 40px;
-			width: auto;
-		}
-
-		/* نمایش فوتر با بالا آمدن */
-		.show-footer {
-			bottom: 0; /* فوتر به جای اصلی خود بازمی‌گردد */
-		}
-
-
 		
 		
     </style>
@@ -206,12 +171,6 @@
     </div>
 
 
-	<footer class="footer">
-		<a href="https://yourwebsite.com">
-			<img src="/img/logo.png" alt="لوگو" class="footer-logo">
-		</a>
-		<p class="footer-email">info@yourwebsite.com</p>
-	</footer>
 
 
 
@@ -261,20 +220,7 @@
 			.catch(error => console.error("Error:", error));
 		});		
 		
-		//کد های مربوط به هاید کردن و آن هاید کردن فوتر بعد از اسکرول
-		// نمایش فوتر بعد از ۳ ثانیه
-		setTimeout(() => {
-			document.querySelector(".footer").classList.add("show-footer");
-		}, 3000);
-
-		// نمایش فوتر هنگام حرکت ماوس یا لمس صفحه
-		document.addEventListener("mousemove", function () {
-			document.querySelector(".footer").classList.add("show-footer");
-		}, { once: true });
-
-		document.addEventListener("touchstart", function () {
-			document.querySelector(".footer").classList.add("show-footer");
-		}, { once: true });
+		
 		
 		
     </script>
