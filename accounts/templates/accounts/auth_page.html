@@ -40,6 +40,7 @@
 
         .container {
             max-width: 1200px;
+			min-height: 100vh; /* حداقل ارتفاع برابر کل صفحه */
             margin: 0 auto;
             padding: 50px 20px;
             display: flex;
@@ -145,11 +146,11 @@
 			justify-content: center;
 			align-items: center;
 			gap: 20px;
-			position: fixed;
-			bottom: -100px; /* فوتر را زیر صفحه مخفی می‌کند */
 			width: 100%;
-			transition: bottom 0.5s ease-out;
+			position: relative; /* فوتر دیگر روی بک‌گراند نیست */
 		}
+
+
 
 		/* استایل ایمیل */
 		.footer-email {
