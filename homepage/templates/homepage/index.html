@@ -11,6 +11,12 @@
             font-family: 'IRANSansWebFaNum';
             src: url('/font/IRANSansWebFaNum.ttf') format('truetype');
         }
+		/* اضافه کردن فونت MRT_poster */
+		@font-face {
+			font-family: 'MRT_poster';
+			src: url('/font/MRT_poster.ttf') format('truetype');
+		}
+		
         body {
             font-family: 'IRANSansWebFaNum';
             direction: rtl;
@@ -304,20 +310,20 @@
 		/* کد CSS */
 		.header {
 			display: flex;
-			flex-direction: column; /* نمایش المان‌ها به صورت عمودی */
+			flex-direction: column; /* نمایش المان ها به صورت عمودی */
 			align-items: center;
 			background-color: #f8f9fa;
 			padding: 10px 20px;
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-			flex-wrap: wrap; /* برای نمایش در دستگاه‌های کوچکتر */
+			flex-wrap: wrap; /* برای نمایش در دستگاه های کوچکتر */
 		}
 
 		.user-info {
 			display: flex;
 			align-items: center;
-			gap: 20px; /* فاصله بین المان‌ها */
-			flex-wrap: wrap; /* برای نمایش در دستگاه‌های کوچکتر */
-			justify-content: center; /* وسط‌چین کردن تمام المان‌های کاربر */
+			gap: 20px; /* فاصله بین المان ها */
+			flex-wrap: wrap; /* برای نمایش در دستگاه های کوچکتر */
+			justify-content: center; /* وسط چین کردن تمام المان های کاربر */
 		}
 
 		.user-info p {
@@ -347,43 +353,65 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			gap: 10px; /* فاصله بین عبارت "نمایش" و دراپ‌دان */
-			margin-top: 20px; /* فاصله بیشتر بین بخش "نمایش" و بقیه المان‌ها */
+			gap: 10px; /* فاصله بین عبارت "نمایش" و دراپ دان */
+			margin-top: 20px; /* فاصله بیشتر بین بخش "نمایش" و بقیه المان ها */
 		}
 
 		.dropdown-label {
 			font-size: 16px;
-			line-height: 1.5; /* تنظیم ارتفاع خط برای وسط‌چین کردن عمودی */
+			line-height: 1.5; /* تنظیم ارتفاع خط برای وسط چین کردن عمودی */
 			display: flex;
 			align-items: center;
-			justify-content: center; /* وسط‌چین کردن عمودی عبارت "نمایش" */
-			height: 100%; /* تنظیم ارتفاع برای وسط‌چین کردن عمودی */
+			justify-content: center; /* وسط چین کردن عمودی عبارت "نمایش" */
+			height: 100%; /* تنظیم ارتفاع برای وسط چین کردن عمودی */
 		}
 
 
-		/* تنظیمات مخصوص نمایش در دستگاه‌های کوچکتر */
+		/* تنظیمات مخصوص نمایش در دستگاه های کوچکتر */
 		@media screen and (max-width: 768px) {
 			.header {
-				flex-direction: column; /* نمایش المان‌ها به صورت عمودی */
+				flex-direction: column; /* نمایش المان ها به صورت عمودی */
 				align-items: center;
 			}
 
 			.user-info {
-				flex-direction: column; /* نمایش المان‌های اطلاعات کاربر به صورت عمودی */
+				flex-direction: column; /* نمایش المان های اطلاعات کاربر به صورت عمودی */
 				align-items: center;
-				gap: 10px; /* فاصله بین المان‌ها برای نمایش بهتر در دستگاه‌های کوچکتر */
+				gap: 10px; /* فاصله بین المان ها برای نمایش بهتر در دستگاه های کوچکتر */
 			}
 
 			.display-section {
-				justify-content: center; /* وسط‌چین کردن عبارت "نمایش" و دراپ‌دان */
+				justify-content: center; /* وسط چین کردن عبارت "نمایش" و دراپ دان */
 			}
 
 			.user-info select {
-				margin-top: 10px; /* فاصله بیشتر بین قسمت نمایش و بقیه المان‌ها */
+				margin-top: 10px; /* فاصله بیشتر بین قسمت نمایش و بقیه المان ها */
 			}
 		}
 
 
+		.custom-header {
+			font-family: 'MRT_poster';
+			background-color: #333;
+			color: #fff;
+			text-align: right;
+			padding: 20px;
+			display: flex;
+			align-items: center;
+		}
+		.custom-header img {
+			height: calc(2 * 1.2em); /* ارتفاع لوگو برای مطابقت با 2 خط متن */
+			margin-left: 20px;
+		}
+		.custom-header h1 {
+			margin: 0;
+			font-size: 1.2em;
+		}
+		.custom-header h2 {
+			margin: 0;
+			font-size: 1em;
+			color: #ddd;
+		}
 
 	
 		
@@ -391,6 +419,15 @@
 </head>
 <body>
 
+
+
+	<div class="custom-header">
+		<img src="/img/logo.png" alt="لوگو" class="logo">
+		<div>
+			<h1>بپرسی میگه!</h1>
+			<h2>نخستین سامانه مشاوره هوش مصنوعی پارسی</h2>
+		</div>
+	</div>
 
 
 	<!-- کد HTML -->
