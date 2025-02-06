@@ -75,7 +75,9 @@ def ask_question(request, section):
         elif section == 14: 
             from_who = "تعمیر کار"  
         elif section == 15: 
-            from_who = "مشاور سرمایه گذاری"                           
+            from_who = "مشاور سرمایه گذاری"       
+        elif section == 16: 
+            from_who = "متخصص موبایل و کامپیوتر"                                 
                      
 
         if number:
