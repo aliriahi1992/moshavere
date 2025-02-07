@@ -127,6 +127,21 @@
                 margin-bottom: 20px;
             }
         }
+		
+		
+		.copy-icon {
+			font-size: 20px;
+			color: #007BFF;
+			cursor: pointer;
+			margin-left: 10px;
+			display: inline-block;
+			transition: color 0.3s;
+		}
+		.copy-icon:hover {
+			color: #0056b3;
+		}		
+				
+		
         .error-message {
             background-color: #ffcccc;
             color: #900;
@@ -594,6 +609,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(1)" id="copy1" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result1">سوال خود را بپرسید</label>
@@ -611,6 +627,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(2)" id="copy2" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result2">سوال خود را بپرسید</label>
@@ -628,6 +645,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(3)" id="copy3" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result3">سوال خود را بپرسید</label>
@@ -644,6 +662,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(4)" id="copy4" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result4">سوال خود را بپرسید</label>
@@ -661,6 +680,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(5)" id="copy5" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result5">سوال خود را بپرسید</label>
@@ -679,6 +699,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(6)" id="copy6" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result6">سوال خود را بپرسید</label>
@@ -698,6 +719,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(7)" id="copy7" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result7">سوال خود را بپرسید</label>
@@ -715,6 +737,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(8)" id="copy8" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result8">سوال خود را بپرسید</label>
@@ -732,6 +755,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(9)" id="copy9" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result9">سوال خود را بپرسید</label>
@@ -748,6 +772,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(10)" id="copy10" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result10">سوال خود را بپرسید</label>
@@ -765,6 +790,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(11)" id="copy11" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result11">سوال خود را بپرسید</label>
@@ -781,6 +807,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(12)" id="copy12" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result12">سوال خود را بپرسید</label>
@@ -797,6 +824,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(13)" id="copy13" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result13">سوال خود را بپرسید</label>
@@ -814,6 +842,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(14)" id="copy14" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result14">سوال خود را بپرسید</label>
@@ -831,6 +860,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(15)" id="copy15" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result15">سوال خود را بپرسید</label>
@@ -848,6 +878,7 @@
                 <div class="form-container">
                     <textarea name="number" rows="4"></textarea><br>
                     <button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+					<i class="fas fa-copy copy-icon" onclick="copyText(16)" id="copy16" style="display:none;"></i>
                 </div>
             </form>
             <label class="label" id="result16">سوال خود را بپرسید</label>
@@ -922,6 +953,7 @@
                     document.getElementById(`result${section}`).innerText = data.result;
                     document.getElementById('balance').innerText = data.balance;
                     document.getElementById('error-message').style.display = 'none';
+					document.getElementById(`copyIcon${section}`).style.display = "inline-block";
                 }
             })
             .finally(() => {
@@ -1240,6 +1272,23 @@
 				custom_header.classList.remove("sticky");
 			}
 		});		
+		
+		
+		//برای کپی کردن سوال و پاسخ دریافت شده در کلیپ بورد
+		function copyText(section) {
+			var question = document.querySelector(`#form${section} textarea`).value;
+			var answer = document.getElementById(`result${section}`).innerText;
+
+			var textToCopy = `سوال: ${question}\nپاسخ: ${answer}`;
+			
+			navigator.clipboard.writeText(textToCopy).then(() => {
+				alert("متن کپی شد!");
+			}).catch(err => {
+				console.error("خطا در کپی کردن:", err);
+			});
+		}		
+				
+		
 		
     </script>
 </body>
