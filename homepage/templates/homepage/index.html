@@ -41,7 +41,7 @@
             width: 30%;
             box-sizing: border-box;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: right;
+            text-align: center;
             transition: all 0.3s ease;
         }
         .section.visible {
@@ -900,9 +900,14 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-					alert(data.error);
-                    //document.getElementById('error-message').style.display = 'block';
-                    //document.getElementById('error-message').innerText = data.error;
+					//alert(data.error);
+					document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').innerText = data.error;
+					var errorMessageElement = document.getElementById("error-message");
+					errorMessageElement.scrollIntoView({ behavior: "smooth", block: "center" }); // اسکرول به محل خطا
+					//document.getElementById(`result${section}`).style.text-align = 'center';
+					//document.getElementById(`result${section}`).innerText = data.error ;
+
                 } else {
                     document.getElementById(`result${section}`).innerText = data.result;
                     document.getElementById('balance').innerText = data.balance;
