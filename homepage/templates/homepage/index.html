@@ -1332,7 +1332,7 @@
 			var question = document.querySelector(`#form${section} textarea`).value;
 			var answer = document.getElementById(`result${section}`).innerText;
 
-			var textToCopy = `\u202Bپرسش شما از beporsimige.ir :\n${question}\nپاسخ "بپرسی میگه" :\n${answer}`;
+			var textToCopy = `\u202Bپرسش شما از beporsimige.ir :\n${question}\n\nپاسخ "بپرسی میگه" :\n${answer}`;
 			
 			navigator.clipboard.writeText(textToCopy).then(() => {
 				alert("متن کپی شد!");
