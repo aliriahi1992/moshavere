@@ -28,7 +28,7 @@ def ask_question(request, section):
     error_message = None
 
     if user.balance < 1:
-        return JsonResponse({'error': 'موجودی شما کافی نیست.'})
+        return JsonResponse({'error': 'اعتبار حساب شما به پایان رسیده \nمی توانید از طریق گزینه "افزایش اعتبار" در منوی بالای سایت حساب خود را شارژ نمایید.'})
 
     if request.method == 'POST':
         #number همان سوال کاربر است که از سمت فرانت می آید

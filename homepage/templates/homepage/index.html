@@ -900,8 +900,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').innerText = data.error;
+					alert(data.error);
+                    //document.getElementById('error-message').style.display = 'block';
+                    //document.getElementById('error-message').innerText = data.error;
                 } else {
                     document.getElementById(`result${section}`).innerText = data.result;
                     document.getElementById('balance').innerText = data.balance;
