@@ -449,6 +449,11 @@
         }
 	
 	
+		/* برای اسکرول اسموت صفحه */
+		html {
+			scroll-behavior: smooth;
+		}
+
 		
     </style>
 </head>
@@ -904,7 +909,14 @@
 					document.getElementById('error-message').style.display = 'block';
                     document.getElementById('error-message').innerText = data.error;
 					var errorMessageElement = document.getElementById("error-message");
-					errorMessageElement.scrollIntoView({ behavior: "smooth", block: "center" }); // اسکرول به محل خطا
+					//errorMessageElement.scrollIntoView({ behavior: "smooth", block: "center" }); // اسکرول به محل خطا
+					// اسکرول نرم به موقعیت المان
+					window.scrollTo({
+						top: errorMessageElement.offsetTop - 100, // ۵۰ پیکسل بالاتر از المان برای نمایش بهتر
+						behavior: "smooth"
+					});					
+					
+					
 					//document.getElementById(`result${section}`).style.text-align = 'center';
 					//document.getElementById(`result${section}`).innerText = data.error ;
 
