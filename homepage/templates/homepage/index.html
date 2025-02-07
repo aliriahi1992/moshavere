@@ -1335,7 +1335,7 @@
 			var textToCopy = `\u202Bپرسش شما از beporsimige.ir :\n${question}\n\nپاسخ "بپرسی میگه" :\n${answer}`;
 			
 			navigator.clipboard.writeText(textToCopy).then(() => {
-				alert("متن کپی شد!");
+				alert("پرسش و پاسخ کپی شدند.");
 			}).catch(err => {
 				console.error("خطا در کپی کردن:", err);
 			});
