@@ -912,11 +912,9 @@
 					//errorMessageElement.scrollIntoView({ behavior: "smooth", block: "center" }); // اسکرول به محل خطا
 					// اسکرول نرم به موقعیت المان
 					window.scrollTo({
-						top: errorMessageElement.offsetTop - 100, // ۵۰ پیکسل بالاتر از المان برای نمایش بهتر
+						top: errorMessageElement.offsetTop - 200, // ۵۰ پیکسل بالاتر از المان برای نمایش بهتر
 						behavior: "smooth"
 					});					
-					
-					
 					//document.getElementById(`result${section}`).style.text-align = 'center';
 					//document.getElementById(`result${section}`).innerText = data.error ;
 
@@ -1235,7 +1233,7 @@
 		//برای نمایش ثابت هدر ها در اسکرول صفحه	
 		window.addEventListener("scroll", function () {
 			var custom_header = document.querySelector(".custom-header");
-			if (window.scrollY > 0) { // پس از 50 پیکسل اسکرول
+			if (window.scrollY > 0) { 
 				custom_header.classList.add("sticky");
 				header.classList.add("sticky");
 			} else {
