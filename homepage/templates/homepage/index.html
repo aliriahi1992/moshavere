@@ -71,9 +71,10 @@
             margin-top: 20px;
         }
 		.button-container {
+			position: relative; /* برای کنترل موقعیت آیکون */
 			display: flex;
-			align-items: center; /* تراز کردن دکمه و آیکون در یک خط */
-			gap: 10px; /* ایجاد فاصله بین دکمه و آیکون */
+			justify-content: center; /* نگه داشتن دکمه در مرکز */
+			align-items: center;
 		}
 				
 		
@@ -144,21 +145,21 @@
 		
 		
 		.copy-icon {
+			position: absolute;
+			left: -40px; /* فاصله مناسب از دکمه */
 			font-size: 20px;
-			color: #ccc; /* رنگ سفید */
+			color: #ffffff; /* رنگ سفید */
 			cursor: pointer;
-			margin-left: 10px;
-			display: inline-block;
-			transition: all 0.3s;
-			padding: 5px; /* کمی فاصله داخلی */
+			padding: 5px;
 			border: 1px solid #ccc; /* هاشیه طوسی کم رنگ */
-			border-radius: 5px; /* گوشه های گرد */
+			border-radius: 5px;
+			transition: all 0.3s;
 		}
 
 		.copy-icon:hover {
-			color: #ccc; /* تغییر رنگ به طوسی پررنگ در هاور */
-			border-color: #999; /* تغییر هاشیه در هاور */
-			background-color: rgba(255, 255, 255, 0.1); /* کمی تغییر پس زمینه */
+			color: #ccc; /* تغییر رنگ در هاور */
+			border-color: #999;
+			background-color: rgba(255, 255, 255, 0.1);
 		}
 				
 		
