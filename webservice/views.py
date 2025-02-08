@@ -68,37 +68,37 @@ def webservice_chat_view(request):
                         model = genai.GenerativeModel('gemini-pro')
 
                         if section == 1:
-                            prompt = "به عنوان یک مشاور در زمینه پوست و مو پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک مشاور در زمینه پوست و مو پاسخ این سوال رو بده " + str(question)
                         elif section == 2:
-                            prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده  " + str(number)
+                            prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده  " + str(question)
                         elif section == 3:
-                            prompt = "به عنوان یک مشاور امور اجتماعی و خانوادگی و فردی پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک مشاور امور اجتماعی و خانوادگی و فردی پاسخ این سوال رو بده " + str(question)
                         elif section == 4:
-                            prompt = "به عنوان یک متخصص تغذیه و رژیم درمانی پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک متخصص تغذیه و رژیم درمانی پاسخ این سوال رو بده " + str(question)
                         elif section == 5:
-                            prompt = "به عنوان یک مربی ورزشی پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک مربی ورزشی پاسخ این سوال رو بده " + str(question)
                         elif section == 6:
-                            prompt = "به عنوان یک فرد آگاه از مسائل حقوقی و قضایی پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک فرد آگاه از مسائل حقوقی و قضایی پاسخ این سوال رو بده " + str(question)
                         elif section == 7:
-                            prompt = "به عنوان یک فرد مشاور تحصیلی پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک فرد مشاور تحصیلی پاسخ این سوال رو بده " + str(question)
                         elif section == 8:
-                            prompt = "به عنوان یک پزشک پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک پزشک پاسخ این سوال رو بده " + str(question)
                         elif section == 9:
-                            prompt = "به عنوان یک مشاور کسب و کار پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک مشاور کسب و کار پاسخ این سوال رو بده " + str(question)
                         elif section == 10:
-                            prompt = "به عنوان یک متخصص بازار های مالی پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک متخصص بازار های مالی پاسخ این سوال رو بده " + str(question)
                         elif section == 11:
-                            prompt = "به عنوان یک مشاور امور مهاجرت پاسخ این سوال رو بده " + str(number)                  
+                            prompt = "به عنوان یک مشاور امور مهاجرت پاسخ این سوال رو بده " + str(question)                  
                         elif section == 12:
-                            prompt = "به عنوان یک برنامه نویس پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک برنامه نویس پاسخ این سوال رو بده " + str(question)
                         elif section == 13:
-                            prompt = "به عنوان یک مشاور خرید محصول پاسخ این سوال رو بده " + str(number)  
+                            prompt = "به عنوان یک مشاور خرید محصول پاسخ این سوال رو بده " + str(question)  
                         elif section == 14:
-                            prompt = "به عنوان یک تعمیر کار پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک تعمیر کار پاسخ این سوال رو بده " + str(question)
                         elif section == 15:
-                            prompt = "به عنوان یک مشاور سرمایه گذاری پاسخ این سوال رو بده " + str(number)
+                            prompt = "به عنوان یک مشاور سرمایه گذاری پاسخ این سوال رو بده " + str(question)
                         elif section == 16:
-                            prompt = "به عنوان یک متخصص موبایل و کامپیوتر پاسخ این سوال رو بده " + str(number)                    
+                            prompt = "به عنوان یک متخصص موبایل و کامپیوتر پاسخ این سوال رو بده " + str(question)                    
 
 
                         response = model.generate_content(prompt)
