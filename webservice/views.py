@@ -6,11 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from accounts.models import CustomUser
 import os
 #برای ذخیره سازی سوابق سوالات پرسیده شده توسط کاربران
-from .models import QuestionHistory 
+from homepage.models import QuestionHistory
 import google.generativeai as genai
 
 @csrf_exempt  # برای جلوگیری از مشکلات CSRF در درخواست‌های POST
-def webservice_chat(request):
+def webservice_chat_view(request):
     if request.method == "POST":
         try:
             # دریافت داده‌های درخواست
