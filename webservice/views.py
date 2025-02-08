@@ -127,7 +127,7 @@ def webservice_chat_view(request):
                             question = question,
                             from_who = from_who,
                             api_key_name = api_key_name,
-                            credit = user.credit,
+                            credit = user.balance,
                             user_os = "****"
                         )
                         question.save()                
@@ -144,7 +144,7 @@ def webservice_chat_view(request):
                         question = question,
                         from_who = from_who,
                         api_key_name = api_key_name,
-                        credit = user.credit,
+                        credit = user.balance,
                         user_os = "****"
                     )
                     question.save()               
