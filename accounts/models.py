@@ -23,7 +23,9 @@ class CustomUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)  # اضافه‌شده
     is_forget = models.BooleanField(default=False)  # اضافه‌شده
-    balance = models.IntegerField(default=5000)  # فیلد شارژ اولیه با مقدار پیش‌فرض 5000
+    is_webservice = models.BooleanField(default=False)  # اضافه‌شده
+    webservice_from_who = models.IntegerField(default=1)  #عددی جهت مشخص شدن مشاور تخصیص یافته به وب سرویس
+    balance = models.IntegerField(default=3)  #اعتبار اولیه با میزان پیش فرض 3 پرسش
 
     
     objects = CustomUserManager()
