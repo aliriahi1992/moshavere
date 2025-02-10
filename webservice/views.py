@@ -46,8 +46,8 @@ def webservice_chat_view(request):
             data = json.loads(request.body)
             question = data.get("question")
             mobile = request.headers.get("X-Mobile")
-            webservice_user = request.headers.get("webservice_user")
-            webservice_user_os = request.headers.get("webservice_user_os")
+            webservice_user = request.headers.get("X-User")
+            webservice_user_os = request.headers.get("X-OS")
             
             user = CustomUser.objects.filter(mobile_number=mobile, is_webservice=True).first()
     
