@@ -672,11 +672,11 @@
 							<td>{{ question.created_at|date:"Y-m-d H:i" }}</td>
 							<td>
 								{% if question.status == "Answered" %}
-									<span class="badge answered"><i class="fas fa-check-circle"></i> پاسخ داده شده</span>
-								{% elif question.status == "Pending" %}
-									<span class="badge pending"><i class="fas fa-clock"></i> در انتظار</span>
+									<span class="badge answered"><i class="fas fa-check-circle"></i>پاسخ داده شده</span>
+								{% elif question.status == "Unable to respond" %}
+									<span class="badge violation"><i class="fas fa-exclamation-triangle"></i>پرسش خلاف قوانین</span>
 								{% else %}
-									<span class="badge error"><i class="fas fa-times-circle"></i> ارور</span>
+									<span class="badge error"><i class="fas fa-times-circle"></i>پاسخ داده نشده</span>
 								{% endif %}
 							</td>
 						</tr>
