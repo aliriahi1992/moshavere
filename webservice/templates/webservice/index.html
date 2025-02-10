@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="fa">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بپرسی میگه</title>
+	<link rel="icon" href="/img/logo.png" type="image/png">
+    <style>
+        @font-face {
+            font-family: 'IRANSansWebFaNum';
+            src: url('/font/IRANSansWebFaNum.ttf') format('truetype');
+        }
+		/* اضافه کردن فونت MRT_poster */
+		@font-face {
+			font-family: 'MRT_poster';
+			src: url('/font/MRT_poster.ttf') format('truetype');
+		}
+		
+        body {
+            font-family: 'IRANSansWebFaNum';
+            direction: rtl;
+            text-align: right;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+		
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .section {
+			display: none;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            width: 30%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .section.visible {
+            display: block;
+        }		
+        .section:hover {
+            background-color: #ffffff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+        .section img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
+        }
+        .section h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        .section p {
+            color: #777;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+		.button-container {
+			position: relative; /* برای کنترل موقعیت آیکون */
+			display: flex;
+			justify-content: center; /* نگه داشتن دکمه در مرکز */
+			align-items: center;
+		}
+				
+		
+        textarea {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            font-family: 'IRANSansWebFaNum'; /* اعمال فونت ایران سنس به تکست باکس ها */
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+            width: auto;
+            font-family: 'IRANSansWebFaNum'; /* اضافه کردن فونت به دکمه ها */
+			
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 5px;			
+			
+			
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .loading {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 3px solid #fff;
+            border-top: 3px solid #007BFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+        .label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+            color: #333;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .section {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+		
+		
+		.copy-icon {
+			position: absolute;
+			left: -40px; /* فاصله مناسب از دکمه */
+			font-size: 20px;
+			color: #ccc; /* رنگ سفید */
+			cursor: pointer;
+			padding: 5px;
+			border: 1px solid #ccc; /* هاشیه طوسی کم رنگ */
+			border-radius: 5px;
+			transition: all 0.3s;
+		}
+
+		.copy-icon:hover {
+			color: #ccc; /* تغییر رنگ در هاور */
+			border-color: #999;
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+				
+		
+        .error-message {
+            background-color: #ffcccc;
+            color: #900;
+            padding: 10px;
+            border: 1px solid #ff8888;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .user-info {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 5px auto;
+            width: 90%;
+        }
+        .user-info p {
+            margin: 5px 0;
+            color: #333;
+        }
+        #dropdown {
+			font-family: 'IRANSansWebFaNum';
+			margin-top: 0px; /* فاصله بیشتر از متن های دیگر */
+			padding: 7px;
+			font-size: 16px;
+			width: 80%; /* عرض دراپ دان 80% از عرض ظرف */
+			max-width: 250px; /* حداکثر عرض برای کنترل بهتر */
+			text-align: center; /* وسط چین کردن متن در داخل دراپ دان */
+			box-sizing: border-box; /* جلوگیری از افزایش غیرمنتظره عرض */
+        }		
+
+		/* استایل پاپ آپ */
+		.modal {
+			font-family: 'IRANSansWebFaNum';
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
+		}
+
+		.modal-content {
+			font-family: 'IRANSansWebFaNum';
+			background-color: #fefefe;
+			margin: 15% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 500px;
+		}
+
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		
+	
+		/* استایل پاپ آپ نمایش نتیجه تراکنش */
+		.modal2 {
+			font-family: 'IRANSansWebFaNum';
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
+		}	
+
+
+		/* استایل پاپ آپ تغییر رمز ورود کاربر */
+		.modal3 {
+			font-family: 'IRANSansWebFaNum';
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
+		}		
+
+
+		
+		
+		/* استایل تکست باکس و دکمه اعمال */
+		#discount-code {
+		  font-family: 'IRANSansWebFaNum';
+		  height: 40px; /* ارتفاع تکست باکس */
+		  padding: 0 10px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  border: 1px solid #ccc; /* حاشیه */
+		  border-radius: 5px; /* گوشه های گرد */
+		  width: 120px; /* عرض تکست باکس */
+		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
+		}
+	
+
+		#apply-discount {
+		  height: 40px; /* ارتفاع دکمه */
+		  padding: 0 20px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  background-color: #28a745; /* رنگ سبز خوش رنگ */
+		  color: white; /* رنگ متن دکمه */
+		  border: none; /* حذف حاشیه */
+		  border-radius: 5px; /* گوشه های گرد */
+		  cursor: pointer; /* تغییر نشانگر ماوس به دست */
+		  transition: background-color 0.3s ease; /* انیمیشن تغییر رنگ */
+		  display: inline-block; /* حالت بلوکی برای دکمه */
+		  margin-left: 10px; /* فاصله از تکست باکس */
+		}		
+		
+		/* افکت هاور */
+		#apply-discount:hover {
+		  background-color: #218838; /* رنگ سبز تیره تر هنگام هاور */
+		}
+
+
+		/* تنظیمات مربوط به چینش دکمه و متن در یک خط */
+		#pay-container {
+		  display: inline-flex; /* نمایش عناصر در یک خط */
+		  align-items: center; /* عمودی وسط چین */
+		}
+
+		/* استایل متن لودینگ */
+		#loading {
+		  color: #007BFF;
+		  font-size: 14px;
+		  margin-left: 10px; /* فاصله بین متن و دکمه */
+		}
+
+		/* استایل تکست باکس تغییر رمز عبور*/
+		#new-password {
+		  font-family: 'IRANSansWebFaNum';
+		  height: 40px; /* ارتفاع تکست باکس */
+		  padding: 0 10px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  border: 1px solid #ccc; /* حاشیه */
+		  border-radius: 5px; /* گوشه های گرد */
+		  width: 150px; /* عرض تکست باکس */
+		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
+		}		
+		
+
+		/* استایل تکست باکس تغییر رمز عبور*/
+		#confirm-password {
+		  font-family: 'IRANSansWebFaNum';
+		  height: 40px; /* ارتفاع تکست باکس */
+		  padding: 0 10px; /* فضای داخلی */
+		  font-size: 16px; /* اندازه فونت */
+		  border: 1px solid #ccc; /* حاشیه */
+		  border-radius: 5px; /* گوشه های گرد */
+		  width: 150px; /* عرض تکست باکس */
+		  box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
+		}	
+		
+		
+
+		/* کد CSS */
+		.header {
+			display: flex;
+			flex-direction: column; /* نمایش المان ها به صورت عمودی */
+			align-items: center;
+			background-color: #f4f4f9;
+			padding: 10px 20px;
+			flex-wrap: wrap; /* برای نمایش در دستگاه های کوچکتر */
+		}
+
+
+		.user-info {
+			display: flex;
+			align-items: center;
+			gap: 20px; /* فاصله بین المان ها */
+			flex-wrap: wrap; /* برای نمایش در دستگاه های کوچکتر */
+			justify-content: center; /* وسط چین کردن تمام المان های کاربر */
+		}
+
+		.user-info p {
+			margin: 0;
+			padding: 0 10px;
+			font-size: 14px;
+			color: #333;
+			display: flex;
+			align-items: center;
+			gap: 5px; /* فاصله بین آیکون و متن */
+		}
+
+		.user-info a {
+			text-decoration: none;
+			color: #007bff;
+			font-size: 14px;
+			display: flex;
+			align-items: center;
+			gap: 5px; /* فاصله بین آیکون و متن */
+		}
+
+		.user-info a:hover {
+			text-decoration: underline;
+		}
+
+		.display-section {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px; /* فاصله بین عبارت "نمایش" و دراپ دان */
+			margin-top: 0px; /* فاصله بیشتر بین بخش "نمایش" و بقیه المان ها */
+		}
+
+		.dropdown-label {
+			font-size: 16px;
+			line-height: 1.5; /* تنظیم ارتفاع خط برای وسط چین کردن عمودی */
+			display: flex;
+			align-items: center;
+			justify-content: center; /* وسط چین کردن عمودی عبارت "نمایش" */
+			height: 100%; /* تنظیم ارتفاع برای وسط چین کردن عمودی */
+		}
+
+
+		/* تنظیمات مخصوص نمایش در دستگاه های کوچکتر */
+		@media screen and (max-width: 768px) {
+			.header {
+				flex-direction: column; /* نمایش المان ها به صورت عمودی */
+				align-items: center;
+			}
+
+			.user-info {
+				flex-direction: column; /* نمایش المان های اطلاعات کاربر به صورت عمودی */
+				align-items: center;
+				gap: 10px; /* فاصله بین المان ها برای نمایش بهتر در دستگاه های کوچکتر */
+			}
+
+			.display-section {
+				justify-content: center; /* وسط چین کردن عبارت "نمایش" و دراپ دان */
+			}
+
+			.user-info select {
+				margin-top: 10px; /* فاصله بیشتر بین قسمت نمایش و بقیه المان ها */
+			}
+		}
+
+
+		.custom-header {		
+			font-family: 'MRT_poster';
+			background-color: rgba(0, 0, 0, 0.7); /* رنگ تیره با شفافیت */
+			color: #fff;
+			text-align: right;
+			padding: 20px;
+			display: flex;
+			align-items: center;
+		}
+		.custom-header img {
+			height: calc(2 * 1.3em); /* ارتفاع لوگو برای مطابقت با 2 خط متن */
+			margin-left: 20px;
+		}
+		.custom-header h1 {
+			margin: 0;
+			font-size: 1.3em;
+		}
+		.custom-header h2 {
+			margin: 0;
+			font-size: 1.0em;
+			color: #ddd;
+		}
+		
+		/* برای نمایش ثابت کاستوم هدر در اسکرول صفحه */
+		.custom-header.sticky {
+			position: fixed;
+			width: 100%;
+			z-index: 9999; /* مقدار بالا برای جلوتر بودن */
+			font-family: 'MRT_poster';
+			background-color: rgba(0, 0, 0, 0.7); /* رنگ تیره با شفافیت */
+			color: #fff;
+			text-align: right;
+			padding: 20px;
+			display: flex;
+			align-items: center;
+			transition: all 0.4s ease-in-out;
+		}		
+
+
+	
+	
+		.footer {		
+			background-color: #333;
+			color: #fff;
+			align-items: center;
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;			
+		}
+        .footer img {
+            width: 100px; /* اندازه لوگو را تنظیم کنید */
+        }
+        .footer p {
+            color: white;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+	
+	
+		/* برای اسکرول اسموت صفحه */
+		html {
+			scroll-behavior: smooth;
+		}
+
+		
+    </style>
+</head>
+<body>
+
+
+
+	<div class="custom-header">
+		<img src="/img/logo.png" alt="لوگو" class="logo">
+		<div>
+			<h1>بپرسی میگه!</h1>
+			<h2>نخستین سامانه مشاوره هوش مصنوعی پارسی</h2>
+		</div>
+	</div>
+
+
+	<!-- کد HTML -->
+	<div class="header">
+		<div class="user-info">
+			<p><i class="fas fa-user"></i> {{ user.full_name }}</p>
+			<p><i class="fas fa-phone"></i> {{ user.mobile_number }}</p>
+			<p><i class="fas fa-question-circle"></i> تعداد پرسش باقیمانده: <span id="balance">{{ balance }}</span></p>
+			<p><a href="#" id="increase-balance-link"><i class="fas fa-plus-circle"></i> افزایش اعتبار</a></p>
+			<p><a href="#" id="change-password-link"><i class="fas fa-key"></i> تغییر رمز ورود</a></p>
+			<p><a href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> خروج از حساب کاربری</a></p>
+		</div>
+
+	</div>
+
+
+    <div id="error-message" class="error-message" style="display:none;"></div>
+
+		<div class="display-section">
+			<label for="dropdown" class="dropdown-label">نمایش</label>
+			<select id="dropdown">
+				<option value="all">همه موارد</option>
+				<option value="section1">متخصص پوست و مو</option>
+				<option value="section2">استاد</option>
+				<option value="section3">مشاور</option>
+				<option value="section4">متخصص تغذیه</option>
+				<option value="section5">مربی</option>
+				<option value="section6">وکیل</option>
+				<option value="section7">مشاور تحصیلی</option>
+				<option value="section8">پزشک</option>
+				<option value="section9">مشاور کسب و کار</option>
+				<option value="section10">متخصص بازار های مالی</option>
+				<option value="section11">مشاور مهاجرت</option>
+				<option value="section12">برنامه نویس</option>
+				<option value="section13">مشاور خرید</option>
+				<option value="section14">تعمیر کار</option>
+				<option value="section15">مشاور سرمایه گذاری</option>
+				<option value="section16">متخصص موبایل و کامپیوتر</option>
+			</select> 
+		</div>
+	
+	<!-- فرم افزایش اعتبار -->
+	<div id="increase-balance-modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div id="increase-balance-content">
+			<h2>افزایش اعتبار</h2>
+				<form id="increase-balance-form">
+					<input type="radio" id="10" name="amount" value="100000">
+					<label for="10">10 هزار تومان (10 پرسش)</label><br>
+					<input type="radio" id="20" name="amount" value="200000">
+					<label for="20">20 هزار تومان (20 پرسش)</label><br>
+					<input type="radio" id="30" name="amount" value="300000">
+					<label for="30">30 هزار تومان (35 پرسش)</label><br>
+					<input type="radio" id="50" name="amount" value="500000">
+					<label for="50">50 هزار تومان (60 پرسش)</label><br><br>
+					
+					<!-- تکست باکس و دکمه اعمال کد تخفیف -->
+					<input type="text" id="discount-code" placeholder="کد تخفیف">
+					<button type="button" id="apply-discount">اعمال</button><br><br>					
+					<!-- متن مبلغ قابل پرداخت -->
+					<p id="payable-amount" style="font-weight: bold;">
+					  مبلغ قابل پرداخت : 
+					</p>						
+						
+				    <div id="pay-container">
+					  <button type="submit" id="pay-button">پرداخت</button>
+					  <p id="loading_pay" style="font-weight: bold; margin-left: 10px; margin-right: 10px; display: none;">
+					    در حال انتقال به درگاه پرداخت
+					  </p>
+				    </div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	
+	
+	
+	
+	<!-- فرم نمایش پاسخ درگاه -->
+	<div id="show-result" class="modal2">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2>نتیجه تراکنش</h2>
+			<div id="payment-result"></div>
+		</div>
+	</div>	
+	
+
+	
+
+	<!-- فرم تغییر رمز ورود -->
+	<div id="change-password-modal" class="modal3">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div id="change-password-content">
+			<h2>تغییر رمز ورود</h2>
+				<form id="change-password-form">
+					<input type="password" id="new-password" placeholder="رمز ورود جدید"><br><br>	
+					<input type="password" id="confirm-password" placeholder="تکرار رمز ورود جدید"><br><br>
+					<button type="button" id="apply-password">تغییر رمز ورود</button><br><br>
+				</form>
+			</div>	
+		</div>
+	</div>	
+
+	
+	
+	
+	
+    <div class="container">
+	
+	
+	
+	
+	        <!-- سکشن اول -->
+        <div id="section1" class="section">
+            <img src="/img/hairandbeauty.jpg" alt="پرسش از متخصص پوست و مو">
+            <h2>پرسش از متخصص پوست و مو</h2>
+            <p>سوالات خود از متخصص پوست و مو را پرسیده و مشاوره بگیرید</p>
+            <form method="POST" id="form1" onsubmit="submitForm(event, 1)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(1)" id="copy1" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result1">سوال خود را بپرسید</label>
+        </div>
+	
+	
+	
+			<!-- سکشن دوم -->
+        <div id="section2" class="section">
+            <img src="/img/ostad.jpg" alt="پرسش از استاد">
+            <h2>پرسش از استاد</h2>
+            <p>در این بخش سوالات درسی و علمی خود را پرسیده و پاسخ بگیرید</p>
+            <form method="POST" id="form2" onsubmit="submitForm(event, 2)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(2)" id="copy2" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result2">سوال خود را بپرسید</label>
+        </div>
+	
+	
+
+        <!-- سکشن سوم -->
+        <div id="section3" class="section">
+            <img src="/img/moshaver.jpg" alt="پرسش از مشاور">
+            <h2>پرسش از مشاور</h2>
+            <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
+            <form method="POST" id="form3" onsubmit="submitForm(event, 3)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(3)" id="copy3" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result3">سوال خود را بپرسید</label>
+        </div>
+
+
+        <!-- سکشن چهارم -->
+        <div id="section4" class="section">
+            <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
+            <h2>پرسش از متخصص تغذیه</h2>
+            <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
+            <form method="POST" id="form4" onsubmit="submitForm(event, 4)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(4)" id="copy4" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result4">سوال خود را بپرسید</label>
+        </div>
+	
+	
+	
+        <!-- سکشن پنجم -->
+        <div id="section5" class="section">
+            <img src="/img/morabi.jpg" alt="پرسش از مربی">
+            <h2>پرسش از مربی</h2>
+            <p>با یک مربی حرفه ای صحبت کنید و مشاوره بگیرید</p>
+            <form method="POST" id="form5" onsubmit="submitForm(event, 5)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(5)" id="copy5" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result5">سوال خود را بپرسید</label>
+        </div>
+	
+	
+	
+	
+        <!-- سکشن ششم -->
+        <div id="section6" class="section">
+            <img src="/img/vakil.jpg" alt="پرسش از وکیل">
+            <h2>پرسش از وکیل</h2>
+            <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
+            <form method="POST" id="form6" onsubmit="submitForm(event, 6)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(6)" id="copy6" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result6">سوال خود را بپرسید</label>
+        </div>
+
+
+
+		
+		
+        <!-- سکشن هفتم -->
+        <div id="section7" class="section">
+            <img src="/img/moshavertahsili.jpg" alt="پرسش از مشاور تحصیلی">
+            <h2>پرسش از مشاور تحصیلی</h2>
+            <p>از مشاور تحصیلی سوالات خود را بپرسید و پاسخ بگیرید</p>
+            <form method="POST" id="form7" onsubmit="submitForm(event, 7)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(7)" id="copy7" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result7">سوال خود را بپرسید</label>
+        </div>		
+		
+
+		
+        <!-- سکشن هشتم -->
+        <div id="section8" class="section">
+            <img src="/img/doctor.jpg" alt="پرسش از پزشک">
+            <h2>پرسش از پزشک</h2>
+            <p>سوالات پزشکی خود را بپرسید و راهنمایی بگیرید</p>
+            <form method="POST" id="form8" onsubmit="submitForm(event, 8)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(8)" id="copy8" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result8">سوال خود را بپرسید</label>
+        </div>			
+		
+
+
+        <!-- سکشن نهم -->
+        <div id="section9" class="section">
+            <img src="/img/business.jpg" alt="پرسش از مشاور کسب و کار">
+            <h2>پرسش از مشاور کسب و کار</h2>
+            <p>برای راه اندازی و توسعه کسب و کار خود مشاوره بگیرید</p>
+            <form method="POST" id="form9" onsubmit="submitForm(event, 9)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(9)" id="copy9" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result9">سوال خود را بپرسید</label>
+        </div>	
+		
+	
+        <!-- سکشن دهم -->
+        <div id="section10" class="section">
+            <img src="/img/financial.jpg" alt="پرسش از متخصص بازار های مالی">
+            <h2>پرسش از متخصص بازار های مالی</h2>
+            <p>سوالات خود در مورد بازار های مالی را مطرح کنید</p>
+            <form method="POST" id="form10" onsubmit="submitForm(event, 10)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(10)" id="copy10" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result10">سوال خود را بپرسید</label>
+        </div>	
+		
+
+
+        <!-- سکشن یازدهم -->
+        <div id="section11" class="section">
+            <img src="/img/vakilmohajerat.jpg" alt="پرسش از مشاور مهاجرت">
+            <h2>پرسش از مشاور مهاجرت</h2>
+            <p>در این بخش سوالات خود در مورد مهاجرت را بپرسید و مشورت بگیرید</p>
+            <form method="POST" id="form11" onsubmit="submitForm(event, 11)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(11)" id="copy11" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result11">سوال خود را بپرسید</label>
+        </div>			
+		
+	
+        <!-- سکشن دوازدهم -->
+        <div id="section12" class="section">
+            <img src="/img/programmer.jpg" alt="پرسش از برنامه نویس">
+            <h2>پرسش از برنامه نویس</h2>
+            <p>سوالات برنامه نویسی خود را بپرسید و پاسخ بگیرید</p>
+            <form method="POST" id="form12" onsubmit="submitForm(event, 12)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(12)" id="copy12" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result12">سوال خود را بپرسید</label>
+        </div>	
+
+
+        <!-- سکشن سیزدهم -->
+        <div id="section13" class="section">
+            <img src="/img/buyer.jpg" alt="پرسش از مشاور خرید">
+            <h2>پرسش از مشاور خرید</h2>
+            <p>برای خرید هدیه و محصول مشاوره بگیرید</p>
+            <form method="POST" id="form13" onsubmit="submitForm(event, 13)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(13)" id="copy13" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result13">سوال خود را بپرسید</label>
+        </div>	
+
+
+		
+        <!-- سکشن چهاردهم -->
+        <div id="section14" class="section">
+            <img src="/img/tamirkar.jpg" alt="پرسش از تعمیر کار">
+            <h2>پرسش از تعمیر کار</h2>
+            <p>از تعمیر کاری حرفه ای مشورت بگیرید</p>
+            <form method="POST" id="form14" onsubmit="submitForm(event, 14)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(14)" id="copy14" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result14">سوال خود را بپرسید</label>
+        </div>			
+		
+
+
+        <!-- سکشن پانزدهم -->
+        <div id="section15" class="section">
+            <img src="/img/sarmayegozar.jpg" alt="پرسش از مشاور سرمایه گذاری">
+            <h2>پرسش از مشاور سرمایه گذاری</h2>
+            <p>برای سرمایه گذاری های خود مشورت بگیرید</p>
+            <form method="POST" id="form15" onsubmit="submitForm(event, 15)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(15)" id="copy15" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result15">سوال خود را بپرسید</label>
+        </div>			
+		
+
+
+        <!-- سکشن شانزدهم -->
+        <div id="section16" class="section">
+            <img src="/img/aliriahi.jpg" alt="پرسش از متخصص موبایل و کامپیوتر">
+            <h2>پرسش از متخصص موبایل و کامپیوتر</h2>
+            <p>سوالات خود را از یک خبره موبایل و کامپیوتر بپرسید</p>
+            <form method="POST" id="form16" onsubmit="submitForm(event, 16)">
+                {% csrf_token %}
+                <div class="form-container">
+                    <textarea name="number" rows="4"></textarea><br>
+					<div class="button-container">
+						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
+						<i class="fas fa-copy copy-icon" onclick="copyText(16)" id="copy16" style="display:none;"></i>
+					</div>
+                </div>
+            </form>
+            <label class="label" id="result16">سوال خود را بپرسید</label>
+        </div>		
+
+
+		
+
+    </div>
+	
+		
+    <div class="footer">
+		
+		<a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=563487&Code=KW2KbuWhkEhdqQklAtHTden7c1vcqriQ'><img referrerpolicy='origin' src="/img/enamad.png" alt='' style='cursor:pointer' code='KW2KbuWhkEhdqQklAtHTden7c1vcqriQ'></a>		
+		
+		
+		<p>info@beporsimige.ir</p>
+		
+    </div>		
+	
+
+    <script>
+		//تابع ارسال و درسافت پاسخ به ویو جهت پاسخ دهی از هوش مصنوعی
+        function submitForm(event, section) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+
+			//مثدار دهی متغیر ها جهت افزوده شدن به درخواست ارسالی به سرو جهت ذخیره سازی در دیتابیس
+			let user_phone_number = "{{ user.mobile_number }}";
+			
+			
+			let user_full_name = "{{ user.full_name }}";
+			let credit = "{{ balance }}";
+			let user_os = getOS();
+			//افزودن مقادیر مورد نیاز به درخواست ارسال به ویو جهت ذخیره سازی در سرور
+			data.append('user_phone_number', user_phone_number);
+			data.append('user_full_name', user_full_name);
+			data.append('credit', credit);
+			data.append('user_os', user_os);
+			
+			
+			
+            const loading = form.querySelector('.loading');
+            loading.style.display = 'inline-block';
+            
+            fetch(`/homepage/ask/${section}/`, {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+					//alert(data.error);
+					document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').innerText = data.error;
+					var errorMessageElement = document.getElementById("error-message");
+					//errorMessageElement.scrollIntoView({ behavior: "smooth", block: "center" }); // اسکرول به محل خطا
+					// اسکرول نرم به موقعیت المان
+					window.scrollTo({
+						top: errorMessageElement.offsetTop - 200, // ۵۰ پیکسل بالاتر از المان برای نمایش بهتر
+						behavior: "smooth"
+					});					
+					//document.getElementById(`result${section}`).style.text-align = 'center';
+					//document.getElementById(`result${section}`).innerText = data.error ;
+
+                } else {
+                    document.getElementById(`result${section}`).innerText = data.result;
+                    document.getElementById('balance').innerText = data.balance;
+                    document.getElementById('error-message').style.display = 'none';
+					document.getElementById(`copy${section}`).style.display = "inline-block";
+                }
+            })
+            .finally(() => {
+                loading.style.display = 'none';
+            })
+        }
+		
+		
+        const dropdown = document.getElementById('dropdown');
+        const sections = document.querySelectorAll('.section');
+
+        function updateSections() {
+            const value = dropdown.value;
+            sections.forEach(section => {
+                if (value === 'all' || section.id === value) {
+                    section.classList.add('visible');
+                } else {
+                    section.classList.remove('visible');
+                }
+            });
+        }
+
+        // Initialize default view
+        updateSections();
+
+        // Add event listener
+        dropdown.addEventListener('change', updateSections);		
+		
+		
+		
+		// باز کردن پاپ آپ افزایش اعتبار
+		document.getElementById('increase-balance-link').onclick = function(event) {
+			event.preventDefault();
+			document.getElementById('increase-balance-modal').style.display = 'block';
+		};
+		
+		// باز کردن پاپ آپ افزایش اعتبار
+		document.getElementById('change-password-link').onclick = function(event) {
+			event.preventDefault();
+			document.getElementById('change-password-modal').style.display = 'block';
+		};		
+		
+
+		// بستن پاپ آپ افزایش اعتبار
+		document.getElementsByClassName('close')[0].onclick = function() {
+			document.getElementById('increase-balance-modal').style.display = 'none';
+		};
+		
+		// بستن پاپ آپ نمایش نتیجه تراکنش
+		document.getElementsByClassName('close')[1].onclick = function() {
+			document.getElementById('show-result').style.display = 'none';
+		};
+		
+		// بستن پاپ آپ تغییر رمز ورود
+		document.getElementsByClassName('close')[2].onclick = function() {
+			document.getElementById('change-password-modal').style.display = 'none';
+		};		
+		
+		
+		//تشخیص سیستم عامل کاربر
+		function getOS() {
+		  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+		  if (/windows phone/i.test(userAgent)) {
+			return "Windows Phone";
+		  }
+		  if (/win/i.test(userAgent)) {
+			return "Windows";
+		  }
+		  if (/android/i.test(userAgent)) {
+			return "Android";
+		  }
+		  if (/linux/i.test(userAgent)) {
+			return "Linux";
+		  }
+		  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+			return "iOS";
+		  }
+		  if (/Mac/i.test(userAgent)) {
+			return "MacOS";
+		  }
+		  return "Unknown";
+		}		
+		
+		
+		
+		//تعریف متغیر برای ذخیره و محاسبات کد تخفیف و قیمت اصلی
+		let discount = 1;
+		let discount_code = "";
+
+		
+		//اعمال کد تخفیف
+		document.getElementById('apply-discount').addEventListener('click', function() {
+			let discountCode = document.getElementById('discount-code').value;
+			if (discountCode === "first time") {
+				discount = 0.8;
+				discount_code = "first time"
+				updatePayableAmount(); // به روزرسانی مبلغ قابل پرداخت
+				alert('تخفیف 20 درصدی اعمال شد.');
+			} else {
+				alert('کد تخفیف نامعتبر است.');
+			}
+		});
+
+
+		
+		//جهت نمایش مبلغ قابل پرداخت در ماؤول افزایش اعتبار
+		const radioButtons = document.querySelectorAll('input[name="amount"]');
+		const payableAmountText = document.getElementById('payable-amount');
+		radioButtons.forEach((radio) => {
+			radio.addEventListener('change', () => {
+			  const selectedAmount = radio.value/10*discount; // مقدار انتخاب شده
+			  const formattedAmount = Math.round(selectedAmount).toLocaleString('en-US'); // قالب بندی عدد با کاما
+			  payableAmountText.textContent = `مبلغ قابل پرداخت : ${formattedAmount} تومان`;	
+			});
+		});		
+		
+		// تابعی برای اینکه در زمان اعمال کد تخفیف آن را صدا زنی کنیم و مبلغ تخفیف را بر روی مبلغ قابل پرداخت اعمال نماید
+		function updatePayableAmount() {
+			const selectedAmount = document.querySelector('input[name="amount"]:checked').value/10*discount; // مقدار انتخاب شده
+			const formattedAmount = Math.round(selectedAmount).toLocaleString('en-US'); // قالب بندی عدد با کاما
+			payableAmountText.textContent = `مبلغ قابل پرداخت : ${formattedAmount} تومان`;			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		// ارسال اطلاعات به ویو جهت ارسال به صفحه پرداخت
+		document.getElementById('increase-balance-form').onsubmit = function(event) {
+			event.preventDefault();
+			let orginal_price = document.querySelector('input[name="amount"]:checked').value;
+			let amount = discount*orginal_price ;	
+			let mobile = "{{ user.mobile_number }}";
+			//جهت ثبت در سوابق پرداخت زرین پال
+			let description = "{{ user.full_name }}";
+			//جهت ثبت در سوابق پرداخت خودمان
+			let user_full_name = "{{ user.full_name }}";
+			//جهت ثبت در سوابق پرداخت زرین پال
+			let order_id = "{{ balance }}";
+			//جهت ثبت در سوابق پرداخت خودمان
+			let initial_credit = "{{ balance }}";
+			//جهت ثبت در سوابق پرداخت زرین پال
+			let email = getOS();
+			//جهت ثبت در سوابق پرداخت خودمان
+			let user_os = getOS();
+			
+			// انتخاب متن لودینگ
+			const loadingText = document.getElementById('loading_pay');
+			// فعال کردن نمایش متن
+			loadingText.style.display = 'inline';
+				
+			
+			
+			fetch('/homepage/request/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+				},
+				body: JSON.stringify({ amount: amount, mobile: mobile, description: description, order_id: order_id, email: email, orginal_price: orginal_price ,user_full_name: user_full_name ,discount_code: discount_code ,initial_credit :initial_credit ,user_os: user_os})
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.url) {
+					window.location.href = data.url;
+				} else {
+					alert('خطا در فرآیند پرداخت');
+				}
+			});
+		};
+
+
+		// نمایش پاپ آپ نمایش نتیجه تراکنش پس از پرداخت
+		function displayPaymentResult(status, message) {
+			var content = document.getElementById('show-result');
+			var result = document.getElementById('payment-result');
+			content.style.display = 'block'; // مخفی کردن محتوای ماژول
+			result.style.display = 'block'; // نمایش نتیجه پرداخت
+			result.innerText = message; // نمایش پیام نتیجه پرداخت
+		}
+
+		// دریافت نتیجه پرداخت
+		function verifyPayment(authority, status) {
+			fetch(`/homepage/verify/?Authority=${authority}&Status=${status}`)
+			.then(response => response.json())
+			.then(data => {
+				if (data.status) {
+					document.getElementById('balance').innerText = data.balance;
+					document.getElementById("payment-result").innerHTML = data.message + '<br>شماره پیگیری : ' + (data.ref_id || '') + '<br>تعداد پرسش باقیمانده : ' + data.balance;
+				} else {
+					displayPaymentResult(false, data.message);
+				}
+			})
+			.catch(error => {
+				displayPaymentResult(false, 'خطا در ارتباط');
+			});
+		}
+
+		// بعد از بازگشت از درگاه پرداخت، این تابع را فراخوانی کنید.
+		window.onload = function() {
+			var urlParams = new URLSearchParams(window.location.search);
+			var authority = urlParams.get('Authority');
+			var status = urlParams.get('Status');
+			if (authority && status) {  // شرط اطمینان از بازگشت از درگاه پرداخت
+				document.getElementById('show-result').style.display = 'block';
+				verifyPayment(authority, status);
+				
+				
+				//بازگرداندن url به حالت اولیه اش
+				const newUrl = window.location.origin + window.location.pathname;
+				history.replaceState(null, '', newUrl);
+			}
+		};
+
+				
+		// مخفی کردن پاپ آپ های افزایش اعتبار و نمایش نتیجه تراکنش و تغییر رمز ورود با کلیک کردن خارج از آنها		
+		window.onclick = function(event) {
+			var modal = document.getElementById('increase-balance-modal');
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
+			var modal2 = document.getElementById('show-result');
+			if (event.target === modal2) {
+				modal2.style.display = 'none';
+			}
+			var modal3 = document.getElementById('change-password-modal');
+			if (event.target === modal3) {
+				modal3.style.display = 'none';
+			}			
+			
+			
+		};
+		
+		
+		//اعتبار سنجی فرم تغییر رمز ورود
+		const changePasswordButton = document.getElementById('apply-password');
+
+		changePasswordButton.addEventListener('click', () => {
+			const newPassword = document.getElementById('new-password').value;
+			const confirmPassword = document.getElementById('confirm-password').value;
+
+			if (newPassword === '' || confirmPassword === '') {
+				alert('رمز ورود نمی تواند خالی باشد.');
+				return;
+			}
+
+			if (newPassword !== confirmPassword) {
+				alert('رمز ورود ها یکسان نیستند.');
+				return;
+			}
+
+			// ارسال به سرور
+			sendPasswordChange(newPassword);
+		});		
+		
+		
+		
+		//تابعی برای تغییر رمز ورود
+		function sendPasswordChange(newPassword) {
+			fetch('/homepage/change-password/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': getCsrfToken(), // اگر از CSRF استفاده می کنید
+				},
+				body: JSON.stringify({ new_password: newPassword }),
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.success) {
+					alert(data.message); // رمز عبور با موفقیت تغییر کرد
+					//مخفی کردن پاپ آپ تغییر رمز ورود
+					document.getElementById('change-password-modal').style.display = 'none';	
+			        document.getElementById('new-password').value = '';
+			        document.getElementById('confirm-password').value = '';					
+					
+				} else {
+					alert(`خطا: ${data.message}`); // پیام خطا از سرور
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('خطایی در ارتباط با سرور رخ داده است.');
+			});
+		}
+
+		// دریافت CSRF Token (اختیاری)
+		function getCsrfToken() {
+			const name = 'csrftoken';
+			const cookies = document.cookie.split(';');
+			for (let cookie of cookies) {
+				const [key, value] = cookie.trim().split('=');
+				if (key === name) {
+					return value;
+				}
+			}
+			return '';
+		}
+		
+		//برای نمایش ثابت هدر ها در اسکرول صفحه	
+		window.addEventListener("scroll", function () {
+			var custom_header = document.querySelector(".custom-header");
+			if (window.scrollY > 0) { 
+				custom_header.classList.add("sticky");
+				header.classList.add("sticky");
+			} else {
+				custom_header.classList.remove("sticky");
+			}
+		});		
+		
+		
+		//برای کپی کردن سوال و پاسخ دریافت شده در کلیپ بورد
+		function copyText(section) {
+			var question = document.querySelector(`#form${section} textarea`).value;
+			var answer = document.getElementById(`result${section}`).innerText;
+
+			var textToCopy = `\u202Bپرسش شما از beporsimige.ir :\n${question}\n\nپاسخ "بپرسی میگه" :\n${answer}`;
+			
+			navigator.clipboard.writeText(textToCopy).then(() => {
+				alert("پرسش و پاسخ کپی شدند.");
+			}).catch(err => {
+				console.error("خطا در کپی کردن:", err);
+			});
+		}		
+				
+		
+		
+    </script>
+</body>
+</html>

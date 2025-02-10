@@ -30,7 +30,11 @@ def auth_page(request):
                 )
                 if user:
                     login(request, user)
-                    return redirect('homepage:homepage')  # به صفحه اصلی هدایت شوید
+                    # بررسی مقدار is_webservice
+                    if user.is_webservice:  # اگر مقدار True باشد
+                        return redirect('webservice:homepage')  # هدایت به صفحه index اپ webservice
+                    else:
+                        return redirect('homepage:homepage')  # هدایت به صفحه اصلی سایت
                 else:
                     messages.error(request, "شماره موبایل یا رمز عبور نادرست است.")
             else:

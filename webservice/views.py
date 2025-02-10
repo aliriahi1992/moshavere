@@ -5,9 +5,19 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from accounts.models import CustomUser
 import os
+import google.generativeai as genai
+from django.contrib.auth.decorators import login_required
 #برای ذخیره سازی سوابق سوالات پرسیده شده توسط کاربران
 from homepage.models import QuestionHistory
-import google.generativeai as genai
+
+
+
+@login_required
+def homepage(request):
+    return render(request, 'webservice/index.html', {'balance': request.user.balance})  # نمایش صفحه index.html
+
+
+
 
 @csrf_exempt  # برای جلوگیری از مشکلات CSRF در درخواست‌های POST
 def webservice_chat_view(request):
@@ -161,5 +171,12 @@ def webservice_chat_view(request):
             
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+
+
+
+
+
+
+            
 
 
