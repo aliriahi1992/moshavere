@@ -46,6 +46,8 @@ def webservice_chat_view(request):
             data = json.loads(request.body)
             question = data.get("question")
             mobile = request.headers.get("X-Mobile")
+            webservice_user = request.headers.get("webservice_user")
+            webservice_user_os = request.headers.get("webservice_user_os")
             
             user = CustomUser.objects.filter(mobile_number=mobile, is_webservice=True).first()
     
@@ -157,7 +159,8 @@ def webservice_chat_view(request):
                             from_who = from_who,
                             api_key_name = api_key_name,
                             credit = user.balance,
-                            user_os = "****"
+                            user_os = webservice_user_os
+                            webservice_user = webservice_user
                         )
                         question.save()                
                         print(f"Error: {e}")
@@ -174,7 +177,8 @@ def webservice_chat_view(request):
                         from_who = from_who,
                         api_key_name = api_key_name,
                         credit = user.balance,
-                        user_os = "****"
+                        user_os = webservice_user_os
+                        webservice_user = webservice_user
                     )
                     question.save()               
                     user.balance -= 1
