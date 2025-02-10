@@ -26,13 +26,7 @@
             padding: 0;
 		
         }
-        .container {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+
         .section {
 			display: none;
             background-color: #ffffff;
@@ -172,19 +166,7 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        .user-info {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin: 5px auto;
-            width: 90%;
-        }
-        .user-info p {
-            margin: 5px 0;
-            color: #333;
-        }
+
         #dropdown {
 			font-family: 'IRANSansWebFaNum';
 			margin-top: 0px; /* فاصله بیشتر از متن های دیگر */
@@ -360,6 +342,13 @@
 			gap: 20px; /* فاصله بین المان ها */
 			flex-wrap: wrap; /* برای نمایش در دستگاه های کوچکتر */
 			justify-content: center; /* وسط چین کردن تمام المان های کاربر */
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 5px auto;
+            width: 90%;			
 		}
 
 		.user-info p {
@@ -370,6 +359,8 @@
 			display: flex;
 			align-items: center;
 			gap: 5px; /* فاصله بین آیکون و متن */
+			margin: 5px 0;
+            color: #333;
 		}
 
 		.user-info a {
@@ -491,6 +482,76 @@
 		}
 
 		
+		
+		
+		
+		
+		
+    .question-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 86%;
+        margin: auto;
+    }
+
+    .question-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 22px;
+        color: #333;
+    }
+
+    .question-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .question-table thead tr {
+        background: #f0f0f0;
+    }
+
+    .question-table th, .question-table td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .badge {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        display: inline-block;
+    }
+
+    .answered {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .error {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .no-questions {
+        text-align: center;
+        color: #777;
+        font-size: 16px;
+    }
+		
+		
+		
+
+
+		
+		
     </style>
 </head>
 <body>
@@ -522,28 +583,7 @@
 
     <div id="error-message" class="error-message" style="display:none;"></div>
 
-		<div class="display-section">
-			<label for="dropdown" class="dropdown-label">نمایش</label>
-			<select id="dropdown">
-				<option value="all">همه موارد</option>
-				<option value="section1">متخصص پوست و مو</option>
-				<option value="section2">استاد</option>
-				<option value="section3">مشاور</option>
-				<option value="section4">متخصص تغذیه</option>
-				<option value="section5">مربی</option>
-				<option value="section6">وکیل</option>
-				<option value="section7">مشاور تحصیلی</option>
-				<option value="section8">پزشک</option>
-				<option value="section9">مشاور کسب و کار</option>
-				<option value="section10">متخصص بازار های مالی</option>
-				<option value="section11">مشاور مهاجرت</option>
-				<option value="section12">برنامه نویس</option>
-				<option value="section13">مشاور خرید</option>
-				<option value="section14">تعمیر کار</option>
-				<option value="section15">مشاور سرمایه گذاری</option>
-				<option value="section16">متخصص موبایل و کامپیوتر</option>
-			</select> 
-		</div>
+
 	
 	<!-- فرم افزایش اعتبار -->
 	<div id="increase-balance-modal" class="modal">
@@ -611,336 +651,42 @@
 		</div>
 	</div>	
 
-	
-	
-	
-	
-    <div class="container">
-	
-	
-	
-	
-	        <!-- سکشن اول -->
-        <div id="section1" class="section">
-            <img src="/img/hairandbeauty.jpg" alt="پرسش از متخصص پوست و مو">
-            <h2>پرسش از متخصص پوست و مو</h2>
-            <p>سوالات خود از متخصص پوست و مو را پرسیده و مشاوره بگیرید</p>
-            <form method="POST" id="form1" onsubmit="submitForm(event, 1)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(1)" id="copy1" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result1">سوال خود را بپرسید</label>
-        </div>
-	
-	
-	
-			<!-- سکشن دوم -->
-        <div id="section2" class="section">
-            <img src="/img/ostad.jpg" alt="پرسش از استاد">
-            <h2>پرسش از استاد</h2>
-            <p>در این بخش سوالات درسی و علمی خود را پرسیده و پاسخ بگیرید</p>
-            <form method="POST" id="form2" onsubmit="submitForm(event, 2)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(2)" id="copy2" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result2">سوال خود را بپرسید</label>
-        </div>
-	
-	
+	<div class="question-container">
+		<h2 class="question-title">لیست سوالات پرسش شده در سرویس شما</h2>
 
-        <!-- سکشن سوم -->
-        <div id="section3" class="section">
-            <img src="/img/moshaver.jpg" alt="پرسش از مشاور">
-            <h2>پرسش از مشاور</h2>
-            <p>در این بخش سوالات خود را از مشاور پرسیده و مشاوره بگیرید</p>
-            <form method="POST" id="form3" onsubmit="submitForm(event, 3)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(3)" id="copy3" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result3">سوال خود را بپرسید</label>
-        </div>
-
-
-        <!-- سکشن چهارم -->
-        <div id="section4" class="section">
-            <img src="/img/taghzie.jpg" alt="پرسش از متخصص تغذیه">
-            <h2>پرسش از متخصص تغذیه</h2>
-            <p>در این قسمت سوالات خود از متخصص تغذیه را مطرح نمایید</p>
-            <form method="POST" id="form4" onsubmit="submitForm(event, 4)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(4)" id="copy4" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result4">سوال خود را بپرسید</label>
-        </div>
-	
-	
-	
-        <!-- سکشن پنجم -->
-        <div id="section5" class="section">
-            <img src="/img/morabi.jpg" alt="پرسش از مربی">
-            <h2>پرسش از مربی</h2>
-            <p>با یک مربی حرفه ای صحبت کنید و مشاوره بگیرید</p>
-            <form method="POST" id="form5" onsubmit="submitForm(event, 5)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(5)" id="copy5" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result5">سوال خود را بپرسید</label>
-        </div>
-	
-	
-	
-	
-        <!-- سکشن ششم -->
-        <div id="section6" class="section">
-            <img src="/img/vakil.jpg" alt="پرسش از وکیل">
-            <h2>پرسش از وکیل</h2>
-            <p>در این قسمت می توانید سوالات قضایی خود را مطرح کرده و مشاوره بگیرید</p>
-            <form method="POST" id="form6" onsubmit="submitForm(event, 6)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(6)" id="copy6" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result6">سوال خود را بپرسید</label>
-        </div>
-
-
-
-		
-		
-        <!-- سکشن هفتم -->
-        <div id="section7" class="section">
-            <img src="/img/moshavertahsili.jpg" alt="پرسش از مشاور تحصیلی">
-            <h2>پرسش از مشاور تحصیلی</h2>
-            <p>از مشاور تحصیلی سوالات خود را بپرسید و پاسخ بگیرید</p>
-            <form method="POST" id="form7" onsubmit="submitForm(event, 7)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(7)" id="copy7" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result7">سوال خود را بپرسید</label>
-        </div>		
-		
-
-		
-        <!-- سکشن هشتم -->
-        <div id="section8" class="section">
-            <img src="/img/doctor.jpg" alt="پرسش از پزشک">
-            <h2>پرسش از پزشک</h2>
-            <p>سوالات پزشکی خود را بپرسید و راهنمایی بگیرید</p>
-            <form method="POST" id="form8" onsubmit="submitForm(event, 8)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(8)" id="copy8" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result8">سوال خود را بپرسید</label>
-        </div>			
-		
-
-
-        <!-- سکشن نهم -->
-        <div id="section9" class="section">
-            <img src="/img/business.jpg" alt="پرسش از مشاور کسب و کار">
-            <h2>پرسش از مشاور کسب و کار</h2>
-            <p>برای راه اندازی و توسعه کسب و کار خود مشاوره بگیرید</p>
-            <form method="POST" id="form9" onsubmit="submitForm(event, 9)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(9)" id="copy9" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result9">سوال خود را بپرسید</label>
-        </div>	
-		
-	
-        <!-- سکشن دهم -->
-        <div id="section10" class="section">
-            <img src="/img/financial.jpg" alt="پرسش از متخصص بازار های مالی">
-            <h2>پرسش از متخصص بازار های مالی</h2>
-            <p>سوالات خود در مورد بازار های مالی را مطرح کنید</p>
-            <form method="POST" id="form10" onsubmit="submitForm(event, 10)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(10)" id="copy10" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result10">سوال خود را بپرسید</label>
-        </div>	
-		
-
-
-        <!-- سکشن یازدهم -->
-        <div id="section11" class="section">
-            <img src="/img/vakilmohajerat.jpg" alt="پرسش از مشاور مهاجرت">
-            <h2>پرسش از مشاور مهاجرت</h2>
-            <p>در این بخش سوالات خود در مورد مهاجرت را بپرسید و مشورت بگیرید</p>
-            <form method="POST" id="form11" onsubmit="submitForm(event, 11)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(11)" id="copy11" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result11">سوال خود را بپرسید</label>
-        </div>			
-		
-	
-        <!-- سکشن دوازدهم -->
-        <div id="section12" class="section">
-            <img src="/img/programmer.jpg" alt="پرسش از برنامه نویس">
-            <h2>پرسش از برنامه نویس</h2>
-            <p>سوالات برنامه نویسی خود را بپرسید و پاسخ بگیرید</p>
-            <form method="POST" id="form12" onsubmit="submitForm(event, 12)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(12)" id="copy12" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result12">سوال خود را بپرسید</label>
-        </div>	
-
-
-        <!-- سکشن سیزدهم -->
-        <div id="section13" class="section">
-            <img src="/img/buyer.jpg" alt="پرسش از مشاور خرید">
-            <h2>پرسش از مشاور خرید</h2>
-            <p>برای خرید هدیه و محصول مشاوره بگیرید</p>
-            <form method="POST" id="form13" onsubmit="submitForm(event, 13)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(13)" id="copy13" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result13">سوال خود را بپرسید</label>
-        </div>	
-
-
-		
-        <!-- سکشن چهاردهم -->
-        <div id="section14" class="section">
-            <img src="/img/tamirkar.jpg" alt="پرسش از تعمیر کار">
-            <h2>پرسش از تعمیر کار</h2>
-            <p>از تعمیر کاری حرفه ای مشورت بگیرید</p>
-            <form method="POST" id="form14" onsubmit="submitForm(event, 14)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(14)" id="copy14" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result14">سوال خود را بپرسید</label>
-        </div>			
-		
-
-
-        <!-- سکشن پانزدهم -->
-        <div id="section15" class="section">
-            <img src="/img/sarmayegozar.jpg" alt="پرسش از مشاور سرمایه گذاری">
-            <h2>پرسش از مشاور سرمایه گذاری</h2>
-            <p>برای سرمایه گذاری های خود مشورت بگیرید</p>
-            <form method="POST" id="form15" onsubmit="submitForm(event, 15)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(15)" id="copy15" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result15">سوال خود را بپرسید</label>
-        </div>			
-		
-
-
-        <!-- سکشن شانزدهم -->
-        <div id="section16" class="section">
-            <img src="/img/aliriahi.jpg" alt="پرسش از متخصص موبایل و کامپیوتر">
-            <h2>پرسش از متخصص موبایل و کامپیوتر</h2>
-            <p>سوالات خود را از یک خبره موبایل و کامپیوتر بپرسید</p>
-            <form method="POST" id="form16" onsubmit="submitForm(event, 16)">
-                {% csrf_token %}
-                <div class="form-container">
-                    <textarea name="number" rows="4"></textarea><br>
-					<div class="button-container">
-						<button type="submit">پرسش <span class="loading" style="display:none;"></span></button>
-						<i class="fas fa-copy copy-icon" onclick="copyText(16)" id="copy16" style="display:none;"></i>
-					</div>
-                </div>
-            </form>
-            <label class="label" id="result16">سوال خود را بپرسید</label>
-        </div>		
-
-
-		
-
-    </div>
+		{% if user_questions %}
+			<table class="question-table">
+				<thead>
+					<tr>
+						<th>شماره</th>
+						<th>سوال</th>
+						<th>تاریخ</th>
+						<th>وضعیت</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for question in user_questions %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ question.question }}</td>
+							<td>{{ question.created_at|date:"Y-m-d H:i" }}</td>
+							<td>
+								{% if question.status == "Answered" %}
+									<span class="badge answered"><i class="fas fa-check-circle"></i> پاسخ داده شده</span>
+								{% elif question.status == "Pending" %}
+									<span class="badge pending"><i class="fas fa-clock"></i> در انتظار</span>
+								{% else %}
+									<span class="badge error"><i class="fas fa-times-circle"></i> ارور</span>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p class="no-questions">شما تاکنون هیچ سوالی ارسال نکرده‌اید.</p>
+		{% endif %}
+	</div>	
 	
 		
     <div class="footer">
@@ -954,88 +700,8 @@
 	
 
     <script>
-		//تابع ارسال و درسافت پاسخ به ویو جهت پاسخ دهی از هوش مصنوعی
-        function submitForm(event, section) {
-            event.preventDefault();
-            const form = event.target;
-            const data = new FormData(form);
 
-			//مثدار دهی متغیر ها جهت افزوده شدن به درخواست ارسالی به سرو جهت ذخیره سازی در دیتابیس
-			let user_phone_number = "{{ user.mobile_number }}";
-			
-			
-			let user_full_name = "{{ user.full_name }}";
-			let credit = "{{ balance }}";
-			let user_os = getOS();
-			//افزودن مقادیر مورد نیاز به درخواست ارسال به ویو جهت ذخیره سازی در سرور
-			data.append('user_phone_number', user_phone_number);
-			data.append('user_full_name', user_full_name);
-			data.append('credit', credit);
-			data.append('user_os', user_os);
-			
-			
-			
-            const loading = form.querySelector('.loading');
-            loading.style.display = 'inline-block';
-            
-            fetch(`/homepage/ask/${section}/`, {
-                method: 'POST',
-                body: data,
-                headers: {
-                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-					//alert(data.error);
-					document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').innerText = data.error;
-					var errorMessageElement = document.getElementById("error-message");
-					//errorMessageElement.scrollIntoView({ behavior: "smooth", block: "center" }); // اسکرول به محل خطا
-					// اسکرول نرم به موقعیت المان
-					window.scrollTo({
-						top: errorMessageElement.offsetTop - 200, // ۵۰ پیکسل بالاتر از المان برای نمایش بهتر
-						behavior: "smooth"
-					});					
-					//document.getElementById(`result${section}`).style.text-align = 'center';
-					//document.getElementById(`result${section}`).innerText = data.error ;
-
-                } else {
-                    document.getElementById(`result${section}`).innerText = data.result;
-                    document.getElementById('balance').innerText = data.balance;
-                    document.getElementById('error-message').style.display = 'none';
-					document.getElementById(`copy${section}`).style.display = "inline-block";
-                }
-            })
-            .finally(() => {
-                loading.style.display = 'none';
-            })
-        }
-		
-		
-        const dropdown = document.getElementById('dropdown');
-        const sections = document.querySelectorAll('.section');
-
-        function updateSections() {
-            const value = dropdown.value;
-            sections.forEach(section => {
-                if (value === 'all' || section.id === value) {
-                    section.classList.add('visible');
-                } else {
-                    section.classList.remove('visible');
-                }
-            });
-        }
-
-        // Initialize default view
-        updateSections();
-
-        // Add event listener
-        dropdown.addEventListener('change', updateSections);		
-		
-		
+				
 		
 		// باز کردن پاپ آپ افزایش اعتبار
 		document.getElementById('increase-balance-link').onclick = function(event) {

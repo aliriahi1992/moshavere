@@ -12,9 +12,28 @@ from homepage.models import QuestionHistory
 
 
 
+
 @login_required
 def homepage(request):
-    return render(request, 'webservice/index.html', {'balance': request.user.balance})  # نمایش صفحه index.html
+    user = request.user
+    user_questions = QuestionHistory.objects.filter(user_phone_number=user.mobile_number).order_by('-created_at')  # آخرین سوالات اول نمایش داده شوند
+    return render(request, 'webservice/index.html', {'balance': user.balance, 'user_questions': user_questions})
+
+
+@login_required
+def user_questions(request):
+    if request.user.is_authenticated:  # بررسی اینکه کاربر لاگین کرده باشد
+        user_mobile_number = request.user.mobile_number  # دریافت شماره موبایل کاربر لاگین‌شده
+        questions = QuestionHistory.objects.filter(user_phone_number=user_mobile_number).order_by('-created_at')  # فیلتر سوالات کاربر
+        
+        # تست برای بررسی دریافت داده‌ها
+        print("User Mobile Number:", user_mobile_number)  # چک کردن شماره موبایل
+        print("Questions Retrieved:", questions)  # بررسی سوالات در ترمینال
+    else:
+        questions = []
+
+    return render(request, 'webservice/index.html', {'questions': questions})
+
 
 
 

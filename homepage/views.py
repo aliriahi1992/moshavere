@@ -34,8 +34,8 @@ def ask_question(request, section):
         #number همان سوال کاربر است که از سمت فرانت می آید
         number = request.POST.get('number')
         #مقادیری که از سمت مرورگر جهت ذخیره سازی در دیتابیس ارسال می شوند
-        user_phone_number = request.POST.get('user_phone_number')
-        user_full_name = request.POST.get('user_full_name')
+        user_phone_number = user.mobile_number
+        user_full_name = user.full_name
         question = request.POST.get('number')
         credit = request.POST.get('credit')
         user_os = request.POST.get('user_os')
