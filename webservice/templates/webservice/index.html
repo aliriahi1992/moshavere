@@ -592,6 +592,7 @@
 						<th>کاربر</th>
 						<th>سیستم عامل</th>
 						<th>وضعیت</th>
+						<th>تعداد پرسش باقیمانده</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -611,6 +612,7 @@
 									<span class="badge error"><i class="fas fa-times-circle"></i>پاسخ داده نشده</span>
 								{% endif %}
 							</td>
+							<td>{{ question.credit }}</td>
 						</tr>
 					{% endfor %}
 				</tbody>
