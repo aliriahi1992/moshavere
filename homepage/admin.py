@@ -14,7 +14,7 @@ class TransactionHistoryResource(resources.ModelResource):
 class QuestionHistoryResource(resources.ModelResource):
     class Meta:
         model = QuestionHistory
-        fields = ('id', 'created_at', 'status', 'user_phone_number', 'user_full_name', 'question', 'from_who', 'api_key_name', 'credit', 'user_os')
+        fields = ('id', 'created_at', 'status', 'user_phone_number', 'user_full_name', 'question', 'from_who', 'api_key_name', 'credit', 'user_os','webservice_user')
 
 # ثبت TransactionHistory با قابلیت خروجی اکسل
 @admin.register(TransactionHistory)
@@ -26,6 +26,6 @@ class TransactionHistoryAdmin(ExportMixin, admin.ModelAdmin):
 # ثبت QuestionHistory با قابلیت خروجی اکسل
 @admin.register(QuestionHistory)
 class QuestionHistoryAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('status', 'user_full_name', 'user_phone_number', 'created_at', 'question', 'from_who', 'credit', 'user_os')
+    list_display = ('status', 'user_full_name', 'user_phone_number', 'created_at', 'question', 'from_who', 'credit', 'user_os','webservice_user')
     search_fields = ('user_full_name', 'user_phone_number')
     resource_class = QuestionHistoryResource  
