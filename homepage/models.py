@@ -27,6 +27,7 @@ class QuestionHistory(models.Model):
     api_key_name = models.CharField(max_length=255, default='')
     credit = models.IntegerField()
     user_os = models.CharField(max_length=255)
+    webservice_user = models.CharField(max_length=255, default='user')
 
     def __str__(self):
         return f"{self.user_full_name} - {self.status}"
