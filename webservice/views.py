@@ -181,8 +181,6 @@ def webservice_chat_view(request):
                         webservice_user = webservice_user
                     )
                     question.save()               
-                    user.balance -= 1
-                    user.save()
                     return JsonResponse({"answer": result, "note": "پاسخ جدید پردازش شد"})
                 else :
                     return JsonResponse({"answer": "این سرویس در حال حاضر غیر فعال است", "note": "اعتبار کاربر وب سرویس پایان یافته است"})    
