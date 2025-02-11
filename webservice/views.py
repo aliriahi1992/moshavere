@@ -48,8 +48,18 @@ def webservice_chat_view(request):
             mobile = request.headers.get("X-Mobile")
             webservice_user = request.headers.get("X-User")
             webservice_user_os = request.headers.get("X-OS")
+            #دریافت اورجین و ریفرر از ریکوئست جهت تشخیص اینکه درخواست از کدام وبسایت آمده
+            # همچنین استفاده از ریفرر به این خاطر است که استثنائا در وبسایت بپرسی میگه ممکن است برای دمو روی یک اورجین چندین ریکوئست بیاید
+            #در این حالت از ریفرر برای یکتا کردن کاربران استفاده میکنیم و برای بقیه دامنه ها از اورجین استفاده می شود
+            request_origin = request.headers.get("Origin")
+            request_Referer = request.headers.get("Referer")
+            if request_origin == "https://beporsimige.ir" :
+                origin = request_Referer
+            else :
+                origin = request_origin    
             
-            user = CustomUser.objects.filter(mobile_number=mobile, is_webservice=True).first()
+            
+            user = CustomUser.objects.filter(webservice_origin=origin, is_webservice=True).first()
     
             if user :
                 if user.balance >0 :    
