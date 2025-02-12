@@ -152,13 +152,13 @@ def webservice_chat_view(request):
                         question = " : " + str(question)
 
                         #در صورتیکه کد تخفیف وارد شده بود دیگر کمپین را جداگانه معرفی نکند
-                        if user.webservice_discount_code == "" :
+                        if user.webservice_discount_code == None :
                             discount_code = ""
                         else :
-                            campaign = ""    
+                            campaign = ""
                         
                         #اگر کمپین و عنوان جشنواره تعریف نشده بود به کل جملات کمپین و کد تخفیف حذف شوند
-                        if user.webservice_campaign_name == "" :
+                        if user.webservice_campaign_name == None :
                             campaign = ""
                             discount_code = ""
                     
