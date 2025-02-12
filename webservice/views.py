@@ -156,7 +156,10 @@ def webservice_chat_view(request):
                         else :
                             campaign = ""    
                         
-
+                        #اگر کمپین و عنوان جشنواره تعریف نشده بود به کل جملات کمپین و کد تخفیف حذف شوند
+                        if user.webservice_campaign_name = "" :
+                            campaign = ""
+                            discount_code = ""
                     
                         prompt = who + campaign + discount_code + name + question
 
