@@ -51,7 +51,7 @@ def ask_question(request, section):
         elif section == 2:
             from_who = "استاد"            
         elif section == 3: 
-            from_who = "مشاور خانواده"    
+            from_who = "مشاور"    
         elif section == 4:
             from_who = "متخصص تغذیه"
         elif section == 5:  

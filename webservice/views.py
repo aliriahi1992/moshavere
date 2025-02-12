@@ -67,11 +67,11 @@ def webservice_chat_view(request):
 
                     #مقداردهی متغیری که باید در دیتابیس ذخیره شود
                     if section == 1:
-                        from_who = "متخصص پوست و مو"
+                        from_who = "مشاور پوست و مو"
                     elif section == 2:
                         from_who = "استاد"            
                     elif section == 3: 
-                        from_who = "مشاور خانواده"    
+                        from_who = "مشاور"    
                     elif section == 4:
                         from_who = "متخصص تغذیه"
                     elif section == 5:  
@@ -110,38 +110,59 @@ def webservice_chat_view(request):
 
 
 
+
+
                         if section == 1:
-                            prompt = "به عنوان یک مشاور در زمینه پوست و مو پاسخ این سوال رو به مخاطب بده و بعد از اون ازش بابت مشاوره گرفتن در  " + user.full_name + "  صمیمانه تشکر کن و بعد از اون بهش  "+ user.webservice_campaign_name+ " رو پیشنهاد کن که بدون نیاز به کد تخفیف میتونه ازش استفاده کنه : " + str(question)
+                            who = "به عنوان یک مشاور در زمینه پوست و مو پاسخ این سوال رو بده "
                         elif section == 2:
-                            prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده  " + str(question)
+                            who = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده  "
                         elif section == 3:
-                            prompt = "به عنوان یک مشاور امور اجتماعی و خانوادگی و فردی پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک مشاور امور اجتماعی و خانوادگی و فردی پاسخ این سوال رو بده "
                         elif section == 4:
-                            prompt = "به عنوان یک متخصص تغذیه و رژیم درمانی پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک متخصص تغذیه و رژیم درمانی پاسخ این سوال رو بده "
                         elif section == 5:
-                            prompt = "به عنوان یک مربی ورزشی پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک مربی ورزشی پاسخ این سوال رو بده "
                         elif section == 6:
-                            prompt = "به عنوان یک فرد آگاه از مسائل حقوقی و قضایی پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک فرد آگاه از مسائل حقوقی و قضایی پاسخ این سوال رو بده "
                         elif section == 7:
-                            prompt = "به عنوان یک فرد مشاور تحصیلی پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک فرد مشاور تحصیلی پاسخ این سوال رو بده "
                         elif section == 8:
-                            prompt = "به عنوان یک پزشک پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک پزشک پاسخ این سوال رو بده "
                         elif section == 9:
-                            prompt = "به عنوان یک مشاور کسب و کار پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک مشاور کسب و کار پاسخ این سوال رو بده "
                         elif section == 10:
-                            prompt = "به عنوان یک متخصص بازار های مالی پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک متخصص بازار های مالی پاسخ این سوال رو بده "
                         elif section == 11:
-                            prompt = "به عنوان یک مشاور امور مهاجرت پاسخ این سوال رو بده " + str(question)                  
+                            who = "به عنوان یک مشاور امور مهاجرت پاسخ این سوال رو بده "                
                         elif section == 12:
-                            prompt = "به عنوان یک برنامه نویس پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک برنامه نویس پاسخ این سوال رو بده "
                         elif section == 13:
-                            prompt = "به عنوان یک مشاور خرید محصول پاسخ این سوال رو بده " + str(question)  
+                            who = "به عنوان یک مشاور خرید محصول پاسخ این سوال رو بده "
                         elif section == 14:
-                            prompt = "به عنوان یک تعمیر کار پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک تعمیر کار پاسخ این سوال رو بده "
                         elif section == 15:
-                            prompt = "به عنوان یک مشاور سرمایه گذاری پاسخ این سوال رو بده " + str(question)
+                            who = "به عنوان یک مشاور سرمایه گذاری پاسخ این سوال رو بده "
                         elif section == 16:
-                            prompt = "به عنوان یک متخصص موبایل و کامپیوتر پاسخ این سوال رو بده " + str(question)                    
+                            who = "به عنوان یک متخصص موبایل و کامپیوتر پاسخ این سوال رو بده "  
+
+                        name = " و در پایان هم در یک جمله ازش بابت مشاوره گرفتن از " + user.full_name + " صمیمانه تشکر کن ."
+                        campaign = " و بعد از اون " + user.webservice_campaign_name + " رو بهش پیشنهاد کن که بدون نیاز به کد تخفیف میتونه ازش استفاده کنه "
+                        discount_code = " و بعد از اون کد تخفیف " + user.webservice_discount_code + " رو بهش برای بهره مندی از " + user.webservice_campaign_name + " پیشنهاد کن "
+                        question = " : " + str(question)
+
+                        #در صورتیکه کد تخفیف وارد شده بود دیگر کمپین را جداگانه معرفی نکند
+                        if user.webservice_discount_code == "" :
+                            discount_code = ""
+                        else :
+                            campaign = ""    
+                        
+
+                    
+                        prompt = who + campaign + discount_code + name + question
+
+
+
+
 
 
                         response = model.generate_content(prompt)
