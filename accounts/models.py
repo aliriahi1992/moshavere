@@ -26,8 +26,8 @@ class CustomUser(AbstractBaseUser):
     is_webservice = models.BooleanField(default=False)  # اضافه‌شده
     webservice_from_who = models.IntegerField(default=1)  #عددی جهت مشخص شدن مشاور تخصیص یافته به وب سرویس
     webservice_origin = models.CharField(max_length=255,default="www")
-    webservice_discount_code = models.CharField(max_length=255,default="")
-    webservice_campaign_name = models.CharField(max_length=255,default="")
+    webservice_discount_code = models.CharField(max_length=255, null=True, blank=True)
+    webservice_campaign_name = models.CharField(max_length=255, null=True, blank=True)
     balance = models.IntegerField(default=3)  #اعتبار اولیه با میزان پیش فرض 3 پرسش
 
     
