@@ -108,8 +108,10 @@ def webservice_chat_view(request):
                         genai.configure(api_key=GOOGLE_API_KEY)
                         model = genai.GenerativeModel('gemini-pro')
 
+
+
                         if section == 1:
-                            prompt = "به عنوان یک مشاور در زمینه پوست و مو  و با لحنی صمیمی پاسخ این سوال رو بده و در آخر هم به عنوان هدیه به مخاطب بگو برای خرید اینترنتی از " + user.full_name + "  میتونه از " + user.webservice_campaign_name +" استفاده کنه : " + str(question)
+                            prompt = "به عنوان یک مشاور در زمینه پوست و مو از مخاطب بابت انتخاب  " + user.full_name + "  تشکر کن و پاسخ این سوال رو بهش بده " + str(question)
                         elif section == 2:
                             prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده  " + str(question)
                         elif section == 3:
