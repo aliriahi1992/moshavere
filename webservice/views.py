@@ -145,9 +145,10 @@ def webservice_chat_view(request):
                         elif section == 16:
                             who = "به عنوان یک متخصص موبایل و کامپیوتر پاسخ این سوال رو بده "  
 
-                        name = " و در پایان هم در یک جمله ازش بابت مشاوره گرفتن از " + user.full_name + " صمیمانه تشکر کن ."
+                        
                         campaign = " و بعد بهش " + user.webservice_campaign_name + " رو بهش پیشنهاد کن که بدون نیاز به کد تخفیف میتونه ازش استفاده کنه "
                         discount_code = " و بعد کد تخفیف " + user.webservice_discount_code + " رو برای بهره مندی از " + user.webservice_campaign_name + " پیشنهاد کن "
+                        name = " و در پایان هم در یک جمله ازش بابت مشاوره گرفتن از " + user.full_name + " صمیمانه تشکر کن ."
                         question = " : " + str(question)
 
                         #در صورتیکه کد تخفیف وارد شده بود دیگر کمپین را جداگانه معرفی نکند
@@ -157,7 +158,7 @@ def webservice_chat_view(request):
                             campaign = ""    
                         
                         #اگر کمپین و عنوان جشنواره تعریف نشده بود به کل جملات کمپین و کد تخفیف حذف شوند
-                        if user.webservice_campaign_name = "" :
+                        if user.webservice_campaign_name == "" :
                             campaign = ""
                             discount_code = ""
                     
