@@ -145,9 +145,11 @@ def webservice_chat_view(request):
                         elif section == 16:
                             who = "به عنوان یک متخصص موبایل و کامپیوتر پاسخ این سوال رو بده "  
 
-                        
-                        campaign = " و بعد بهش " + user.webservice_campaign_name + " رو بهش پیشنهاد کن که بدون نیاز به کد تخفیف میتونه ازش استفاده کنه "
-                        discount_code = " و بعد کد تخفیف " + user.webservice_discount_code + " رو برای بهره مندی از " + user.webservice_campaign_name + " پیشنهاد کن "
+
+                        if user.webservice_campaign_name is not None :
+                            campaign = " و بعد بهش " + user.webservice_campaign_name + " رو بهش پیشنهاد کن که بدون نیاز به کد تخفیف میتونه ازش استفاده کنه "
+                        if user.webservice_discount_code is not None :
+                            discount_code = " و بعد کد تخفیف " + user.webservice_discount_code + " رو برای بهره مندی از " + user.webservice_campaign_name + " پیشنهاد کن "
                         name = " و در پایان هم بابت مشاوره گرفتن از " + user.full_name + " صمیمانه تشکر کن ."
                         question = " : " + str(question)
 
@@ -161,6 +163,10 @@ def webservice_chat_view(request):
                         if user.webservice_campaign_name == None :
                             campaign = ""
                             discount_code = ""
+
+
+
+
                     
                         prompt = who + campaign + discount_code + name + question
 
