@@ -111,7 +111,7 @@ def webservice_chat_view(request):
 
 
                         if section == 1:
-                            prompt = "به عنوان یک مشاور در زمینه پوست و مو از مخاطب بابت انتخاب  " + user.full_name + "  تشکر کن و پاسخ این سوال رو بهش بده " + str(question)
+                            prompt = "به عنوان یک مشاور در زمینه پوست و مو پاسخ این سوال رو به مخاطب بده و بعد ازش بابت انتخاب  " + user.full_name + "  تشکر کن و بعد بهش استفاده از  "+ user.webservice_campaign_name+ " پیشمهاد کن : " + str(question)
                         elif section == 2:
                             prompt = "به عنوان یک استاد علمی و دانشگاهی و معلم پاسخ این سوال رو بده  " + str(question)
                         elif section == 3:
