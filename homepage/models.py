@@ -28,6 +28,8 @@ class QuestionHistory(models.Model):
     credit = models.IntegerField()
     user_os = models.CharField(max_length=255)
     webservice_user = models.CharField(max_length=255, default='user')
+    webservice_discount_code = models.CharField(max_length=255, null=True, blank=True)
+    webservice_campaign_name = models.CharField(max_length=255, null=True, blank=True)    
 
     def __str__(self):
         return f"{self.user_full_name} - {self.status}"
