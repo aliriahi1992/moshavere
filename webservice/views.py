@@ -17,7 +17,7 @@ from homepage.models import QuestionHistory
 def homepage(request):
     user = request.user
     user_questions = QuestionHistory.objects.filter(user_phone_number=user.mobile_number).order_by('-created_at')  # آخرین سوالات اول نمایش داده شوند
-    return render(request, 'webservice/index.html', {'balance': user.balance, 'user_questions': user_questions, 'webservice_discount_code': user.webservice_discount_code , 'webservice_campaign_name': user.webservice_campaign_name})
+    return render(request, 'webservice/index.html', {'balance': user.balance, 'user_questions': user_questions, 'webservice_discount_code': user.webservice_discount_code , 'webservice_campaign_name': user.webservice_campaign_name , 'webservice_total_request_limit': user.webservice_total_request_limit, 'webservice_user_request_limit': user.webservice_user_request_limit})
 
 
 @login_required
