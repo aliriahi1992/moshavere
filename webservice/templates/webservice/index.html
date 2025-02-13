@@ -614,8 +614,8 @@
 									<span class="badge error"><i class="fas fa-times-circle"></i>پاسخ داده نشده</span>
 								{% endif %}
 							</td>
-							<td>{{ question.webservice_discount_code }}</td>
-							<td>{{ question.webservice_campaign_name }}</td>
+							<td>{{ question.webservice_discount_code|default:"-" }}</td>
+							<td>{{ question.webservice_campaign_name|default:"-" }}</td>
 							<td>{{ question.credit }}</td>
 						</tr>
 					{% endfor %}
