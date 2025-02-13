@@ -660,16 +660,16 @@
 			<span class="close" id="close-ai-settings">&times;</span>
 			<h2>تنظیمات هوش مصنوعی</h2>
 			<form id="ai-settings-form">
-				<label for="requests-per-hour">تعداد درخواست های مجاز در هر ساعت</label>
+				<label for="requests-per-hour">محدودیت تعداد درخواست کل سرویس در هر ساعت</label>
 				<input type="number" id="requests-per-hour" >
 
-				<label for="user-requests-per-hour">تعداد درخواست های هر کاربر در هر ساعت</label>
+				<label for="user-requests-per-hour">محدودیت تعداد درخواست هر کاربر در هر ساعت</label>
 				<input type="number" id="user-requests-per-hour" >
 
-				<label for="discount-code">کد تخفیف</label>
+				<label for="discount-code">کد تخفیف جهت ارائه</label>
 				<input type="text" id="discount-code2" value= "{{ user.webservice_discount_code }}">
 
-				<label for="campaign-name">نام کمپین</label>
+				<label for="campaign-name">نام جشنواره جهت ارائه</label>
 				<input type="text" id="campaign-name" value= "{{ webservice_campaign_name }}">
 				
 				<button type="button" id="apply-ai-settings">ذخیره تنظیمات</button>
