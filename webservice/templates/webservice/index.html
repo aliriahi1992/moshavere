@@ -502,6 +502,7 @@
 			<p><i class="fas fa-question-circle"></i> تعداد پرسش باقیمانده: <span id="balance">{{ balance }}</span></p>
 			<p><a href="#" id="increase-balance-link"><i class="fas fa-plus-circle"></i> افزایش اعتبار</a></p>
 			<p><a href="#" id="change-password-link"><i class="fas fa-key"></i> تغییر رمز ورود</a></p>
+			<p><a href="#" id="ai-settings-link"><i class="fas fa-cog"></i> تنظیمات هوش مصنوعی</a></p>
 			<p><a href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> خروج از حساب کاربری</a></p>
 		</div>
 
@@ -561,7 +562,6 @@
 	</div>	
 	
 
-	
 
 	<!-- فرم تغییر رمز ورود -->
 	<div id="change-password-modal" class="modal3">
@@ -577,6 +577,129 @@
 			</div>	
 		</div>
 	</div>	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+/* استایل فرم تنظیمات هوش مصنوعی مشابه فرم تغییر رمز */
+.modal-ai {
+    font-family: 'IRANSansWebFaNum';
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content-ai {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.modal-content-ai form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content-ai label {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-content-ai input {
+    width: calc(100% - 120px);
+    padding: 5px;
+}
+
+#apply-ai-settings {
+    margin-top: 20px; /* اضافه کردن فاصله بالای دکمه */
+	width: 40%;
+}
+</style>
+
+<div id="ai-settings-modal" class="modal-ai">
+    <div class="modal-content-ai">
+        <span class="close" id="close-ai-settings">&times;</span>
+        <h2>تنظیمات هوش مصنوعی</h2>
+        <form id="ai-settings-form">
+            <label for="requests-per-hour">تعداد درخواست های مجاز در هر ساعت:</label>
+            <input type="number" id="requests-per-hour" placeholder="تعداد درخواست های مجاز در هر ساعت">
+            
+            <label for="user-requests-per-hour">تعداد درخواست های هر کاربر در هر ساعت:</label>
+            <input type="number" id="user-requests-per-hour" placeholder="تعداد درخواست های هر کاربر در هر ساعت">
+            
+            <label for="discount-code">کد تخفیف:</label>
+            <input type="text" id="discount-code" placeholder="کد تخفیف">
+            
+            <label for="campaign-name">نام کمپین:</label>
+            <input type="text" id="campaign-name" placeholder="نام کمپین">
+            
+            <button type="button" id="apply-ai-settings">ذخیره تنظیمات</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('ai-settings-link').onclick = function() {
+    document.getElementById('ai-settings-modal').style.display = 'block';
+}
+
+document.getElementById('close-ai-settings').onclick = function() {
+    document.getElementById('ai-settings-modal').style.display = 'none';
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
 
 	<div class="question-container">
 		<h2 class="question-title">پرسش های مطرح شده</h2>
@@ -843,7 +966,10 @@
 			if (event.target === modal3) {
 				modal3.style.display = 'none';
 			}			
-			
+			var modal_ai = document.getElementById('ai-settings-modal');
+			if (event.target === modal_ai) {
+				modal_ai.style.display = 'none';
+			}				
 			
 		};
 		
