@@ -202,7 +202,9 @@ def webservice_chat_view(request):
                             api_key_name = api_key_name,
                             credit = user.balance,
                             user_os = webservice_user_os,
-                            webservice_user = webservice_user
+                            webservice_user = webservice_user,
+                            webservice_discount_code = user.webservice_discount_code,
+                            webservice_campaign_name = user.webservice_campaign_name                            
                         )
                         question.save()                
                         print(f"Error: {e}")
@@ -220,7 +222,9 @@ def webservice_chat_view(request):
                         api_key_name = api_key_name,
                         credit = user.balance,
                         user_os = webservice_user_os,
-                        webservice_user = webservice_user
+                        webservice_user = webservice_user,
+                        webservice_discount_code = user.webservice_discount_code,
+                        webservice_campaign_name = user.webservice_campaign_name
                     )
                     question.save()               
                     return JsonResponse({"answer": result, "note": "پاسخ جدید پردازش شد"})
