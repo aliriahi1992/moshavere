@@ -696,9 +696,9 @@
 						<th>تاریخ</th>
 						<th>کاربر</th>
 						<th>سیستم عامل</th>
-						<th>وضعیت</th>
 						<th>کد تخفیف ارائه شده</th>
 						<th>جشنواره معرفی شده</th>
+						<th>وضعیت</th>
 						<th>تعداد پرسش باقیمانده</th>
 					</tr>
 				</thead>
@@ -710,6 +710,8 @@
 							<td>{{ question.created_at|date:"Y-m-d H:i" }}</td>
 							<td>{{ question.webservice_user }}</td>
 							<td>{{ question.user_os }}</td>
+							<td>{{ question.webservice_discount_code|default:"-" }}</td>
+							<td>{{ question.webservice_campaign_name|default:"-" }}</td>
 							<td>
 								{% if question.status == "Answered" %}
 									<span class="badge answered"><i class="fas fa-check-circle"></i>پاسخ داده شده</span>
@@ -718,9 +720,7 @@
 								{% else %}
 									<span class="badge error"><i class="fas fa-times-circle"></i>پاسخ داده نشده</span>
 								{% endif %}
-							</td>
-							<td>{{ question.webservice_discount_code|default:"-" }}</td>
-							<td>{{ question.webservice_campaign_name|default:"-" }}</td>
+							</td>							
 							<td>{{ question.credit }}</td>
 						</tr>
 					{% endfor %}
