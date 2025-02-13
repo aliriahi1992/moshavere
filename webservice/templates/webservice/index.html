@@ -644,6 +644,21 @@
     margin-top: 20px; /* اضافه کردن فاصله بالای دکمه */
 	width: 40%;
 }
+
+
+  input[type="number"],
+  input[type="text"] {
+    font-family: 'IRANSansWebFaNum';
+    height: 40px; /* ارتفاع تکست باکس */
+    padding: 0 10px; /* فضای داخلی */
+    font-size: 16px; /* اندازه فونت */
+    border: 1px solid #ccc; /* حاشیه */
+    border-radius: 5px; /* گوشه های گرد */
+    width: 45%; /* عرض تکست باکس */
+    box-sizing: border-box; /* حساب کردن padding و border داخل عرض */
+  }
+
+
 </style>
 
 <div id="ai-settings-modal" class="modal-ai">
@@ -651,17 +666,17 @@
         <span class="close" id="close-ai-settings">&times;</span>
         <h2>تنظیمات هوش مصنوعی</h2>
         <form id="ai-settings-form">
-            <label for="requests-per-hour">تعداد درخواست های مجاز در هر ساعت:</label>
-            <input type="number" id="requests-per-hour" placeholder="تعداد درخواست های مجاز در هر ساعت">
-            
-            <label for="user-requests-per-hour">تعداد درخواست های هر کاربر در هر ساعت:</label>
-            <input type="number" id="user-requests-per-hour" placeholder="تعداد درخواست های هر کاربر در هر ساعت">
-            
-            <label for="discount-code">کد تخفیف:</label>
-            <input type="text" id="discount-code" placeholder="کد تخفیف">
-            
-            <label for="campaign-name">نام کمپین:</label>
-            <input type="text" id="campaign-name" placeholder="نام کمپین">
+			<label for="requests-per-hour">تعداد درخواست های مجاز در هر ساعت</label>
+			<input type="number" id="requests-per-hour" >
+
+			<label for="user-requests-per-hour">تعداد درخواست های هر کاربر در هر ساعت</label>
+			<input type="number" id="user-requests-per-hour" >
+
+			<label for="discount-code">کد تخفیف</label>
+			<input type="text" id="discount-code2" >
+
+			<label for="campaign-name">نام کمپین</label>
+			<input type="text" id="campaign-name" >
             
             <button type="button" id="apply-ai-settings">ذخیره تنظیمات</button>
         </form>
