@@ -592,6 +592,8 @@
 						<th>کاربر</th>
 						<th>سیستم عامل</th>
 						<th>وضعیت</th>
+						<th>کد تخفیف ارائه شده</th>
+						<th>جشنواره معرفی شده</th>
 						<th>تعداد پرسش باقیمانده</th>
 					</tr>
 				</thead>
@@ -612,6 +614,8 @@
 									<span class="badge error"><i class="fas fa-times-circle"></i>پاسخ داده نشده</span>
 								{% endif %}
 							</td>
+							<td>{{ webservice_discount_code }}</td>
+							<td>{{ webservice_campaign_name }}</td>
 							<td>{{ question.credit }}</td>
 						</tr>
 					{% endfor %}
