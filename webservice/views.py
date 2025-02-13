@@ -151,7 +151,6 @@ def webservice_chat_view(request):
                         if user.webservice_discount_code is not None :
                             discount_code = "' و بعد کد تخفیف " + user.webservice_discount_code + " رو برای بهره مندی از '" + user.webservice_campaign_name + " در  " + user.full_name + " پیشنهاد کن "
                         name = " و در پایان هم از مخاطب بابت مشاوره گرفتنش از " + user.full_name + " صمیمانه تشکر کن ."
-                        question = " : " + str(question)
 
                         #در صورتیکه کد تخفیف وارد شده بود دیگر کمپین را جداگانه معرفی نکند
                         if user.webservice_discount_code == None :
@@ -168,7 +167,7 @@ def webservice_chat_view(request):
 
 
                     
-                        prompt = who + campaign + discount_code + name + question
+                        prompt = who + campaign + discount_code + name + " : " + str(question)
 
 
 
