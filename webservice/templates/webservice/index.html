@@ -667,10 +667,10 @@
 				<input type="number" id="user-requests-per-hour" value= "{{ user.webservice_user_request_limit }}">
 
 				<label for="discount-code">کد تخفیف جهت ارائه به کاربر</label>
-				<input type="text" id="discount-code2" value= "{{ user.webservice_discount_code }}">
+				<input type="text" id="discount-code2" value= "{{ user.webservice_discount_code|default:'-' }}">
 
 				<label for="campaign-name">نام جشنواره جهت پیشنهاد به کاربر</label>
-				<input type="text" id="campaign-name" value= "{{ user.webservice_campaign_name }}">
+				<input type="text" id="campaign-name" value= "{{ user.webservice_campaign_name|default:'-' }}">
 				
 				<button type="button" id="apply-ai-settings" onclick="ApplyAiSettings()">ذخیره تنظیمات</button>
 			</form>
