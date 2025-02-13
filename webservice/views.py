@@ -37,6 +37,21 @@ def user_questions(request):
 
 
 
+@csrf_exempt
+def update_ai_settings(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user = request.user
+        user.webservice_total_request_limit = data.get('requests_per_hour', 10000)
+        user.webservice_user_request_limit = data.get('user_requests_per_hour', 30)
+        user.webservice_discount_code = data.get('discount_code')
+        user.webservice_campaign_name = data.get('campaign_name')
+        user.save()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'fail'}, status=400)
+
+
+
 
 @csrf_exempt  # برای جلوگیری از مشکلات CSRF در درخواست‌های POST
 def webservice_chat_view(request):

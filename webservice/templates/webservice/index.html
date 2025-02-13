@@ -672,7 +672,7 @@
 				<label for="campaign-name">نام جشنواره جهت پیشنهاد به کاربر</label>
 				<input type="text" id="campaign-name" value= "{{ webservice_campaign_name }}">
 				
-				<button type="button" id="apply-ai-settings">ذخیره تنظیمات</button>
+				<button type="button" id="apply-ai-settings" onclick="ApplyAiSettings()">ذخیره تنظیمات</button>
 			</form>
 		</div>
 	</div>
@@ -1051,23 +1051,66 @@
 		});		
 		
 		
-		//برای کپی کردن سوال و پاسخ دریافت شده در کلیپ بورد
-		function copyText(section) {
-			var question = document.querySelector(`#form${section} textarea`).value;
-			var answer = document.getElementById(`result${section}`).innerText;
+				
+				
+				
+				
+				
+				
+				
+		//سنجش اعتبار و ارسال اطلاعات ماژول مربوط به تنظیمات هوش مصنوعی
+        function ApplyAiSettings() {
+            const requestsPerHour = document.getElementById("requests-per-hour").value;
+            const userRequestsPerHour = document.getElementById("user-requests-per-hour").value;
+            const discountCode = document.getElementById("discount-code2").value;
+            const campaignName = document.getElementById("campaign-name").value;
 
-			var textToCopy = `\u202Bپرسش شما از beporsimige.ir :\n${question}\n\nپاسخ "بپرسی میگه" :\n${answer}`;
-			
-			navigator.clipboard.writeText(textToCopy).then(() => {
-				alert("پرسش و پاسخ کپی شدند.");
-			}).catch(err => {
-				console.error("خطا در کپی کردن:", err);
-			});
-		}		
-				
-				
-		
-		
+            if (requestsPerHour <= 1) {
+                alert("مقدار 'محدودیت تعداد درخواست کل سرویس در هر ساعت' باید بزرگتر از 1 باشد.");
+                return;
+            }
+
+            if (userRequestsPerHour <= 1) {
+                alert("مقدار 'محدودیت تعداد درخواست هر کاربر در هر ساعت' باید بزرگتر از 1 باشد.");
+                return;
+            }
+
+            if (discountCode && !campaignName) {
+                alert("برای ثبت کد تخفیف باید عنوان جشنواره نیز نوشته شود.");
+                return;
+            }
+
+            // ارسال مقادیر به ویو جنگو
+            const data = {
+                requests_per_hour: requestsPerHour,
+                user_requests_per_hour: userRequestsPerHour,
+                discount_code: discountCode,
+                campaign_name: campaignName
+            };
+
+            fetch('/webservice/settings/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}' // دریافت CSRF token از جنگو
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert("تنظیمات با موفقیت ذخیره شد.");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert("خطایی رخ داد، لطفا مجددا تلاش کنید.");
+            });
+        }
+
+
+
+
+	
 		
     </script>
 </body>
