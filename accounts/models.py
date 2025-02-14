@@ -30,6 +30,7 @@ class CustomUser(AbstractBaseUser):
     webservice_campaign_name = models.CharField(max_length=255, null=True, blank=True)
     webservice_total_request_limit = models.IntegerField(default=10000)
     webservice_user_request_limit = models.IntegerField(default=30)
+    webservice_question_price = models.IntegerField(default=30000)
     balance = models.IntegerField(default=3)  #اعتبار اولیه با میزان پیش فرض 3 پرسش
 
     
