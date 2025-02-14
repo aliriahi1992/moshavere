@@ -8,7 +8,7 @@ from import_export.admin import ExportMixin
 class TransactionHistoryResource(resources.ModelResource):
     class Meta:
         model = TransactionHistory
-        fields = ('id', 'created_at', 'status', 'user_phone_number', 'user_full_name', 'orginal_price', 'amount', 'ref_id', 'discount_code', 'initial_credit', 'secondary_credit', 'user_os')
+        fields = ('id', 'created_at', 'status', 'user_phone_number', 'user_full_name', 'orginal_price', 'amount', 'ref_id', 'discount_code', 'initial_credit', 'secondary_credit', 'user_os', 'webservice_question_price')
 
 # تعریف resource برای QuestionHistory
 class QuestionHistoryResource(resources.ModelResource):
@@ -19,7 +19,7 @@ class QuestionHistoryResource(resources.ModelResource):
 # ثبت TransactionHistory با قابلیت خروجی اکسل
 @admin.register(TransactionHistory)
 class TransactionHistoryAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('status', 'user_full_name', 'user_phone_number', 'created_at', 'orginal_price', 'amount', 'discount_code', 'user_os')
+    list_display = ('status', 'user_full_name', 'user_phone_number', 'created_at', 'orginal_price', 'amount', 'discount_code', 'user_os','webservice_question_price')
     search_fields = ('user_full_name', 'user_phone_number', 'ref_id')
     resource_class = TransactionHistoryResource
 
