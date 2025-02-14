@@ -294,8 +294,8 @@ currency = "IRR"  # or "IRT"
 # Required Data
 amount = 20000  # Based on your currency
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://127.0.0.1:8000/webservice/'
-#CallbackURL = 'http://beporsimige.ir/webservice/'
+#CallbackURL = 'http://127.0.0.1:8000/webservice/'
+CallbackURL = 'http://beporsimige.ir/webservice/'
 
 # Important: need to edit for a real server.
 
