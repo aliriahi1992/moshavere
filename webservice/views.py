@@ -5,11 +5,20 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from accounts.models import CustomUser
 import os
+import requests
 import google.generativeai as genai
 from django.contrib.auth.decorators import login_required
 #برای ذخیره سازی سوابق سوالات پرسیده شده توسط کاربران
 from homepage.models import QuestionHistory
-
+#برای زرین پال
+from django.conf import settings
+import requests
+import json
+from django.http import HttpResponse , JsonResponse
+from django.shortcuts import redirect
+#برای ذخیره سازی سوابق تراکنش ها در مدل دیتای جنگو
+from homepage.models import TransactionHistory 
+from datetime import datetime
 
 
 
@@ -269,6 +278,173 @@ def webservice_chat_view(request):
 
 
 
+
+
+
+
+ZP_API_REQUEST = "https://sandbox.zarinpal.com/pg/v4/payment/request.json"
+ZP_API_VERIFY = "https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
+ZP_API_STARTPAY = "https://sandbox.zarinpal.com/pg/StartPay/"
+
+
+currency = "IRR"  # or "IRT"
+
+# کد مرچنت خود را در فایل settings وارد کنید
+
+# Required Data
+amount = 20000  # Based on your currency
+description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
+#CallbackURL = 'http://127.0.0.1:8000/homepage/'
+CallbackURL = 'http://beporsimige.ir/webservice/'
+
+# Important: need to edit for a real server.
+
+
+#تابع ارسال درخواست به درگاه بانکی
+def send_request(request):
+    if request.method == 'POST':
+        #دریافت متغیر های ارسالی به درگاه از صفحه وب سمت مشتری
+        data = json.loads(request.body)
+        amount = data.get('amount')
+        orginal_price = data.get('orginal_price')
+        mobile = data.get('mobile')
+        description = data.get('description')
+        order_id = data.get('order_id')
+        email = data.get('email')
+        #مقادیر اختصاصی جهت ثبت در دیتا مدل سوابق تراکنش خودمان در جنگو
+        user_full_name = data.get('user_full_name')
+        discount_code = data.get('discount_code')
+        initial_credit = data.get('initial_credit')
+        user_os = data.get('user_os')
+
+
+
+        metadata = {
+	    "mobile": mobile,  # Buyer phone number Must start with 09
+	    "email": email,  # Buyer Email
+	    "order_id": order_id,  # Order Id
+        }
+
+
+
+        if not amount:
+            return JsonResponse({'status': False, 'error': 'مقدار نامعتبر است.'})
+
+        # داده‌های مورد نیاز برای زرین پال
+        data = {
+            "merchant_id": settings.MERCHANT,
+            "amount": int(amount),
+            "currency": currency,
+            "description": description,
+            "callback_url": CallbackURL,
+            "metadata": metadata
+        }
+        data = json.dumps(data)
+        headers = {'content-type': 'application/json', 'accept': 'application/json'}
+
+        try:
+            response = requests.post(ZP_API_REQUEST, data=data, headers=headers, timeout=10)
+            response = response.json()
+            err = response.get("errors")
+            if err:
+                return JsonResponse(err, content_type="application/json", safe=False)
+            if response['data']['code'] == 100:
+
+                #استفاده از مفهوم سشن برای ذخیره سازی اطلاعات پرداخت کاربر در زمان ارسال به درگاه و بازگشت از درگاه ، این مقادیر جلوتر در تابع وریفای از سشن استخراج می شوند
+                request.session['user_phone_number'] = str(mobile)
+                request.session['user_full_name'] = str(user_full_name)
+                request.session['amount'] = int(amount)
+                request.session['orginal_price'] = int(orginal_price)
+                request.session['discount_code'] = str(discount_code)
+                request.session['initial_credit'] = str(initial_credit)
+                request.session['user_os'] = str(user_os)
+
+                url = ZP_API_STARTPAY + str(response['data']['authority'])
+                return JsonResponse({'url': url})
+            else:
+                return JsonResponse({'status': False, 'code': str(response['data']['code'])})
+        except requests.exceptions.Timeout:
+            return JsonResponse({'status': False, 'error': 'timeout'})
+        except requests.exceptions.ConnectionError:
+            return JsonResponse({'status': False, 'error': 'اتصال برقرار نشد'})
+
+    return JsonResponse({'status': False, 'error': 'درخواست نامعتبر است.'})
+
+
+#تابع نمایش نتیجه تراکنش بانکی و ذخیره نتیجه
+@login_required
+def verify(request):
+    #جهت افزایش اعتبار یوزر 
+    user = request.user
+    authority = request.GET.get('Authority')
+    status = request.GET.get('Status')
+    if status == "NOK":
+       
+        #ذخیره سازی سابقه تراکنش به عنوان تراکنشی نا موفق
+        transaction = TransactionHistory(
+            #created_at = datetime.now(),
+            status = "NOK",
+            user_phone_number = request.session.get('user_phone_number'),
+            user_full_name = request.session.get('user_full_name'),
+            orginal_price = request.session.get('orginal_price'),
+            amount = request.session.get('amount'),
+            ref_id = "",
+            discount_code = request.session.get('discount_code'),
+            initial_credit = request.session.get('initial_credit'),
+            secondary_credit = request.session.get('initial_credit'),
+            user_os = request.session.get('user_os'),
+            webservice_question_price = user.webservice_question_price
+        )
+        transaction.save()
+
+
+        return JsonResponse({'status': False, 'message': "پرداخت ناموفق"})
+
+    data = {
+        "merchant_id": settings.MERCHANT,
+        #استفاده از مفهوم سشن برای ذخیره سازی اطلاعات پرداخت کاربر در زمان ارسال به درگاه و بازگشت از درگاه
+        "amount" : request.session.get('amount'),
+        "authority": authority,
+    }
+    headers = {'content-type': 'application/json', 'accept': 'application/json'}
+    try:
+        response = requests.post(ZP_API_VERIFY, data=json.dumps(data), headers=headers)
+        response = response.json()
+        if response['data']['code'] == 100:
+
+            #جهت افزایش اعتبار یوزر 
+            i = request.session.get('orginal_price') / user.webservice_question_price
+
+            user.balance += i
+            user.save()
+
+            
+            #ذخیره سازی سابقه تراکنش به عنوان تراکنش موفق
+            transaction = TransactionHistory(
+                #created_at = datetime.now(),
+                status = "OK",
+                user_phone_number = request.session.get('user_phone_number'),
+                user_full_name = request.session.get('user_full_name'),
+                orginal_price = request.session.get('orginal_price'),
+                amount = request.session.get('amount'),
+                ref_id = response['data']['ref_id'],
+                discount_code = request.session.get('discount_code'),
+                initial_credit = request.session.get('initial_credit'),
+                secondary_credit = int(request.session.get('initial_credit')) + i,
+                user_os = request.session.get('user_os'),
+                webservice_question_price = user.webservice_question_price
+            )
+            transaction.save()           
+            
+
+            return JsonResponse({'status': True, 'message': 'پرداخت موفق', 'ref_id': response['data']['ref_id'] , 'balance': user.balance})
+
+
+
+        else:
+            return JsonResponse({'status': False, 'message': 'پرداخت ناموفق', 'data': response})
+    except requests.exceptions.ConnectionError:
+        return JsonResponse({'status': False, 'message': 'اتصال برقرار نشد'})
 
             
 

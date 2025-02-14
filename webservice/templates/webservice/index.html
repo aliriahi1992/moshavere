@@ -854,11 +854,14 @@
 		
 		
 	
+		const questionPrice = parseInt(document.getElementById('question-price').dataset.price, 10);
+		const questionCount = parseInt(document.getElementById('question-count').value, 10) || 0;
+		const totalAmount = questionPrice * questionCount;
 		
 		// ارسال اطلاعات به ویو جهت ارسال به صفحه پرداخت
 		document.getElementById('increase-balance-form').onsubmit = function(event) {
 			event.preventDefault();
-			let orginal_price = document.querySelector('input[name="amount"]:checked').value;
+			let orginal_price = 10000;
 			let amount = discount*orginal_price ;	
 			let mobile = "{{ user.mobile_number }}";
 			//جهت ثبت در سوابق پرداخت زرین پال
@@ -881,11 +884,11 @@
 				
 			
 			
-			fetch('/homepage/request/', {
+			fetch('/webservice/request/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+					'X-CSRFToken': getCsrfToken(),
 				},
 				body: JSON.stringify({ amount: amount, mobile: mobile, description: description, order_id: order_id, email: email, orginal_price: orginal_price ,user_full_name: user_full_name ,discount_code: discount_code ,initial_credit :initial_credit ,user_os: user_os})
 			})
@@ -911,7 +914,7 @@
 
 		// دریافت نتیجه پرداخت
 		function verifyPayment(authority, status) {
-			fetch(`/homepage/verify/?Authority=${authority}&Status=${status}`)
+			fetch(`/webservice/verify/?Authority=${authority}&Status=${status}`)
 			.then(response => response.json())
 			.then(data => {
 				if (data.status) {
