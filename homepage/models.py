@@ -12,6 +12,7 @@ class TransactionHistory(models.Model):
     initial_credit = models.IntegerField()
     secondary_credit = models.IntegerField()
     user_os = models.CharField(max_length=255)
+    webservice_question_price = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"Transaction {self.ref_id} for {self.user_full_name}"
@@ -29,7 +30,7 @@ class QuestionHistory(models.Model):
     user_os = models.CharField(max_length=255)
     webservice_user = models.CharField(max_length=255, default='user')
     webservice_discount_code = models.CharField(max_length=255, null=True, blank=True)
-    webservice_campaign_name = models.CharField(max_length=255, null=True, blank=True)    
+    webservice_campaign_name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.user_full_name} - {self.status}"
