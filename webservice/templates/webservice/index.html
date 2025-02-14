@@ -556,8 +556,9 @@
 		  width: 150px; /* عرض تکست باکس */
 		}
 		
-		#amount {
+		#question-count {
 		  width: 150px; /* عرض تکست باکس */
+		  font-size: 14px;
 		}
 				
     </style>
@@ -602,22 +603,21 @@
 			<h2>افزایش اعتبار</h2>
 				<form id="increase-balance-form">
 
-
 					<p id="question-price" style="font-weight: bold;">
 					   هزینه هر پرسش : {{ webservice_question_price }} تومان
 					</p>
 
-					<label for="amount">مبلغ مورد نظر برای افزایش اعتبار (ریال)</label><br>
-					<input type="text" id="amount" value= ""><br><br>
-
+					<label for="amount">تعداد پرسش جهت افزایش اعتبار</label><br>
+					<input type="number" id="question-count" value= ""><br><br>
 
 					<!-- تکست باکس و دکمه اعمال کد تخفیف -->
 					<input type="text" id="discount-code" placeholder="کد تخفیف">
-					<button type="button" id="apply-discount">اعمال</button><br>					
-					<!-- متن مبلغ قابل پرداخت -->
+					<button type="button" id="apply-discount">اعمال</button><br>
+					
+					<!-- متن مبلغ قابل پرداخت -->						
 					<p id="payable-amount" style="font-weight: bold;">
-					  تعداد پرسشی که افزوده خواهد شد : 
-					</p>						
+					  مبلغ قابل پرداخت : 
+					</p>					
 						
 				    <div id="pay-container">
 					  <button type="submit" id="pay-button">پرداخت</button>
@@ -1131,6 +1131,33 @@
 		const formattedBalance = priceInToman.toLocaleString('fa-IR');
 		// نمایش در عنصر <p>
 		document.getElementById('question-price').innerHTML = `هزینه هر سوال  ${formattedBalance} تومان`;
+
+
+
+		document.addEventListener("DOMContentLoaded", function() {
+		  // تبدیل عدد هزینه هر سوال به تومان و نمایش
+		  const webservice_question_price = `{{ webservice_question_price }}`;
+		  const priceInToman = parseInt(webservice_question_price, 10) / 10;
+		  const formattedBalance = priceInToman.toLocaleString('fa-IR');
+		  document.getElementById('question-price').innerHTML = `هزینه هر سوال : ${formattedBalance} تومان`;
+
+		  // محاسبه مبلغ قابل پرداخت هنگام وارد کردن تعداد سوالات
+		  document.getElementById('question-count').addEventListener('input', function() {
+			calculatePayableAmount(priceInToman);
+		  });
+
+		  function calculatePayableAmount(questionPrice) {
+			const questionCount = parseInt(document.getElementById('question-count').value, 10) || 0;
+			const payableAmount = (questionCount * questionPrice).toLocaleString('fa-IR');
+			document.getElementById('payable-amount').innerText = `مبلغ قابل پرداخت : ${payableAmount} تومان`;
+		  }
+		});
+
+
+
+
+
+
 
 
 
