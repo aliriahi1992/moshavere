@@ -1110,13 +1110,17 @@
         }
 
 
+		// تبدیل عدد هزینه هر سوال به تومان و نمایش
+		const webservice_question_price = `{{ webservice_question_price }}`;
+		const priceInToman = parseInt(webservice_question_price, 10) / 10;
+		const formattedBalance = priceInToman.toLocaleString('fa-IR');
+		document.getElementById('question-price').innerHTML = `هزینه هر پرسش : ${formattedBalance} تومان`;
+
+
+
 		//نمایش قیمت هر سوال و مبلغ قابل پرداخت به صورت لحظه ای
 		document.addEventListener("DOMContentLoaded", function() {
-		  // تبدیل عدد هزینه هر سوال به تومان و نمایش
-		  const webservice_question_price = `{{ webservice_question_price }}`;
-		  const priceInToman = parseInt(webservice_question_price, 10) / 10;
-		  const formattedBalance = priceInToman.toLocaleString('fa-IR');
-		  document.getElementById('question-price').innerHTML = `هزینه هر پرسش : ${formattedBalance} تومان`;
+
 
 		  // محاسبه مبلغ قابل پرداخت هنگام وارد کردن تعداد سوالات
 		  document.getElementById('question-count').addEventListener('input', function() {
@@ -1125,7 +1129,7 @@
 
 		  function calculatePayableAmount(questionPrice) {
 			const questionCount = parseInt(document.getElementById('question-count').value, 10) || 0;
-			const payableAmount = ((questionCount * questionPrice)* discount).toLocaleString('fa-IR');
+			const payableAmount = (questionCount * questionPrice).toLocaleString('fa-IR');
 			document.getElementById('payable-amount').innerText = `مبلغ قابل پرداخت : ${payableAmount} تومان`;
 		  }
 		});
