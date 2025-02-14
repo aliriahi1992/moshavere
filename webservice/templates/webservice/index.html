@@ -835,6 +835,7 @@
 			let discountCode = document.getElementById('discount-code').value;
 			if (discountCode === "first time") {
 			  discount = 0.8;
+			  discount_code = "first time"
 			  alert('تخفیف 20 درصدی اعمال شد.');
 			} else {
 			  discount = 1;
@@ -1120,8 +1121,6 @@
 
 		//نمایش قیمت هر سوال و مبلغ قابل پرداخت به صورت لحظه ای
 		document.addEventListener("DOMContentLoaded", function() {
-
-
 		  // محاسبه مبلغ قابل پرداخت هنگام وارد کردن تعداد سوالات
 		  document.getElementById('question-count').addEventListener('input', function() {
 			calculatePayableAmount(priceInToman);
