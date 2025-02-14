@@ -607,7 +607,7 @@
 					   هزینه هر پرسش : {{ webservice_question_price }} تومان
 					</p>
 
-					<label for="amount">تعداد پرسش جهت افزایش اعتبار</label>
+					<label for="amount">تعداد پرسش جهت افزایش اعتبار</label><br>
 					<input type="number" id="question-count" value= ""><br><br>
 
 					<!-- تکست باکس و دکمه اعمال کد تخفیف -->
@@ -659,10 +659,6 @@
 			</div>	
 		</div>
 	</div>	
-	
-	
-	
-
 
 
 
@@ -691,8 +687,6 @@
 	</div>
 
 
-	
-	
 	
 	
 
@@ -834,39 +828,28 @@
 		let discount_code = "";
 
 		
-		//اعمال کد تخفیف
-		document.getElementById('apply-discount').addEventListener('click', function() {
+		document.addEventListener("DOMContentLoaded", function() {
+
+		  // اعمال کد تخفیف
+		  document.getElementById('apply-discount').addEventListener('click', function() {
 			let discountCode = document.getElementById('discount-code').value;
 			if (discountCode === "first time") {
-				discount = 0.8;
-				discount_code = "first time"
-				updatePayableAmount(); // به روزرسانی مبلغ قابل پرداخت
-				alert('تخفیف 20 درصدی اعمال شد.');
+			  discount = 0.8;
+			  alert('تخفیف 20 درصدی اعمال شد.');
 			} else {
-				alert('کد تخفیف نامعتبر است.');
+			  discount = 1;
+			  alert('کد تخفیف نامعتبر است.');
 			}
+			updatePayableAmount(priceInToman); // به روزرسانی مبلغ قابل پرداخت
+		  });
+
+		  // تابع به روزرسانی مبلغ قابل پرداخت
+		  function updatePayableAmount(questionPrice) {
+			const questionCount = parseInt(document.getElementById('question-count').value, 10) || 0;
+			const payableAmount = Math.round((questionCount * questionPrice) * discount).toLocaleString('fa-IR');
+			document.getElementById('payable-amount').innerText = `مبلغ قابل پرداخت : ${payableAmount} تومان`;
+		  }
 		});
-
-
-		
-		//جهت نمایش مبلغ قابل پرداخت در ماؤول افزایش اعتبار
-		const radioButtons = document.querySelectorAll('input[name="amount"]');
-		const payableAmountText = document.getElementById('payable-amount');
-		radioButtons.forEach((radio) => {
-			radio.addEventListener('change', () => {
-			  const selectedAmount = radio.value/10*discount; // مقدار انتخاب شده
-			  const formattedAmount = Math.round(selectedAmount).toLocaleString('en-US'); // قالب بندی عدد با کاما
-			  payableAmountText.textContent = `مبلغ قابل پرداخت : ${formattedAmount} تومان`;	
-			});
-		});		
-		
-		// تابعی برای اینکه در زمان اعمال کد تخفیف آن را صدا زنی کنیم و مبلغ تخفیف را بر روی مبلغ قابل پرداخت اعمال نماید
-		function updatePayableAmount() {
-			const selectedAmount = document.querySelector('input[name="amount"]:checked').value/10*discount; // مقدار انتخاب شده
-			const formattedAmount = Math.round(selectedAmount).toLocaleString('en-US'); // قالب بندی عدد با کاما
-			payableAmountText.textContent = `مبلغ قابل پرداخت : ${formattedAmount} تومان`;			
-		}
-		
 		
 		
 		
@@ -942,6 +925,7 @@
 				displayPaymentResult(false, 'خطا در ارتباط');
 			});
 		}
+
 
 		// بعد از بازگشت از درگاه پرداخت، این تابع را فراخوانی کنید.
 		window.onload = function() {
@@ -1039,6 +1023,7 @@
 			});
 		}
 
+
 		// دریافت CSRF Token (اختیاری)
 		function getCsrfToken() {
 			const name = 'csrftoken';
@@ -1052,6 +1037,7 @@
 			return '';
 		}
 		
+		
 		//برای نمایش ثابت هدر ها در اسکرول صفحه	
 		window.addEventListener("scroll", function () {
 			var custom_header = document.querySelector(".custom-header");
@@ -1064,12 +1050,7 @@
 		});		
 		
 		
-				
-				
-				
-				
-				
-				
+		
 				
 		//سنجش اعتبار و ارسال اطلاعات ماژول مربوط به تنظیمات هوش مصنوعی
         function ApplyAiSettings() {
@@ -1133,7 +1114,7 @@
 		document.getElementById('question-price').innerHTML = `هزینه هر سوال  ${formattedBalance} تومان`;
 
 
-
+		
 		document.addEventListener("DOMContentLoaded", function() {
 		  // تبدیل عدد هزینه هر سوال به تومان و نمایش
 		  const webservice_question_price = `{{ webservice_question_price }}`;
@@ -1152,11 +1133,6 @@
 			document.getElementById('payable-amount').innerText = `مبلغ قابل پرداخت : ${payableAmount} تومان`;
 		  }
 		});
-
-
-
-
-
 
 
 
