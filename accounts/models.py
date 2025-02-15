@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, mobile_number, full_name, password=None):
@@ -31,6 +33,8 @@ class CustomUser(AbstractBaseUser):
     webservice_total_request_limit = models.IntegerField(default=10000)
     webservice_user_request_limit = models.IntegerField(default=30)
     webservice_question_price = models.IntegerField(default=30000)
+    created_at = models.DateTimeField(default=timezone.now)
+    last_login = models.DateTimeField(default=timezone.now)
     balance = models.IntegerField(default=3)  #اعتبار اولیه با میزان پیش فرض 3 پرسش
 
     
