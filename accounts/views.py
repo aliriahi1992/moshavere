@@ -32,9 +32,10 @@ def auth_page(request):
                 if user:
                     login(request, user)
                     # بررسی مقدار is_webservice
-
                     user.last_login = timezone.now()
+                    user.login_counter += 1
                     user.save()
+                    
                     if user.is_webservice:  # اگر مقدار True باشد
                         return redirect('webservice:homepage')  # هدایت به صفحه index اپ webservice
                     else:
