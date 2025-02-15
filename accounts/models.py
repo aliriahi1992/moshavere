@@ -35,6 +35,7 @@ class CustomUser(AbstractBaseUser):
     webservice_question_price = models.IntegerField(default=30000)
     created_at = models.DateTimeField(default=timezone.now)
     last_login = models.DateTimeField(default=timezone.now)
+    login_counter = models.IntegerField(default=0)
     balance = models.IntegerField(default=3)  #اعتبار اولیه با میزان پیش فرض 3 پرسش
 
     

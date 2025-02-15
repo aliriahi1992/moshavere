@@ -5,6 +5,7 @@ from django.contrib import messages
 #برای فراموشی رمز عبور
 from django.http import JsonResponse
 from .models import CustomUser
+from django.utils import timezone
 
 
 def auth_page(request):
@@ -31,6 +32,9 @@ def auth_page(request):
                 if user:
                     login(request, user)
                     # بررسی مقدار is_webservice
+
+                    user.last_login = timezone.now()
+                    user.save()
                     if user.is_webservice:  # اگر مقدار True باشد
                         return redirect('webservice:homepage')  # هدایت به صفحه index اپ webservice
                     else:
